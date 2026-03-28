@@ -119,28 +119,38 @@ echo [OK] Milvus is ready
 echo.
 
 echo [5/7] Starting CLS MCP server...
-start "CLS MCP Server" /min %PYTHON_CMD% mcp_servers/cls_server.py
+if not exist logs mkdir logs
+start "CLS MCP Server" /min cmd /c ""%PYTHON_CMD%" mcp_servers\cls_server.py > logs\mcp_cls.log 2>&1"
 timeout /t 2 /nobreak >nul
 echo [OK] CLS MCP server started
 echo.
 
 echo [6/7] Starting Monitor MCP server...
-start "Monitor MCP Server" /min %PYTHON_CMD% mcp_servers/monitor_server.py
+start "Monitor MCP Server" /min cmd /c ""%PYTHON_CMD%" mcp_servers\monitor_server.py > logs\mcp_monitor.log 2>&1"
 timeout /t 2 /nobreak >nul
 echo [OK] Monitor MCP server started
 echo.
 
 echo [7/7] Starting FastAPI service...
-start "SuperBizAgent API" %PYTHON_CMD% -m uvicorn app.main:app --host 0.0.0.0 --port 9900
-echo [INFO] Waiting 15 seconds for API startup...
-timeout /t 15 /nobreak >nul
+start "SuperBizAgent API" /min cmd /c ""%PYTHON_CMD%" -m uvicorn app.main:app --host 0.0.0.0 --port 9900 > logs\uvicorn_start.log 2>&1"
+
+set API_READY=0
+set API_WAIT_COUNT=0
+:wait_api_health
+set /a API_WAIT_COUNT+=1
+curl -s http://localhost:9900/health >nul 2>&1
+if not errorlevel 1 (
+    set API_READY=1
+    goto :api_health_done
+)
+if %API_WAIT_COUNT% geq 30 goto :api_health_done
+echo [INFO] Waiting for API health... (%API_WAIT_COUNT%/30)
+timeout /t 2 /nobreak >nul
+goto :wait_api_health
+:api_health_done
 echo.
 
-echo [INFO] Checking API health...
-curl -s http://localhost:9900/health >nul 2>&1
-if errorlevel 1 (
-    echo [WARN] API may still be starting. Please check logs if needed.
-) else (
+if "%API_READY%"=="1" (
     echo [OK] FastAPI service is healthy
     echo.
     echo [INFO] Uploading aiops-docs into the vector store...
@@ -149,6 +159,9 @@ if errorlevel 1 (
         curl -s -X POST http://localhost:9900/api/upload -F "file=@%%f" >nul 2>&1
     )
     echo [OK] Document upload completed
+) else (
+    echo [WARN] API did not become healthy within 60 seconds.
+    echo [TIP] Check logs\uvicorn_start.log for startup errors.
 )
 
 echo.
@@ -159,9 +172,10 @@ echo Web UI: http://localhost:9900
 echo API Docs: http://localhost:9900/docs
 echo.
 echo Logs:
-echo   FastAPI: logs\app_*.log
-echo   CLS MCP: mcp_cls.log
-echo   Monitor MCP: mcp_monitor.log
+echo   FastAPI startup: logs\uvicorn_start.log
+echo   FastAPI runtime: logs\app_*.log
+echo   CLS MCP: logs\mcp_cls.log
+echo   Monitor MCP: logs\mcp_monitor.log
 echo Stop services with: stop-windows.bat
 echo ====================================
 pause
