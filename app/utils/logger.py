@@ -30,17 +30,22 @@ def setup_logger():
     )
 
     # 添加文件输出（按天轮转，自动压缩）
-    logger.add(
-        "logs/app_{time:YYYY-MM-DD}.log",
-        rotation="00:00",  # 每天0点自动切割新日志文件
-        retention="7 days",  # 仅保留最近7天的日志
-        compression="zip",  # 过期日志自动压缩为zip
-        encoding="utf-8",  # 解决中文乱码
-        enqueue=True,  # 异步写入，提升性能（避免IO阻塞）
-        backtrace=True,  # 显示完整异常栈信息
-        diagnose=True,  # 显示变量值，便于调试
-        level="INFO",
-        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {module}.{function}:{line} | {message}",
-    )
+    file_sink_kwargs = {
+        "rotation": "00:00",  # 每天0点自动切割新日志文件
+        "retention": "7 days",  # 仅保留最近7天的日志
+        "compression": "zip",  # 过期日志自动压缩为zip
+        "encoding": "utf-8",  # 解决中文乱码
+        "enqueue": True,  # 异步写入，提升性能（避免IO阻塞）
+        "backtrace": True,  # 显示完整异常栈信息
+        "diagnose": True,  # 显示变量值，便于调试
+        "level": "INFO",
+        "format": "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {module}.{function}:{line} | {message}",
+    }
+    try:
+        logger.add("logs/app_{time:YYYY-MM-DD}.log", **file_sink_kwargs)
+    except Exception:
+        # 某些 Windows 环境下 multiprocessing 队列可能因为权限限制不可用，降级为同步文件写入。
+        file_sink_kwargs["enqueue"] = False
+        logger.add("logs/app_{time:YYYY-MM-DD}.log", **file_sink_kwargs)
 
 setup_logger()

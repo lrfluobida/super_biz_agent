@@ -209,7 +209,7 @@ async def get_session_info(session_id: str) -> SessionInfoResponse:
 
         return SessionInfoResponse(
             session_id=session_id,
-            message_count=len(history),
+            message_count=rag_agent_service.get_session_message_count(session_id),
             history=history
         )
 

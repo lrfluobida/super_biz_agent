@@ -120,19 +120,19 @@ echo.
 
 echo [5/7] Starting CLS MCP server...
 if not exist logs mkdir logs
-start "CLS MCP Server" /min cmd /c ""%PYTHON_CMD%" mcp_servers\cls_server.py > logs\mcp_cls.log 2>&1"
+start "CLS MCP Server" powershell -NoProfile -NoExit -Command "Set-Location '%CD%'; & '%PYTHON_CMD%' 'mcp_servers\cls_server.py' 2>&1 | Tee-Object -FilePath 'logs\mcp_cls.log' -Append"
 timeout /t 2 /nobreak >nul
 echo [OK] CLS MCP server started
 echo.
 
 echo [6/7] Starting Monitor MCP server...
-start "Monitor MCP Server" /min cmd /c ""%PYTHON_CMD%" mcp_servers\monitor_server.py > logs\mcp_monitor.log 2>&1"
+start "Monitor MCP Server" powershell -NoProfile -NoExit -Command "Set-Location '%CD%'; & '%PYTHON_CMD%' 'mcp_servers\monitor_server.py' 2>&1 | Tee-Object -FilePath 'logs\mcp_monitor.log' -Append"
 timeout /t 2 /nobreak >nul
 echo [OK] Monitor MCP server started
 echo.
 
 echo [7/7] Starting FastAPI service...
-start "SuperBizAgent API" /min cmd /c ""%PYTHON_CMD%" -m uvicorn app.main:app --host 0.0.0.0 --port 9900 > logs\uvicorn_start.log 2>&1"
+start "SuperBizAgent API" powershell -NoProfile -NoExit -Command "Set-Location '%CD%'; & '%PYTHON_CMD%' -m uvicorn app.main:app --host 0.0.0.0 --port 9900 2>&1 | Tee-Object -FilePath 'logs\uvicorn_start.log' -Append"
 
 set API_READY=0
 set API_WAIT_COUNT=0

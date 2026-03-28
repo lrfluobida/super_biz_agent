@@ -4,6 +4,7 @@
 """
 
 from typing import Dict, Any
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -38,6 +39,14 @@ class Settings(BaseSettings):
     rag_top_k: int = 3
     rag_model: str = "qwen3.5-flash"  # 使用快速响应模型，不带扩展思考
 
+    # 对话记忆配置
+    memory_window_turns: int = 5
+    memory_prompt_budget_tokens: int = 24000
+    memory_summary_soft_ratio: float = 0.6
+    memory_summary_hard_ratio: float = 0.8
+    memory_reserved_output_tokens: int = 4096
+    memory_sqlite_path: str = "volumes/memory/session_memory.sqlite3"
+
     # 文档分块配置
     chunk_max_size: int = 800
     chunk_overlap: int = 100
@@ -47,6 +56,18 @@ class Settings(BaseSettings):
     mcp_cls_url: str = "http://localhost:8003/mcp"
     mcp_monitor_transport: str = "streamable-http"
     mcp_monitor_url: str = "http://localhost:8004/mcp"
+
+    @field_validator("debug", mode="before")
+    @classmethod
+    def normalize_debug(cls, value: Any) -> Any:
+        """兼容 DEBUG=release 等非标准布尔值"""
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized in {"true", "1", "yes", "on", "debug"}:
+                return True
+            if normalized in {"false", "0", "no", "off", "release", "prod", "production"}:
+                return False
+        return value
 
     @property
     def mcp_servers(self) -> Dict[str, Dict[str, Any]]:
