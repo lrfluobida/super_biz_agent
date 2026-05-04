@@ -16,6 +16,34 @@ from app.api import chat, health, file, aiops
 from app.core.milvus_client import milvus_manager
 
 
+def _init_bm25() -> None:
+    """初始化 BM25 模型：优先加载已有模型，否则从 Milvus 自动训练"""
+    from pathlib import Path
+
+    from app.services.keyword_search_service import keyword_search_service
+    from app.services.vector_store_manager import vector_store_manager
+
+    if not config.hybrid_search_enabled:
+        logger.info("Hybrid Search 已禁用，跳过 BM25 初始化")
+        return
+
+    model_path = Path(config.bm25_model_path)
+    if model_path.exists():
+        try:
+            keyword_search_service.load(str(model_path))
+            logger.info(f"✅ BM25 模型已加载: {model_path}")
+            return
+        except Exception as e:
+            logger.error(f"BM25 模型加载失败，将重新训练: {e}")
+
+    # 自动从 Milvus 训练
+    try:
+        logger.info("BM25 模型不存在，尝试从 Milvus 自动训练...")
+        vector_store_manager.rebuild_bm25_from_collection()
+    except Exception as e:
+        logger.error(f"BM25 自动训练失败: {e}")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """应用生命周期管理"""
@@ -30,7 +58,10 @@ async def lifespan(app: FastAPI):
     logger.info("🔌 正在连接 Milvus...")
     milvus_manager.connect()
     logger.info("✅ Milvus 连接成功")
-    
+
+    # 初始化 BM25 模型
+    _init_bm25()
+
     logger.info("=" * 60)
     
     yield

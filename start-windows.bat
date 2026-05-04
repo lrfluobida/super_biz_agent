@@ -39,19 +39,8 @@ echo [3/7] Preparing virtual environment...
 if exist .venv\Scripts\python.exe (
     echo [INFO] Existing virtual environment found
     if "%USE_UV%"=="1" (
-        uv sync 2>nul
-        if errorlevel 1 (
-            echo [WARN] uv sync failed, falling back to pip install -e .
-            call :ensure_pip .venv\Scripts\python.exe
-            .venv\Scripts\python.exe -m pip install -e . -q
-            if errorlevel 1 (
-                echo [ERROR] Failed to update dependencies with pip
-                pause
-                exit /b 1
-            )
-        ) else (
-            echo [OK] Dependency sync completed with uv
-        )
+        echo [INFO] Skipping uv sync (run manually if deps changed^)
+        goto :venv_created
     ) else (
         echo [INFO] Updating dependencies with pip...
         call :ensure_pip .venv\Scripts\python.exe
@@ -100,6 +89,9 @@ echo [OK] Virtual environment ready
 echo.
 
 set PYTHON_CMD=.venv\Scripts\python.exe
+if "%PROMETHEUS_ENABLED%"=="" set PROMETHEUS_ENABLED=false
+echo [INFO] PROMETHEUS_ENABLED=%PROMETHEUS_ENABLED%
+echo.
 
 echo [4/7] Starting Milvus containers...
 docker ps --format "{{.Names}}" | findstr "milvus-standalone" >nul 2>&1

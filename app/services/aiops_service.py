@@ -9,6 +9,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from loguru import logger
 
 from app.agent.aiops import PlanExecuteState, planner, executor, replanner
+from app.services.aiops_prompt import build_aiops_task_prompt
 
 
 # 节点名称常量
@@ -244,6 +245,8 @@ class AIOpsService:
                 - 最终输出必须是纯 Markdown 文本，不要包含 JSON 结构
                 - 所有内容必须基于工具查询的真实数据，严禁编造
                 - 如果某个步骤失败，在结论中如实说明，不要跳过""")
+
+        aiops_task = build_aiops_task_prompt(config.prometheus_enabled)
 
         async for event in self.execute(aiops_task, session_id):
             # 转换事件格式以兼容旧的 API

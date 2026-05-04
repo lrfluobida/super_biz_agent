@@ -114,6 +114,14 @@ class VectorIndexService:
             result.success = result.fail_count == 0
             result.end_time = datetime.now()
 
+            # 批量索引完成后重建 BM25 模型
+            if result.success_count > 0:
+                try:
+                    logger.info("批量索引完成，开始重建 BM25 模型...")
+                    vector_store_manager.rebuild_bm25_from_collection()
+                except Exception as e:
+                    logger.error(f"BM25 模型重建失败: {e}")
+
             logger.info(
                 f"目录索引完成: 总数={result.total_files}, "
                 f"成功={result.success_count}, 失败={result.fail_count}"
@@ -163,6 +171,11 @@ class VectorIndexService:
             if documents:
                 vector_store_manager.add_documents(documents)
                 logger.info(f"文件索引完成: {file_path}, 共 {len(documents)} 个分片")
+                # 索引完成后重建 BM25 模型
+                try:
+                    vector_store_manager.rebuild_bm25_from_collection()
+                except Exception as e:
+                    logger.warning(f"BM25 模型重建失败（非致命）: {e}")
             else:
                 logger.warning(f"文件内容为空或无法分割: {file_path}")
 

@@ -8,6 +8,7 @@ from loguru import logger
 
 from app.config import config
 from app.core.milvus_client import milvus_manager
+from app.services.keyword_search_service import keyword_search_service
 from app.services.vector_embedding_service import vector_embedding_service
 
 
@@ -62,7 +63,7 @@ class VectorStoreManager:
 
     def add_documents(self, documents: List[Document]) -> List[str]:
         """
-        批量添加文档到向量存储（自动批量向量化）
+        批量添加文档到向量存储（同时写入 dense 和 sparse 向量）
 
         Args:
             documents: 文档列表
@@ -75,22 +76,76 @@ class VectorStoreManager:
             import uuid
             start_time = time.time()
 
-            # 为每个文档生成唯一 id（因为 auto_id=False）
             ids = [str(uuid.uuid4()) for _ in documents]
+            texts = [doc.page_content for doc in documents]
 
-            # LangChain Milvus 的 add_documents 会自动调用 embedding_function
-            # 并进行批量处理，性能更好
-            result_ids = self.vector_store.add_documents(documents, ids=ids)
+            # 如果 BM25 已训练，使用 PyMilvus 直接插入 dense + sparse
+            if keyword_search_service.is_fitted:
+                return self._add_documents_with_sparse(documents, ids, texts, start_time)
 
+            # 回退：仅 dense 向量，使用 PyMilvus 直接插入（带空 sparse_vector）
+            dense_vectors = vector_embedding_service.embed_documents(texts)
+            insert_data = []
+            for i, doc in enumerate(documents):
+                row = {
+                    "id": ids[i],
+                    "vector": dense_vectors[i],
+                    "sparse_vector": {},
+                    "content": doc.page_content[:8000],
+                    "metadata": doc.metadata,
+                }
+                insert_data.append(row)
+            collection = milvus_manager.get_collection()
+            collection.insert(insert_data)
+            collection.flush()
             elapsed = time.time() - start_time
             logger.info(
-                f"批量添加 {len(documents)} 个文档到 VectorStore 完成, "
-                f"耗时: {elapsed:.2f}秒, 平均: {elapsed/len(documents):.2f}秒/个"
+                f"批量添加 {len(documents)} 个文档到 VectorStore 完成 (仅 dense), "
+                f"耗时: {elapsed:.2f}秒"
             )
-            return result_ids
+            return ids
+
         except Exception as e:
             logger.error(f"添加文档失败: {e}")
             raise
+
+    def _add_documents_with_sparse(
+        self,
+        documents: List[Document],
+        ids: List[str],
+        texts: List[str],
+        start_time: float,
+    ) -> List[str]:
+        """使用 PyMilvus 直接插入 dense + sparse 向量"""
+        import time
+
+        # 生成 dense 向量
+        dense_vectors = vector_embedding_service.embed_documents(texts)
+        # 生成 sparse 向量
+        sparse_vectors = keyword_search_service.encode_documents(texts)
+
+        # 构建插入数据
+        insert_data = []
+        for i, doc in enumerate(documents):
+            row = {
+                "id": ids[i],
+                "vector": dense_vectors[i],
+                "sparse_vector": sparse_vectors[i] if sparse_vectors[i] else {},
+                "content": doc.page_content[:8000],  # 截断到字段限制
+                "metadata": doc.metadata,
+            }
+            insert_data.append(row)
+
+        collection = milvus_manager.get_collection()
+        collection.insert(insert_data)
+        collection.flush()
+
+        elapsed = time.time() - start_time
+        logger.info(
+            f"批量添加 {len(documents)} 个文档到 VectorStore 完成 (dense + sparse), "
+            f"耗时: {elapsed:.2f}秒, 平均: {elapsed/len(documents):.2f}秒/个"
+        )
+        return ids
 
     def delete_by_source(self, file_path: str) -> int:
         """
@@ -128,6 +183,45 @@ class VectorStoreManager:
             Milvus: VectorStore 实例
         """
         return self.vector_store
+
+    def rebuild_bm25_from_collection(self) -> None:
+        """从 Milvus 中读取全部文档内容，重建 BM25 模型并持久化"""
+        try:
+            import time
+            start_time = time.time()
+
+            collection = milvus_manager.get_collection()
+            # 分批读取所有文档内容
+            all_texts: list[str] = []
+            offset = 0
+            batch_size = 500
+
+            while True:
+                results = collection.query(
+                    expr="id != ''",
+                    output_fields=["content"],
+                    offset=offset,
+                    limit=batch_size,
+                )
+                if not results:
+                    break
+                all_texts.extend(r["content"] for r in results)
+                offset += batch_size
+
+            if not all_texts:
+                logger.warning("Collection 中没有文档，跳过 BM25 重建")
+                return
+
+            keyword_search_service.fit(all_texts)
+            keyword_search_service.save(config.bm25_model_path)
+
+            elapsed = time.time() - start_time
+            logger.info(
+                f"BM25 模型重建完成: 文档数={len(all_texts)}, 耗时={elapsed:.2f}秒"
+            )
+        except Exception as e:
+            logger.error(f"BM25 模型重建失败: {e}")
+            raise
 
     def similarity_search(self, query: str, k: int = 3) -> List[Document]:
         """

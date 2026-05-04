@@ -4,7 +4,7 @@
 """
 
 import json
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from sse_starlette.sse import EventSourceResponse
 from app.models.request import ChatRequest, ClearRequest
 from app.models.response import SessionInfoResponse, ApiResponse
@@ -14,8 +14,24 @@ from loguru import logger
 router = APIRouter()
 
 
+def _is_truthy(value: str | None) -> bool:
+    if value is None:
+        return False
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _parse_positive_int(value: str | None) -> int | None:
+    if value is None:
+        return None
+    try:
+        parsed = int(value.strip())
+    except ValueError:
+        return None
+    return parsed if parsed > 0 else None
+
+
 @router.post("/chat")
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest, http_request: Request):
     """快速对话接口
     {
         "code": 200,
@@ -35,10 +51,22 @@ async def chat(request: ChatRequest):
     """
     try:
         logger.info(f"[会话 {request.id}] 收到快速对话请求: {request.question}")
-        answer = await rag_agent_service.query(
+        eval_mode = _is_truthy(http_request.headers.get("X-RAG-Eval-Mode"))
+        eval_top_k = _parse_positive_int(http_request.headers.get("X-RAG-Eval-Top-K"))
+        eval_hybrid = http_request.headers.get("X-RAG-Hybrid-Search")
+        use_hybrid: bool | None = None
+        if eval_mode and eval_hybrid is not None:
+            use_hybrid = _is_truthy(eval_hybrid)
+
+        result = await rag_agent_service.query_with_evaluation(
             request.question,
-            session_id=request.id
+            session_id=request.id,
+            eval_mode=eval_mode,
+            eval_top_k=eval_top_k,
+            use_hybrid=use_hybrid,
         )
+        answer = result["answer"]
+        evaluation = result["evaluation"]
 
         logger.info(f"[会话 {request.id}] 快速对话完成")
 
@@ -48,7 +76,8 @@ async def chat(request: ChatRequest):
             "data": {
                 "success": True,
                 "answer": answer,
-                "errorMessage": None
+                "errorMessage": None,
+                "evaluation": evaluation,
             }
         }
 

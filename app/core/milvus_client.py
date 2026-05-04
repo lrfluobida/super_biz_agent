@@ -99,28 +99,38 @@ class MilvusClientManager:
                 logger.info(f"collection '{self.COLLECTION_NAME}' 已存在")
                 self._collection = Collection(self.COLLECTION_NAME)
                 
-                # 检查向量维度是否匹配
+                # 检查向量维度是否匹配以及 sparse_vector 字段是否存在
                 schema = self._collection.schema
                 vector_field = None
                 existing_dim = None
+                has_sparse_vector = False
                 for field in schema.fields:
                     if field.name == "vector":
                         vector_field = field
-                        break
-                
+                    if field.name == "sparse_vector":
+                        has_sparse_vector = True
+
+                need_recreate = False
                 if vector_field and hasattr(vector_field, 'params') and 'dim' in vector_field.params:
                     existing_dim = vector_field.params['dim']
                     if existing_dim != self.VECTOR_DIM:
                         logger.warning(
                             f"检测到向量维度不匹配！当前 collection 维度: {existing_dim}, 配置维度: {self.VECTOR_DIM}"
                         )
-                        logger.info(f"正在删除旧 collection '{self.COLLECTION_NAME}'...")
-                        _ = utility.drop_collection(self.COLLECTION_NAME)
-                        logger.info(f"正在重新创建 collection '{self.COLLECTION_NAME}'...")
-                        self._create_collection()
-                        logger.info(f"成功重新创建 collection，维度: {self.VECTOR_DIM}")
+                        need_recreate = True
                     else:
                         logger.info(f"向量维度匹配: {self.VECTOR_DIM}")
+
+                if not has_sparse_vector:
+                    logger.warning("检测到 collection 缺少 sparse_vector 字段，需要重建")
+                    need_recreate = True
+
+                if need_recreate:
+                    logger.info(f"正在删除旧 collection '{self.COLLECTION_NAME}'...")
+                    _ = utility.drop_collection(self.COLLECTION_NAME)
+                    logger.info(f"正在重新创建 collection '{self.COLLECTION_NAME}'...")
+                    self._create_collection()
+                    logger.info(f"成功重新创建 collection，维度: {self.VECTOR_DIM}")
 
             # 加载 collection
             self._load_collection()
@@ -170,6 +180,10 @@ class MilvusClientManager:
                 name="metadata",
                 dtype=DataType.JSON,
             ),
+            FieldSchema(
+                name="sparse_vector",
+                dtype=DataType.SPARSE_FLOAT_VECTOR,
+            ),
         ]
 
         # 创建 schema
@@ -190,7 +204,7 @@ class MilvusClientManager:
         self._create_index()
 
     def _create_index(self) -> None:
-        """为 vector 字段创建索引"""
+        """为 vector 和 sparse_vector 字段创建索引"""
         if self._collection is None:
             raise RuntimeError("Collection 未初始化")
 
@@ -206,6 +220,19 @@ class MilvusClientManager:
         )
 
         logger.info("成功为 vector 字段创建索引")
+
+        sparse_index_params = {
+            "metric_type": "IP",
+            "index_type": "SPARSE_INVERTED_INDEX",
+            "params": {"drop_ratio_build": 0.2},
+        }
+
+        _ = self._collection.create_index(
+            field_name="sparse_vector",
+            index_params=sparse_index_params,
+        )
+
+        logger.info("成功为 sparse_vector 字段创建索引")
 
     def _load_collection(self) -> None:
         """加载 collection 到内存"""

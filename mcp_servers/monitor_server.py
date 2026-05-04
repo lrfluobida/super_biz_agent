@@ -16,6 +16,8 @@ import random
 from typing import Dict, Any, Optional
 from datetime import datetime, timedelta
 from fastmcp import FastMCP
+from app.config import config
+from app.services.prometheus_alert_service import fetch_prometheus_alerts
 
 # 配置日志
 logging.basicConfig(
@@ -112,6 +114,26 @@ def generate_time_series(base_time: datetime, minutes_offset: int, format_str: s
     """
     result_time = base_time + timedelta(minutes=minutes_offset)
     return result_time.strftime(format_str)
+
+
+def build_prometheus_disabled_result() -> Dict[str, Any]:
+    """Return the disabled status for the Prometheus tool."""
+    return {
+        "source": "prometheus",
+        "status": "disabled",
+        "alerts": [],
+        "message": "Prometheus integration is disabled. Use the existing monitor tools instead.",
+    }
+
+
+def build_prometheus_error_result(message: str) -> Dict[str, Any]:
+    """Return an error status for the Prometheus tool."""
+    return {
+        "source": "prometheus",
+        "status": "error",
+        "alerts": [],
+        "message": message,
+    }
 
 
 
@@ -428,6 +450,23 @@ def query_memory_metrics(
         }
 
 
+
+
+@mcp.tool()
+@log_tool_call
+def query_prometheus_alerts() -> Dict[str, Any]:
+    """查询 Prometheus 活跃告警并提取关键字段。"""
+    if not config.prometheus_enabled:
+        return build_prometheus_disabled_result()
+
+    try:
+        return fetch_prometheus_alerts(
+            base_url=config.prometheus_base_url,
+            timeout_seconds=config.prometheus_timeout_seconds,
+        )
+    except Exception as exc:
+        logger.warning(f"Prometheus 告警查询失败: {exc}")
+        return build_prometheus_error_result(str(exc))
 
 
 if __name__ == "__main__":

@@ -7,7 +7,36 @@ from langchain_core.tools import tool
 from loguru import logger
 
 from app.config import config
+from app.services.rag_trace import get_effective_top_k, record_retrieval
 from app.services.vector_store_manager import vector_store_manager
+
+
+def retrieve_knowledge_documents(
+    query: str,
+    top_k: int | None = None,
+    use_hybrid: bool | None = None,
+) -> list[Document]:
+    """执行底层知识检索（二路召回 + RRF），并在开启 trace 时记录结果。"""
+    effective_top_k = top_k if top_k and top_k > 0 else get_effective_top_k(config.rag_top_k)
+    recall_meta = None
+
+    if config.hybrid_search_enabled and use_hybrid is not False:
+        from app.services.hybrid_search_service import hybrid_search
+
+        docs, recall_meta = hybrid_search(query, effective_top_k, use_hybrid=use_hybrid)
+    elif use_hybrid is True:
+        from app.services.hybrid_search_service import hybrid_search
+
+        docs, recall_meta = hybrid_search(query, effective_top_k, use_hybrid=True)
+    else:
+        vector_store = vector_store_manager.get_vector_store()
+        retriever = vector_store.as_retriever(search_kwargs={"k": effective_top_k})
+        docs = retriever.invoke(query)
+        for doc in docs:
+            doc.metadata["_recall_path"] = "dense"
+
+    record_retrieval(query, docs, recall_meta)
+    return docs
 
 
 @tool(response_format="content_and_artifact")
@@ -24,14 +53,8 @@ def retrieve_knowledge(query: str) -> Tuple[str, List[Document]]:
     """
     try:
         logger.info(f"知识检索工具被调用: query='{query}'")
-        
-        # 从向量存储中检索相关文档
-        vector_store = vector_store_manager.get_vector_store()
-        retriever = vector_store.as_retriever(
-            search_kwargs={"k": config.rag_top_k}
-        )
-        
-        docs = retriever.invoke(query)
+
+        docs = retrieve_knowledge_documents(query)
         
         if not docs:
             logger.warning("未检索到相关文档")

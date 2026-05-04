@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     rag_top_k: int = 3
     rag_model: str = "qwen3.5-flash"  # 使用快速响应模型，不带扩展思考
 
+    # Hybrid Search 配置（二路召回 + RRF）
+    hybrid_search_enabled: bool = True
+    hybrid_rrf_k: int = 5
+    hybrid_per_ranker_limit: int = 10
+    bm25_model_path: str = "volumes/bm25_model.pkl"
+
     # 对话记忆配置
     memory_window_turns: int = 5
     memory_prompt_budget_tokens: int = 24000
@@ -56,6 +62,9 @@ class Settings(BaseSettings):
     mcp_cls_url: str = "http://localhost:8003/mcp"
     mcp_monitor_transport: str = "streamable-http"
     mcp_monitor_url: str = "http://localhost:8004/mcp"
+    prometheus_enabled: bool = False
+    prometheus_base_url: str = "http://localhost:9090"
+    prometheus_timeout_seconds: float = 5.0
 
     @field_validator("debug", mode="before")
     @classmethod

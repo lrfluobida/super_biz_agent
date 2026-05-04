@@ -1,5 +1,49 @@
 # MCP Servers
 
+## Prometheus 告警接入
+
+- 新增工具：`query_prometheus_alerts`
+- 调用接口：`GET /api/v1/alerts`
+- 提取字段：
+  - `alertname` ← `labels.alertname`
+  - `description` ← `annotations.description`
+  - `activeAt` ← `activeAt`
+- AIOps 推荐顺序：先 `query_prometheus_alerts()`，再查 CPU、内存和日志
+
+### 环境变量
+
+```bash
+PROMETHEUS_ENABLED=false
+PROMETHEUS_BASE_URL=http://localhost:9090
+PROMETHEUS_TIMEOUT_SECONDS=5
+```
+
+说明：`PROMETHEUS_ENABLED=false` 时不启用 Prometheus，AIOps 会沿用 monitor 原本的 CPU、内存、日志等工具链；`true` 时才优先使用 Prometheus 告警工具。
+
+`PROMETHEUS_ENABLED=false` 时走 monitor 内置 mock；`true` 时查询真实 Prometheus，失败会自动回退到 mock。
+
+### Docker 启动示例
+
+Linux/macOS:
+
+```bash
+docker run -d --name super-biz-prometheus \
+  -p 9090:9090 \
+  -v $(pwd)/ops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml \
+  -v $(pwd)/ops/prometheus/alerts.yml:/etc/prometheus/alerts.yml \
+  prom/prometheus
+```
+
+Windows PowerShell:
+
+```powershell
+docker run -d --name super-biz-prometheus `
+  -p 9090:9090 `
+  -v ${PWD}/ops/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml `
+  -v ${PWD}/ops/prometheus/alerts.yml:/etc/prometheus/alerts.yml `
+  prom/prometheus
+```
+
 为 AIOps 智能诊断提供日志查询和监控数据工具。
 
 ## 📚 服务列表
