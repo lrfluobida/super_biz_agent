@@ -67,11 +67,13 @@ class DocumentSplitterService:
             # 第三阶段: 合并太小的分片 (< 300字符)
             final_docs = self._merge_small_chunks(docs_after_split, min_size=300)
 
-            # 添加文件路径元数据
-            for doc in final_docs:
+            # 添加文件路径和位置元数据
+            for i, doc in enumerate(final_docs):
                 doc.metadata["_source"] = file_path
                 doc.metadata["_extension"] = ".md"
                 doc.metadata["_file_name"] = Path(file_path).name
+                doc.metadata["_chunk_index"] = i + 1
+                doc.metadata["_chunk_total"] = len(final_docs)
 
             logger.info(f"Markdown 分割完成: {file_path} -> {len(final_docs)} 个分片")
             return final_docs
@@ -97,16 +99,18 @@ class DocumentSplitterService:
 
         try:
             # 直接使用递归字符分割器
+            base_metadata = {
+                "_source": file_path,
+                "_extension": Path(file_path).suffix,
+                "_file_name": Path(file_path).name,
+            }
             docs = self.text_splitter.create_documents(
                 texts=[content],
-                metadatas=[
-                    {
-                        "_source": file_path,
-                        "_extension": Path(file_path).suffix,
-                        "_file_name": Path(file_path).name,
-                    }
-                ],
+                metadatas=[base_metadata],
             )
+            for i, doc in enumerate(docs):
+                doc.metadata["_chunk_index"] = i + 1
+                doc.metadata["_chunk_total"] = len(docs)
 
             logger.info(f"文本分割完成: {file_path} -> {len(docs)} 个分片")
             return docs

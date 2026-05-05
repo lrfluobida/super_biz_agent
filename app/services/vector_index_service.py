@@ -6,6 +6,7 @@ from typing import Any, Dict, Optional
 
 from loguru import logger
 
+from app.config import config
 from app.services.document_splitter_service import document_splitter_service
 from app.services.vector_store_manager import vector_store_manager
 
@@ -63,6 +64,35 @@ class VectorIndexService:
         """初始化向量索引服务"""
         self.upload_path = "./uploads"
         logger.info("向量索引服务初始化完成")
+
+    def _generate_doc_context(self, content: str, file_path: str) -> str:
+        """为文档生成上下文摘要，嵌入时拼接到 chunk 前面以提升检索命中率。
+
+        只在索引阶段调用，不影响查询延迟。失败时返回空字符串，不阻断索引。
+        """
+        try:
+            from langchain_qwq import ChatQwen
+
+            model = ChatQwen(
+                model=config.rag_model,
+                api_key=config.dashscope_api_key,
+                temperature=0.1,
+            )
+            prompt = (
+                "请用 2-3 句话描述以下文档的主题和覆盖的知识点。"
+                "只描述文档实际内容，禁止编造。直接输出描述，不要加\"本文档是\"等前缀。\n\n"
+                f"文件名：{Path(file_path).name}\n"
+                f"内容（仅前 2000 字）：\n{content[:2000]}"
+            )
+            response = model.invoke(prompt)
+            context = response.content.strip()
+            if not context:
+                return ""
+            logger.info(f"文档上下文摘要已生成: {file_path} ({len(context)} 字符)")
+            return context
+        except Exception as e:
+            logger.warning(f"文档上下文摘要生成失败，将跳过 Contextual Chunking: {file_path}, 原因: {e}")
+            return ""
 
     def index_directory(self, directory_path: Optional[str] = None) -> IndexingResult:
         """
@@ -166,6 +196,25 @@ class VectorIndexService:
             # 3. 使用新的文档分割器
             documents = document_splitter_service.split_document(content, normalized_path)
             logger.info(f"文档分割完成: {file_path} -> {len(documents)} 个分片")
+
+            # 3.5. 上下文增强（Contextual Chunking）
+            if config.contextual_chunking_enabled and documents:
+                if len(documents) <= 3:
+                    # 小块文档：用 chunk 自身的标题元数据构建确定性前缀，避免 LLM 摘要引入噪音
+                    for doc in documents:
+                        headers = []
+                        for key in ["h1", "h2", "h3"]:
+                            val = doc.metadata.get(key, "")
+                            if val:
+                                headers.append(val)
+                        if headers:
+                            doc.metadata["_doc_context"] = " > ".join(headers)
+                else:
+                    # 大文档：LLM 生成的文档级上下文摘要
+                    doc_context = self._generate_doc_context(content, normalized_path)
+                    if doc_context:
+                        for doc in documents:
+                            doc.metadata["_doc_context"] = doc_context
 
             # 4. 添加文档到向量存储
             if documents:

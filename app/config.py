@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
     # DashScope 配置
     dashscope_api_key: str = ""  # 默认空字符串，实际使用需从环境变量加载
-    dashscope_model: str = "qwen3.5-flash"
+    dashscope_model: str = "qwen3.6-flash"
     dashscope_embedding_model: str = "text-embedding-v4"  # v4 支持多种维度（默认 1024）
 
     # Milvus 配置
@@ -37,7 +37,7 @@ class Settings(BaseSettings):
 
     # RAG 配置
     rag_top_k: int = 3
-    rag_model: str = "qwen3.5-flash"  # 使用快速响应模型，不带扩展思考
+    rag_model: str = "qwen3.6-flash"  # 使用快速响应模型，不带扩展思考
 
     # Hybrid Search 配置（二路召回 + RRF）
     hybrid_search_enabled: bool = True
@@ -56,6 +56,9 @@ class Settings(BaseSettings):
     # 文档分块配置
     chunk_max_size: int = 800
     chunk_overlap: int = 100
+
+    # Contextual Chunking — 索引时为每个文档生成上下文摘要，嵌入时拼到 chunk 前面
+    contextual_chunking_enabled: bool = True
 
     # MCP 服务配置
     mcp_cls_transport: str = "streamable-http"

@@ -16,6 +16,21 @@ from app.services.vector_embedding_service import vector_embedding_service
 COLLECTION_NAME = "biz"
 
 
+def _build_dense_texts(documents: List[Document]) -> List[str]:
+    """为 dense embedding 构建输入文本，有上下文时拼接到 chunk 前面。
+
+    BM25 和 content 字段仍使用原始 page_content，不受影响。
+    """
+    result: List[str] = []
+    for doc in documents:
+        ctx = doc.metadata.get("_doc_context", "")
+        if ctx:
+            result.append(f"{ctx}\n\n{doc.page_content}")
+        else:
+            result.append(doc.page_content)
+    return result
+
+
 class VectorStoreManager:
     """向量存储管理器"""
 
@@ -77,14 +92,17 @@ class VectorStoreManager:
             start_time = time.time()
 
             ids = [str(uuid.uuid4()) for _ in documents]
+            # 用于 sparse 嵌入和 content 字段（原始文本）
             texts = [doc.page_content for doc in documents]
+            # 用于 dense 嵌入（可拼接文档上下文摘要）
+            dense_texts = _build_dense_texts(documents)
 
             # 如果 BM25 已训练，使用 PyMilvus 直接插入 dense + sparse
             if keyword_search_service.is_fitted:
-                return self._add_documents_with_sparse(documents, ids, texts, start_time)
+                return self._add_documents_with_sparse(documents, ids, texts, dense_texts, start_time)
 
             # 回退：仅 dense 向量，使用 PyMilvus 直接插入（带空 sparse_vector）
-            dense_vectors = vector_embedding_service.embed_documents(texts)
+            dense_vectors = vector_embedding_service.embed_documents(dense_texts)
             insert_data = []
             for i, doc in enumerate(documents):
                 row = {
@@ -114,14 +132,19 @@ class VectorStoreManager:
         documents: List[Document],
         ids: List[str],
         texts: List[str],
+        dense_texts: List[str],
         start_time: float,
     ) -> List[str]:
-        """使用 PyMilvus 直接插入 dense + sparse 向量"""
+        """使用 PyMilvus 直接插入 dense + sparse 向量
+
+        texts: 用于 sparse 嵌入和 content 字段（原始文本）
+        dense_texts: 用于 dense 嵌入（可包含文档上下文摘要）
+        """
         import time
 
-        # 生成 dense 向量
-        dense_vectors = vector_embedding_service.embed_documents(texts)
-        # 生成 sparse 向量
+        # 生成 dense 向量（使用可能拼接了上下文的文本）
+        dense_vectors = vector_embedding_service.embed_documents(dense_texts)
+        # 生成 sparse 向量（始终使用原始文本，不受上下文影响）
         sparse_vectors = keyword_search_service.encode_documents(texts)
 
         # 构建插入数据

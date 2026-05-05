@@ -2,30 +2,35 @@
 
 > 企业级智能对话和运维助手，支持 RAG 知识库问答和 AIOps 智能诊断
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg)](https://fastapi.tiangolo.com/)
 [![LangChain](https://img.shields.io/badge/LangChain-latest-orange.svg)](https://www.langchain.com/)
+[![Milvus](https://img.shields.io/badge/Milvus-2.5+-teal.svg)](https://milvus.io/)
 
 ## ✨ 核心特性
 
-- 🤖 **智能对话** - LangChain 多轮对话 + 流式输出
-- 📚 **RAG 问答** - 向量检索增强，支持文档上传、自动建立向量索引、自动更新知识库
+- 🤖 **智能对话** - LangGraph Agent 多轮对话 + 流式输出 + SQLite 会话记忆
+- 📚 **RAG 问答** - 混合检索（Dense + BM25 + RRF）+ Contextual Chunking 上下文增强，支持文档上传自动索引
 - 🔧 **AIOps 诊断** - Plan-Execute-Replan 自动故障诊断和根因分析
-- 🌐 **Web 界面** - 现代化 UI，支持多种对话模式：快速问答/流式对话
+- 🌐 **Web 界面** - 现代化 UI，支持快速问答、流式对话、AIOps 诊断
 - 🔌 **MCP 集成** - 日志查询和监控数据工具接入
+- 📊 **评估体系** - RAG 检索轨迹追踪 + 要点命中率评估 + 离线批量评测脚本
 
 ## 🛠️ 技术栈
 
 - **框架**: FastAPI + LangChain + LangGraph
-- **LLM**: 阿里云 DashScope (通义千问)
-- **向量库**: Milvus
-- **工具协议**: MCP (Model Context Protocol)
+- **LLM**: 阿里云 DashScope (通义千问 qwen3.6-flash, text-embedding-v4)
+- **向量库**: Milvus (Dense COSINE + Sparse BM25 IP 双向量)
+- **混合检索**: 二路召回 + RRF (Reciprocal Rank Fusion) 合并
+- **工具协议**: MCP (Model Context Protocol) + streamable-http 传输
+- **会话记忆**: SQLite 持久化 + Token 预算控制 + 结构化摘要压缩
 
 ## 🚀 快速开始
 
 ### 环境要求
-- Python 3.10+
+- Python 3.11+
 - 阿里云 DashScope API Key ([获取地址](https://dashscope.aliyun.com/))
+- Docker Desktop（Milvus 向量数据库）
 
 ### 安装和启动
 
@@ -133,11 +138,14 @@ python -c "import requests, os, time; [requests.post('http://localhost:9900/api/
 
 | 功能 | 方法 | 路径 | 说明 |
 |------|------|------|------|
-| 普通对话 | POST | `/api/chat` | 一次性返回 |
+| 普通对话 | POST | `/api/chat` | 一次性返回，支持 RAG 评测模式 |
 | 流式对话 | POST | `/api/chat_stream` | SSE 流式输出 |
+| 会话历史 | GET | `/api/chat/session/{session_id}` | 查询会话历史 |
+| 清除会话 | POST | `/api/chat/clear` | 清除指定会话记忆 |
 | AIOps 诊断 | POST | `/api/aiops` | 自动故障诊断（流式） |
-| 文件上传 | POST | `/api/upload` | 上传并索引文档 |
-| 健康检查 | GET | `/api/health` | 服务状态检查 |
+| 文件上传 | POST | `/api/upload` | 上传并索引文档（.md/.txt） |
+| 目录索引 | POST | `/api/index_directory` | 批量索引目录下所有文档 |
+| 健康检查 | GET | `/api/health` | 服务状态 + Milvus 连接检查 |
 
 ### 使用示例
 
@@ -163,75 +171,96 @@ curl -X POST "http://localhost:9900/api/aiops" \
 ## 📁 项目结构
 
 ```
-super_biz_agent_py/
+super_biz_agent/
 ├── app/                                    # 应用核心
 │   ├── __init__.py                         # 包初始化（自动加载日志配置）
 │   ├── main.py                             # FastAPI 应用入口
-│   ├── config.py                           # 配置管理（环境变量、MCP 服务器配置）
+│   ├── config.py                           # 配置管理（Pydantic Settings）
 │   ├── api/                                # API 路由层
-│   │   ├── __init__.py
-│   │   ├── chat.py                         # 对话接口（RAG 聊天）
+│   │   ├── chat.py                         # 对话接口（RAG + 会话管理）
 │   │   ├── aiops.py                        # AIOps 接口（故障诊断）
-│   │   ├── file.py                         # 文件管理（文档上传）
-│   │   └── health.py                       # 健康检查（服务状态）
+│   │   ├── file.py                         # 文件管理（上传 + 目录索引）
+│   │   └── health.py                       # 健康检查（含 Milvus 状态）
 │   ├── services/                           # 业务服务层
-│   │   ├── __init__.py
-│   │   ├── rag_agent_service.py            # RAG Agent（LangGraph 状态图）
-│   │   ├── aiops_service.py                # AIOps 服务（计划-执行-重规划）
-│   │   ├── vector_store_manager.py         # 向量存储管理器
-│   │   ├── vector_embedding_service.py     # 向量embedding服务
-│   │   ├── vector_index_service.py         # 向量索引服务
-│   │   ├── vector_search_service.py        # 向量检索服务
-│   │   └── document_splitter_service.py    # 文档分割服务
+│   │   ├── rag_agent_service.py            # RAG Agent（LangGraph + ChatQwen）
+│   │   ├── aiops_service.py                # AIOps Plan-Execute-Replan
+│   │   ├── aiops_prompt.py                 # AIOps 诊断提示词构建
+│   │   ├── memory_manager.py               # SQLite 会话记忆 + 摘要压缩
+│   │   ├── vector_store_manager.py         # Milvus 向量存储管理
+│   │   ├── vector_embedding_service.py     # DashScope embedding 服务
+│   │   ├── vector_index_service.py         # 文档索引 + Contextual Chunking
+│   │   ├── vector_search_service.py        # Milvus 相似度搜索
+│   │   ├── document_splitter_service.py    # 文档分割（Markdown 感知）
+│   │   ├── hybrid_search_service.py        # 混合检索（Dense + BM25 + RRF）
+│   │   ├── keyword_search_service.py       # BM25 稀疏向量编码
+│   │   ├── prometheus_alert_service.py     # Prometheus 告警查询
+│   │   ├── rag_eval_metrics.py             # RAG 评估指标（Hit@K, MRR）
+│   │   └── rag_trace.py                    # RAG 检索路径追踪
 │   ├── agent/                              # Agent 模块
-│   │   ├── __init__.py
-│   │   ├── mcp_client.py                   # MCP 客户端（工具调用）
-│   │   └── aiops/                          # AIOps 核心逻辑
-│   │       ├── __init__.py
+│   │   ├── mcp_client.py                   # MCP 客户端（重试 + 全局管理）
+│   │   └── aiops/                          # AIOps Agent 核心
 │   │       ├── planner.py                  # 计划制定器
-│   │       ├── executor.py                 # 步骤执行器
+│   │       ├── executor.py                 # 步骤执行器（ToolNode）
 │   │       ├── replanner.py                # 重规划器
 │   │       ├── state.py                    # 状态定义
-│   │       └── utils.py                    # 工具函数
-│   ├── models/                             # 数据模型层
-│   │   ├── __init__.py
+│   │       └── utils.py                    # 工具描述格式化
+│   ├── models/                             # 数据模型（Pydantic）
 │   │   ├── aiops.py                        # AIOps 模型
 │   │   ├── document.py                     # 文档模型
+│   │   ├── memory.py                       # 记忆摘要模型
 │   │   ├── request.py                      # 请求模型
 │   │   └── response.py                     # 响应模型
-│   ├── tools/                              # Agent 工具集
-│   │   ├── __init__.py
-│   │   ├── knowledge_tool.py               # 知识库查询工具
-│   │   └── time_tool.py                    # 时间工具
+│   ├── tools/                              # Agent 工具
+│   │   ├── knowledge_tool.py               # 知识库检索 + 格式化
+│   │   └── time_tool.py                    # 时间查询
 │   ├── core/                               # 核心组件
-│   │   ├── __init__.py
-│   │   ├── llm_factory.py                  # LLM 工厂（模型管理）
-│   │   └── milvus_client.py                # Milvus 客户端
-│   └── utils/                              # 工具类
-│       ├── __init__.py
-│       └── logger.py                       # 日志配置（Loguru）
-├── static/                                 # Web 前端（纯静态）
-│   ├── index.html                          # 主页面
-│   ├── app.js                              # 前端逻辑
-│   └── styles.css                          # 样式表
+│   │   ├── llm_factory.py                  # LLM 工厂
+│   │   └── milvus_client.py                # Milvus 连接管理
+│   └── utils/
+│       └── logger.py                       # Loguru 日志配置
+├── static/                                 # Web 前端
+│   ├── index.html
+│   ├── app.js
+│   └── styles.css
 ├── mcp_servers/                            # MCP 服务器
-│   ├── cls_server.py                       # CLS 日志查询服务
-│   ├── monitor_server.py                   # 监控数据服务
-│   └── README.md                           # MCP 服务说明
-├── aiops-docs/                             # 运维知识库（Markdown 文档）
-├── logs/                                   # 日志目录（Loguru 自动创建）
-│   └── app_YYYY-MM-DD.log                  # 按天轮转的日志文件
-├── uploads/                                # 上传文件临时目录
-├── volumes/                                # Milvus 数据持久化目录
-├── .env                                    # 环境变量配置（需手动创建）
-├── Makefile                                # 项目管理命令（Linux/macOS）
+│   ├── cls_server.py                       # CLS 日志查询（模拟数据）
+│   ├── monitor_server.py                   # 监控数据（模拟数据）
+│   └── README.md
+├── scripts/                                # 评测 & 报告脚本
+│   ├── run_rag_eval.py                     # RAG 批量评测
+│   ├── generate_eval_review.py             # 评测审查报告生成
+│   ├── render_rag_eval_excel.py            # 评测结果 Excel 导出
+│   └── render_rag_eval_readable.py         # 评测结果可读报告
+├── docs/                                   # 文档 & 评测报告
+│   ├── rag_optimization_2026-05-04.md      # RAG 优化总结
+│   ├── rag_eval_dataset.json               # 评测数据集（60 题）
+│   └── rag_eval_results_*.json/xlsx        # 历次评测结果
+├── tests/                                  # 测试
+│   └── services/                           # 服务层测试
+│       ├── test_hybrid_search_service.py
+│       ├── test_keyword_search_service.py
+│       ├── test_memory_manager.py
+│       ├── test_rag_eval_metrics.py
+│       └── test_rag_eval_regression.py
+├── aiops-docs/                             # 运维知识库文档
+│   ├── cpu_high_usage.md
+│   ├── disk_high_usage.md
+│   ├── memory_high_usage.md
+│   ├── service_unavailable.md
+│   └── slow_response.md
+├── logs/                                   # 日志目录
+├── uploads/                                # 上传文件目录
+├── volumes/                                # 数据持久化
+│   ├── bm25_model.pkl                      # BM25 模型文件
+│   └── memory/                             # SQLite 会话记忆
+├── .env                                    # 环境配置
+├── Makefile                                # Linux/macOS 管理命令
 ├── start-windows.bat                       # Windows 启动脚本
 ├── stop-windows.bat                        # Windows 停止脚本
-├── vector-database.yml                     # Milvus Docker Compose 配置
-├── pyproject.toml                          # 项目配置（依赖、元数据）
-├── uv.lock                                 # uv 依赖锁定文件
-├── pyrightconfig.json                      # Pyright 类型检查配置
-└── README.md                               # 项目说明
+├── vector-database.yml                     # Milvus Docker Compose
+├── pyproject.toml                          # 项目元数据 & 依赖
+├── uv.lock                                 # 依赖锁文件
+└── README.md
 ```
 
 ## ⚙️ 配置说明
@@ -239,20 +268,53 @@ super_biz_agent_py/
 通过 `.env` 文件配置：
 
 ```bash
-# 阿里云LLM DashScope 配置（必填）
-# 秘钥管理： https://bailian.console.aliyun.com/cn-beijing/?spm=5176.29597918.J_SEsSjsNv72yRuRFS2VknO.2.61ac133ccTVQLw&tab=demohouse#/api-key
-DASHSCOPE_API_KEY=your-api-key （配置你自己的秘钥）
-DASHSCOPE_API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1  # 不配置则默认会使用新加坡站点
-DASHSCOPE_MODEL=qwen-max
+# 应用配置
+APP_NAME=SuperBizAgent
+DEBUG=True
+HOST=0.0.0.0
+PORT=9900
+
+# 阿里云 DashScope 配置（必填）
+# API Key 管理：https://bailian.console.aliyun.com/
+DASHSCOPE_API_KEY=your-api-key-here
+DASHSCOPE_API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
+DASHSCOPE_MODEL=qwen3.6-flash
+DASHSCOPE_EMBEDDING_MODEL=text-embedding-v4
 
 # Milvus 配置
 MILVUS_HOST=localhost
 MILVUS_PORT=19530
+MILVUS_TIMEOUT=10000
 
 # RAG 配置
 RAG_TOP_K=3
+RAG_MODEL=qwen3.6-flash
+
+# 文档分块配置
 CHUNK_MAX_SIZE=800
 CHUNK_OVERLAP=100
+
+# 混合检索配置（Dense + BM25 + RRF）
+HYBRID_SEARCH_ENABLED=true
+HYBRID_RRF_K=5
+HYBRID_PER_RANKER_LIMIT=10
+
+# Contextual Chunking — 索引时为文档生成上下文摘要
+CONTEXTUAL_CHUNKING_ENABLED=true
+
+# 会话记忆配置
+MEMORY_WINDOW_TURNS=5
+MEMORY_PROMPT_BUDGET_TOKENS=24000
+
+# MCP 服务配置
+MCP_CLS_TRANSPORT=streamable-http
+MCP_CLS_URL=http://localhost:8003/mcp
+MCP_MONITOR_TRANSPORT=streamable-http
+MCP_MONITOR_URL=http://localhost:8004/mcp
+
+# Prometheus 告警配置（可选）
+PROMETHEUS_ENABLED=false
+PROMETHEUS_BASE_URL=http://localhost:9090
 ```
 
 ## 🎯 AIOps 智能运维
