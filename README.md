@@ -2,9 +2,6 @@
 
 > 企业级智能对话和运维助手，支持 RAG 知识库问答和 AIOps 智能诊断
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg)](https://fastapi.tiangolo.com/)
-[![LangChain](https://img.shields.io/badge/LangChain-latest-orange.svg)](https://www.langchain.com/)
 
 ## ✨ 核心特性
 
@@ -402,15 +399,3 @@ netstat -ano | findstr :8003  # CLS MCP
 netstat -ano | findstr :8004  # Monitor MCP
 ```
 
-## 📚 参考资源
-
-- [FastAPI 文档](https://fastapi.tiangolo.com/)
-- [LangChain 文档](https://python.langchain.com/)
-- [LangGraph Plan-Execute](https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/)
-- [阿里云 DashScope](https://dashscope.aliyun.com/)
-- [MCP 协议](https://modelcontextprotocol.io/)
-
-## 📄 许可证
-author： chief
-
-MIT License
