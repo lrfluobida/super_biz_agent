@@ -401,16 +401,3 @@ netstat -ano | findstr :9900  # FastAPI
 netstat -ano | findstr :8003  # CLS MCP
 netstat -ano | findstr :8004  # Monitor MCP
 ```
-
-## 📚 参考资源
-
-- [FastAPI 文档](https://fastapi.tiangolo.com/)
-- [LangChain 文档](https://python.langchain.com/)
-- [LangGraph Plan-Execute](https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/)
-- [阿里云 DashScope](https://dashscope.aliyun.com/)
-- [MCP 协议](https://modelcontextprotocol.io/)
-
-## 📄 许可证
-author： chief
-
-MIT License
