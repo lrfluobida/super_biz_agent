@@ -2,10 +2,6 @@
 
 > 企业级智能对话和运维助手，支持 RAG 知识库问答和 AIOps 智能诊断
 
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg)](https://fastapi.tiangolo.com/)
-[![LangChain](https://img.shields.io/badge/LangChain-latest-orange.svg)](https://www.langchain.com/)
-[![Milvus](https://img.shields.io/badge/Milvus-2.5+-teal.svg)](https://milvus.io/)
 
 ## ✨ 核心特性
 
@@ -234,15 +230,22 @@ super_biz_agent/
 │   ├── monitor_server.py                   # 监控数据（模拟数据）
 │   └── README.md
 ├── scripts/                                # 评测 & 报告脚本
-│   ├── run_rag_eval.py                     # RAG 批量评测
+│   ├── run_rag_eval.py                     # RAG 批量评测（支持 rewrite A/B 对比）
 │   ├── generate_eval_review.py             # 评测审查报告生成
 │   ├── render_rag_eval_excel.py            # 评测结果 Excel 导出
-│   └── render_rag_eval_readable.py         # 评测结果可读报告
+│   ├── render_rag_eval_readable.py         # 评测结果可读报告
+│   ├── update_rag_eval_excel_overview.py   # 评测 Excel 汇总更新
+│   └── phase0_verify_json.py               # 评测数据 JSON 格式验证
 ├── docs/                                   # 文档 & 评测报告
 │   ├── rag_optimization_2026-05-04.md      # RAG 优化总结
 │   ├── query_rewrite_implementation_report.md  # Query Rewrite 实现报告
+│   ├── rag_eval_dataset.md                 # 评测数据集说明
 │   ├── rag_eval_dataset.json               # 评测数据集（60 题）
-│   └── rag_eval_results_*.json/xlsx        # 历次评测结果
+│   ├── rag_eval_results_readable.md        # 评测结果可读报告
+│   ├── rag_eval_report/                    # 各次评测报告
+│   ├── rag_eval_results_*.json/xlsx        # 历次评测结果
+│   ├── plans/                              # 优化方案文档
+│   └── superpowers/                        # 历史规划文档
 ├── tests/                                  # 测试
 │   └── services/                           # 服务层测试
 │       ├── test_hybrid_search_service.py
@@ -250,6 +253,9 @@ super_biz_agent/
 │       ├── test_memory_manager.py
 │       ├── test_rag_eval_metrics.py
 │       ├── test_rag_eval_regression.py
+│       ├── test_aiops_prompt.py            # AIOps 提示词测试
+│       ├── test_prometheus_alert_service.py # Prometheus 告警服务测试
+│       ├── test_rag_trace.py               # RAG 轨迹追踪测试
 │       ├── test_query_router.py            # 意图路由测试（25 用例）
 │       ├── test_query_rewriter.py          # 改写器测试（12 用例）
 │       ├── test_drift_guard.py             # 漂移检测测试（15 用例）
@@ -310,6 +316,7 @@ CHUNK_OVERLAP=100
 HYBRID_SEARCH_ENABLED=true
 HYBRID_RRF_K=5
 HYBRID_PER_RANKER_LIMIT=10
+BM25_MODEL_PATH=volumes/bm25_model.pkl
 
 # Contextual Chunking — 索引时为文档生成上下文摘要
 CONTEXTUAL_CHUNKING_ENABLED=true
@@ -317,6 +324,10 @@ CONTEXTUAL_CHUNKING_ENABLED=true
 # 会话记忆配置
 MEMORY_WINDOW_TURNS=5
 MEMORY_PROMPT_BUDGET_TOKENS=24000
+MEMORY_SUMMARY_SOFT_RATIO=0.6
+MEMORY_SUMMARY_HARD_RATIO=0.8
+MEMORY_RESERVED_OUTPUT_TOKENS=4096
+MEMORY_SQLITE_PATH=volumes/memory/session_memory.sqlite3
 
 # MCP 服务配置
 MCP_CLS_TRANSPORT=streamable-http
@@ -327,12 +338,19 @@ MCP_MONITOR_URL=http://localhost:8004/mcp
 # Prometheus 告警配置（可选）
 PROMETHEUS_ENABLED=false
 PROMETHEUS_BASE_URL=http://localhost:9090
+PROMETHEUS_TIMEOUT_SECONDS=5.0
 
 # Query Rewrite 配置（可选，需安装 Ollama）
+REWRITE_ENABLED=true
 REWRITE_LOCAL_MODEL_NAME=qwen2.5:7b  # 改写模型，默认 qwen2.5:1.5b
 REWRITE_LOCAL_MODEL_URL=http://localhost:11434/v1
 REWRITE_LOCAL_MODEL_TEMPERATURE=0.1
 REWRITE_LOCAL_MODEL_TIMEOUT=10
+REWRITE_ROUTER_ENABLED=true
+REWRITE_DRIFT_THRESHOLD=0.65
+REWRITE_DRIFT_MODERATE_THRESHOLD=0.40
+REWRITE_PARALLEL_RETRIEVAL_ENABLED=true
+REWRITE_PARALLEL_MAX_WORKERS=4
 ```
 
 ## 🎯 AIOps 智能运维
@@ -481,16 +499,3 @@ netstat -ano | findstr :9900  # FastAPI
 netstat -ano | findstr :8003  # CLS MCP
 netstat -ano | findstr :8004  # Monitor MCP
 ```
-
-## 📚 参考资源
-
-- [FastAPI 文档](https://fastapi.tiangolo.com/)
-- [LangChain 文档](https://python.langchain.com/)
-- [LangGraph Plan-Execute](https://langchain-ai.github.io/langgraph/tutorials/plan-and-execute/)
-- [阿里云 DashScope](https://dashscope.aliyun.com/)
-- [MCP 协议](https://modelcontextprotocol.io/)
-
-## 📄 许可证
-author： chief
-
-MIT License
