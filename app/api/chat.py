@@ -57,6 +57,10 @@ async def chat(request: ChatRequest, http_request: Request):
         use_hybrid: bool | None = None
         if eval_mode and eval_hybrid is not None:
             use_hybrid = _is_truthy(eval_hybrid)
+        eval_rewrite = http_request.headers.get("X-RAG-Rewrite-Enabled")
+        rewrite_enabled: bool | None = None
+        if eval_rewrite is not None:
+            rewrite_enabled = _is_truthy(eval_rewrite)
 
         result = await rag_agent_service.query_with_evaluation(
             request.question,
@@ -64,6 +68,7 @@ async def chat(request: ChatRequest, http_request: Request):
             eval_mode=eval_mode,
             eval_top_k=eval_top_k,
             use_hybrid=use_hybrid,
+            rewrite_enabled=rewrite_enabled,
         )
         answer = result["answer"]
         evaluation = result["evaluation"]

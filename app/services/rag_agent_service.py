@@ -10,11 +10,13 @@ from loguru import logger
 from langchain_qwq import ChatQwen
 
 from app.config import config
-from app.services.rag_trace import begin_rag_trace, end_rag_trace, get_rag_trace_payload
+from app.services.rag_trace import begin_rag_trace, end_rag_trace, get_rag_trace_payload, record_rewrite
 from app.tools import get_current_time, retrieve_knowledge
 from app.tools.knowledge_tool import format_docs, retrieve_knowledge_documents
 from app.agent.mcp_client import get_mcp_client_with_retry
 from app.services.memory_manager import MemoryManager
+from app.services.query_rewrite_pipeline import query_rewrite_pipeline
+from app.models.rewrite import RewritePipelineResult
 
 
 class RagAgentService:
@@ -84,17 +86,20 @@ class RagAgentService:
             tool_names = [tool.name if hasattr(tool, "name") else str(tool) for tool in all_tools]
             logger.info(f"可用工具列表: {', '.join(tool_names)}")
 
-    def _build_system_prompt(self) -> str:
+    def _build_system_prompt(self, extra: str = "") -> str:
         """
         构建系统提示词
 
         注意：LangChain 框架会自动将工具信息传递给 LLM，
         因此系统提示词中无需列举具体的工具列表。
 
+        Args:
+            extra: 改写管线追加的额外系统提示词（decompose/step_back/contextualize 场景）
+
         Returns:
             str: 系统提示词
         """
-        return dedent("""
+        base = dedent("""
             你是一个专业的AI助手。你必须遵守以下强制工作流程：
 
             【强制规则 - 必须严格遵守】
@@ -113,6 +118,51 @@ class RagAgentService:
             - 基于事实，不编造信息
             - 回答简洁明了，重点突出
         """).strip()
+
+        if extra:
+            return base + "\n\n" + extra
+        return base
+
+    async def _apply_rewrite(
+        self, query: str, session_id: str, rewrite_enabled: bool | None = None,
+    ) -> RewritePipelineResult:
+        """执行查询改写管线，返回改写结果
+
+        Args:
+            query: 用户原始查询
+            session_id: 会话 ID
+            rewrite_enabled: 显式控制是否改写，None 使用配置值
+        """
+        if rewrite_enabled is False:
+            from app.models.rewrite import Intent, RouterResult, RouterSource
+            return RewritePipelineResult(
+                agent_question=query,
+                original_query=query,
+                intent=Intent.DIRECT,
+                router_result=RouterResult(intent=Intent.DIRECT, source=RouterSource.FALLBACK),
+                rewritten=False,
+            )
+        try:
+            result = await query_rewrite_pipeline.process(query, session_id, self.memory_manager)
+            record_rewrite(result)
+            if result.rewritten:
+                logger.info(
+                    f"[会话 {session_id}] 查询改写生效: intent={result.intent.value}, "
+                    f"agent_question='{result.agent_question[:60]}...'"
+                )
+            return result
+        except Exception as e:
+            logger.warning(f"[会话 {session_id}] 查询改写失败，回退原始查询: {e}")
+            from app.models.rewrite import Intent, RouterResult, RouterSource
+            fallback = RewritePipelineResult(
+                agent_question=query,
+                original_query=query,
+                intent=Intent.DIRECT,
+                router_result=RouterResult(intent=Intent.DIRECT, source=RouterSource.FALLBACK),
+                rewritten=False,
+            )
+            record_rewrite(fallback)
+            return fallback
 
     def _detect_eval_question_style(self, question: str) -> str:
         """识别评测问题类型，便于使用更稳定的输出骨架。"""
@@ -207,10 +257,13 @@ class RagAgentService:
         session_id: str,
         eval_top_k: int | None,
         use_hybrid: bool | None = None,
+        rewrite_enabled: bool | None = None,
     ) -> str:
         """评测模式走确定性的先检索后生成链路。"""
+        pipeline_result = await self._apply_rewrite(question, session_id, rewrite_enabled)
+        agent_question = pipeline_result.agent_question
         question_style = self._detect_eval_question_style(question)
-        docs = retrieve_knowledge_documents(question, top_k=eval_top_k, use_hybrid=use_hybrid)
+        docs = retrieve_knowledge_documents(agent_question, top_k=eval_top_k, use_hybrid=use_hybrid)
         context = format_docs(docs) if docs else "没有找到相关参考资料。"
         eval_system_prompt = self._build_eval_system_prompt(question_style)
         eval_question = self._build_eval_question(question, context, question_style)
@@ -240,6 +293,7 @@ class RagAgentService:
         eval_mode: bool = False,
         eval_top_k: int | None = None,
         use_hybrid: bool | None = None,
+        rewrite_enabled: bool | None = None,
     ) -> Dict[str, Any]:
         """
         非流式处理用户问题，并在评测模式开启时返回检索轨迹。
@@ -250,6 +304,7 @@ class RagAgentService:
             eval_mode: 是否开启评测模式
             eval_top_k: 评测模式下检索 TopK 覆盖
             use_hybrid: 评测模式下是否启用混合检索，None 使用配置值
+            rewrite_enabled: 是否启用查询改写，None 使用配置值
 
         Returns:
             Dict[str, Any]: 包含答案和评测信息的响应
@@ -265,15 +320,20 @@ class RagAgentService:
                     session_id=session_id,
                     eval_top_k=eval_top_k,
                     use_hybrid=use_hybrid,
+                    rewrite_enabled=rewrite_enabled,
                 )
                 logger.info(f"[会话 {session_id}] RAG Eval 查询完成（非流式）")
             else:
                 await self._initialize_agent()
 
+                pipeline_result = await self._apply_rewrite(question, session_id, rewrite_enabled)
+                agent_question = pipeline_result.agent_question
+                system_prompt = self._build_system_prompt(pipeline_result.extra_system_prompt)
+
                 messages = await self.memory_manager.build_messages(
                     session_id=session_id,
-                    system_prompt=self.system_prompt,
-                    question=question,
+                    system_prompt=system_prompt,
+                    question=agent_question,
                 )
 
                 agent_input = {"messages": messages}
@@ -297,7 +357,11 @@ class RagAgentService:
                         tool_names = [tc.get("name", "unknown") for tc in last_message.tool_calls]
                         logger.info(f"[会话 {session_id}] Agent 调用了工具: {tool_names}")
 
-                    await self.memory_manager.complete_turn(session_id, question, answer)
+                    await self.memory_manager.complete_turn(
+                        session_id,
+                        pipeline_result.original_query,
+                        answer,
+                    )
                     logger.info(f"[会话 {session_id}] RAG Agent 查询完成（非流式）")
                 else:
                     logger.warning(f"[会话 {session_id}] Agent 返回结果为空")
@@ -338,10 +402,14 @@ class RagAgentService:
 
             logger.info(f"[会话 {session_id}] RAG Agent 收到查询（流式）: {question}")
 
+            pipeline_result = await self._apply_rewrite(question, session_id)
+            agent_question = pipeline_result.agent_question
+            system_prompt = self._build_system_prompt(pipeline_result.extra_system_prompt)
+
             messages = await self.memory_manager.build_messages(
                 session_id=session_id,
-                system_prompt=self.system_prompt,
-                question=question,
+                system_prompt=system_prompt,
+                question=agent_question,
             )
 
             # 构建 Agent 输入
@@ -380,7 +448,11 @@ class RagAgentService:
 
             answer = "".join(answer_chunks).strip()
             if answer:
-                await self.memory_manager.complete_turn(session_id, question, answer)
+                await self.memory_manager.complete_turn(
+                    session_id,
+                    pipeline_result.original_query,
+                    answer,
+                )
             logger.info(f"[会话 {session_id}] RAG Agent 查询完成（流式）")
             yield {"type": "complete"}
 

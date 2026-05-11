@@ -2,7 +2,7 @@
   "name": "superbizagent-rag-eval-v1",
   "version": "1.0",
   "generated_date": "2026-03-30",
-  "description": "基于 aiops-docs 中 5 篇运维知识文档整理的轻量 RAG 评测集，覆盖直接问答、排查流程、场景改写和对比分析问题。",
+  "description": "基于 aiops-docs 中 5 篇运维知识文档整理的轻量 RAG 评测集，覆盖直接问答、排查流程、场景改写和对比分析问题。 v1.1 新增 rewrite_expected 字段。",
   "source_docs": [
     "aiops-docs/cpu_high_usage.md",
     "aiops-docs/memory_high_usage.md",
@@ -17,7 +17,8 @@
     "gold_docs": "标准证据文档列表，可用于检索命中评估",
     "category": "题型：direct/procedure/scenario/compare",
     "difficulty": "难度：easy/medium/hard",
-    "gold_answer_points": "标准答案要点列表，可用于回答质量评估"
+    "gold_answer_points": "标准答案要点列表，可用于回答质量评估",
+    "rewrite_expected": "预期改写意图，用于 A/B 对比评测（可选字段）"
   },
   "items": [
     {
@@ -33,7 +34,10 @@
         "可能导致应用响应变慢",
         "可能导致请求超时增加",
         "可能造成系统负载过高或触发雪崩效应"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "cpu_02",
@@ -48,7 +52,10 @@
         "流量突增",
         "定时任务重叠执行",
         "数据库查询慢"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "cpu_03",
@@ -63,7 +70,10 @@
         "检查应用响应时间恢复正常",
         "确认没有新的错误日志产生",
         "持续观察 30 分钟确保问题不再复现"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "cpu_04",
@@ -139,7 +149,10 @@
         "可以先立即重启受影响实例止血",
         "随后查看应用日志定位代码问题",
         "必要时回滚到上一个稳定版本并通知开发修复"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "cpu_09",
@@ -154,7 +167,10 @@
         "检查是否有营销活动或突发流量",
         "启动自动扩容或增加实例",
         "如怀疑恶意流量，可启用限流策略"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "cpu_10",
@@ -185,7 +201,11 @@
         "慢响应更关注慢查询、外部 API 超时、缓存失效和系统资源瓶颈",
         "CPU 高强调先看 system-metrics 与进程级特征",
         "慢响应强调结合应用性能日志、慢查询日志和响应时间指标排查"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "cpu_12",
@@ -201,7 +221,11 @@
         "内存高常表现为频繁 GC、OOM、应用崩溃或 swap 频繁",
         "CPU 高更关注高占用进程、流量和定时任务",
         "内存高更关注内存泄漏、缓存配置、大对象处理和 JVM 参数"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "mem_01",
@@ -216,7 +240,10 @@
         "可能导致频繁 GC",
         "可能出现 OOM",
         "可能导致应用崩溃、重启或 swap 频繁"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "mem_02",
@@ -232,7 +259,10 @@
         "缓存配置不当",
         "大文件或大数据处理",
         "JVM 参数配置不合理"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "mem_03",
@@ -247,7 +277,10 @@
         "观察 GC 频率和耗时是否恢复正常",
         "确认应用日志中没有 OOM 错误",
         "持续监控 30 分钟确保稳定"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "mem_04",
@@ -322,7 +355,10 @@
         "先重启应用临时释放内存",
         "在重启前 dump 堆快照",
         "使用 MAT 等工具分析堆转储并定位持有大量对象引用的代码"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "mem_09",
@@ -368,7 +404,11 @@
         "CPU 高更常见单进程打满、重复错误堆栈或多进程均匀升高",
         "内存高处置上常优先重启实例并保留堆快照",
         "CPU 高处置上更偏向扩容、限流、重启异常实例或回滚代码"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "mem_12",
@@ -384,7 +424,11 @@
         "应同时查看应用日志和系统事件日志，确认是否有 OOM kill 或启动失败",
         "短期需要先恢复服务，例如重启实例或扩容",
         "后续再分析内存增长根因并修复配置或代码问题"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "disk_01",
@@ -399,7 +443,10 @@
         "可能导致无法写入新数据",
         "可能导致日志无法记录、应用崩溃或数据库损坏",
         "还会造成系统性能下降"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "disk_02",
@@ -416,7 +463,10 @@
         "备份文件占用空间",
         "应用缓存文件过多",
         "Docker 镜像和容器占用空间"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "disk_03",
@@ -431,7 +481,10 @@
         "du -sh 查看目录大小",
         "find / -type f -size +1G 查找大文件",
         "df -i 查看 inode 使用情况"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "disk_04",
@@ -506,7 +559,10 @@
         "可以先清空或压缩大日志文件释放空间",
         "删除过旧日志并启用日志轮转",
         "将生产环境日志级别调整为 INFO 或 WARN"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "disk_09",
@@ -552,7 +608,11 @@
         "服务不可用更偏向业务中断，需要先确认服务状态、错误日志和依赖状态",
         "磁盘高通常先清理空间恢复写入能力",
         "服务不可用通常先恢复可用性，例如回滚、重启、降级或摘除故障实例"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "disk_12",
@@ -568,7 +628,11 @@
         "慢响应更多表现为响应时间超阈值、请求堆积和用户体验下降",
         "磁盘高优化重点是清理空间、轮转日志、归档数据和扩容",
         "慢响应优化重点是慢查询、外部依赖、缓存策略和性能优化"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "svc_01",
@@ -583,7 +647,10 @@
         "会导致用户无法访问服务",
         "会造成业务完全中断",
         "可能带来经济损失和声誉影响"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "svc_02",
@@ -600,7 +667,10 @@
         "配置错误",
         "资源耗尽",
         "网络故障"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "svc_03",
@@ -615,7 +685,10 @@
         "5 分钟内快速定位问题并决定修复、回滚或降级",
         "15 分钟内恢复服务并验证核心功能",
         "30 分钟内完成全面验证、通知和初步总结"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "svc_04",
@@ -690,7 +763,10 @@
         "如果和发布相关，应立即回滚到上一个稳定版本",
         "随后查看启动日志、配置和依赖服务状态",
         "必要时启用备用服务或维护页面止损"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "svc_09",
@@ -736,7 +812,11 @@
         "服务响应变慢仍可能可访问，重点是性能退化而非完全不可用",
         "服务不可用优先做止损、回滚、降级和故障隔离",
         "慢响应优先做性能定位、扩容、限流和慢点优化"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "svc_12",
@@ -752,7 +832,11 @@
         "磁盘高只是资源耗尽中的一种具体情况",
         "当服务不可用时，需要先判断到底是哪类资源耗尽导致服务挂掉",
         "如果确认是磁盘问题，再继续按大文件、日志、临时文件和备份等方向细查"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "slow_01",
@@ -767,7 +851,10 @@
         "会导致用户体验下降",
         "可能造成请求堆积",
         "可能进一步触发超时错误并影响下游服务"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "slow_02",
@@ -784,7 +871,10 @@
         "缓存失效或缓存穿透",
         "系统资源不足",
         "网络问题"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "slow_03",
@@ -799,7 +889,10 @@
         "吞吐量指标，如 QPS、TPS",
         "错误率，如 4xx 和 5xx 比例",
         "资源使用指标和数据库、缓存相关指标"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "direct"
+      }
     },
     {
       "id": "slow_04",
@@ -829,7 +922,10 @@
         "还可能伴随数据库 CPU 高和连接池接近满载",
         "外部 API 超时通常会在日志中出现第三方调用记录或网络超时错误",
         "可以根据慢点落在数据库层还是外部依赖层决定优化方向"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "slow_06",
@@ -874,7 +970,10 @@
         "找出最慢的 SQL 并查看执行计划",
         "检查是否缺少索引或存在低效 SQL",
         "短期可优化 SQL、加索引、调连接池或加缓存"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "step_back"
+      }
     },
     {
       "id": "slow_09",
@@ -920,7 +1019,11 @@
         "服务不可用时，优先恢复可用性，例如回滚、启用备用服务或维护页面",
         "两者都可能需要降级，但服务不可用更强调止损和恢复业务",
         "慢响应更强调找到性能瓶颈并逐步优化"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     },
     {
       "id": "slow_12",
@@ -936,7 +1039,11 @@
         "如果 CPU 高由死循环、流量突增或慢查询引起，慢响应可能是其表现之一",
         "排查时要同时看响应时间日志、系统资源、进程占用和应用日志",
         "根据是资源打满还是外部依赖慢，决定扩容、限流、重启还是优化代码和 SQL"
-      ]
+      ],
+      "rewrite_expected": {
+        "intent": "decompose",
+        "min_sub_queries": 2
+      }
     }
   ]
 }

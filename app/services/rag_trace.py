@@ -85,6 +85,40 @@ def record_retrieval(
     state["retrieval_calls"].append(call_record)
 
 
+def record_rewrite(result: Any) -> None:
+    """记录查询改写结果到当前 trace。未开启 trace 时静默忽略。"""
+    state = _trace_state.get()
+    if not state:
+        return
+
+    if result is None:
+        state["rewrite"] = {"rewritten": False}
+        return
+
+    try:
+        rewrite_record: dict[str, Any] = {
+            "rewritten": getattr(result, "rewritten", False),
+            "intent": str(getattr(result, "intent", "direct")),
+            "agent_question": getattr(result, "agent_question", ""),
+            "original_query": getattr(result, "original_query", ""),
+            "rewrite_meta": getattr(result, "rewrite_meta", {}),
+            "extra_system_prompt": getattr(result, "extra_system_prompt", ""),
+            "pre_retrieved_context_len": len(getattr(result, "pre_retrieved_context", "")),
+        }
+
+        drift = getattr(result, "drift_check", None)
+        if drift is not None:
+            rewrite_record["drift"] = {
+                "similarity": getattr(drift, "similarity", 0),
+                "severity": str(getattr(drift, "severity", "none")),
+                "action": getattr(drift, "action", ""),
+            }
+
+        state["rewrite"] = rewrite_record
+    except Exception:
+        state["rewrite"] = {"rewritten": False, "error": "serialization failed"}
+
+
 def get_rag_trace_payload() -> dict[str, Any]:
     """获取当前请求的 trace 快照。"""
     state = _trace_state.get()
@@ -94,6 +128,7 @@ def get_rag_trace_payload() -> dict[str, Any]:
             "requested_top_k": None,
             "retrieval_calls": [],
             "retrieved_docs": [],
+            "rewrite": None,
         }
 
     retrieval_calls = deepcopy(state.get("retrieval_calls", []))
@@ -136,4 +171,5 @@ def get_rag_trace_payload() -> dict[str, Any]:
         "retrieved_docs": retrieved_docs,
         "recall_meta": recall_summary,
         "recall_path_stats": path_counts,
+        "rewrite": state.get("rewrite"),
     }

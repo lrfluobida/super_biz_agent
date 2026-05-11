@@ -69,6 +69,26 @@ class Settings(BaseSettings):
     prometheus_base_url: str = "http://localhost:9090"
     prometheus_timeout_seconds: float = 5.0
 
+    # Query Rewrite 配置
+    rewrite_enabled: bool = True
+
+    # 本地改写模型（Ollama）
+    rewrite_local_model_url: str = "http://localhost:11434/v1"
+    rewrite_local_model_name: str = "qwen2.5:1.5b"
+    rewrite_local_model_temperature: float = 0.1
+    rewrite_local_model_timeout: int = 10  # 秒
+
+    # Router
+    rewrite_router_enabled: bool = True
+
+    # Drift Guard
+    rewrite_drift_threshold: float = 0.65
+    rewrite_drift_moderate_threshold: float = 0.40
+
+    # 并行检索
+    rewrite_parallel_retrieval_enabled: bool = True
+    rewrite_parallel_max_workers: int = 4
+
     @field_validator("debug", mode="before")
     @classmethod
     def normalize_debug(cls, value: Any) -> Any:

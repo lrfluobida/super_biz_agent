@@ -10,7 +10,7 @@
 ## ✨ 核心特性
 
 - 🤖 **智能对话** - LangGraph Agent 多轮对话 + 流式输出 + SQLite 会话记忆
-- 📚 **RAG 问答** - 混合检索（Dense + BM25 + RRF）+ Contextual Chunking 上下文增强，支持文档上传自动索引
+- 📚 **RAG 问答** - 混合检索（Dense + BM25 + RRF）+ Contextual Chunking 上下文增强 + Query Rewrite 查询改写，支持文档上传自动索引
 - 🔧 **AIOps 诊断** - Plan-Execute-Replan 自动故障诊断和根因分析
 - 🌐 **Web 界面** - 现代化 UI，支持快速问答、流式对话、AIOps 诊断
 - 🔌 **MCP 集成** - 日志查询和监控数据工具接入
@@ -194,6 +194,12 @@ super_biz_agent/
 │   │   ├── hybrid_search_service.py        # 混合检索（Dense + BM25 + RRF）
 │   │   ├── keyword_search_service.py       # BM25 稀疏向量编码
 │   │   ├── prometheus_alert_service.py     # Prometheus 告警查询
+│   │   ├── query_rewrite_pipeline.py       # 查询改写编排（route→rewrite→drift）
+│   │   ├── query_router.py                 # 意图路由（Stage1 规则 + Stage2 模型）
+│   │   ├── query_rewriter.py               # 三种改写器（decompose/step_back/contextualize）
+│   │   ├── drift_guard.py                  # 查询漂移检测（余弦相似度）
+│   │   ├── rewrite_model_service.py        # Ollama 改写模型封装
+│   │   ├── async_retrieval_service.py      # 并行检索服务
 │   │   ├── rag_eval_metrics.py             # RAG 评估指标（Hit@K, MRR）
 │   │   └── rag_trace.py                    # RAG 检索路径追踪
 │   ├── agent/                              # Agent 模块
@@ -209,7 +215,8 @@ super_biz_agent/
 │   │   ├── document.py                     # 文档模型
 │   │   ├── memory.py                       # 记忆摘要模型
 │   │   ├── request.py                      # 请求模型
-│   │   └── response.py                     # 响应模型
+│   │   ├── response.py                     # 响应模型
+│   │   └── rewrite.py                      # 查询改写模型
 │   ├── tools/                              # Agent 工具
 │   │   ├── knowledge_tool.py               # 知识库检索 + 格式化
 │   │   └── time_tool.py                    # 时间查询
@@ -233,6 +240,7 @@ super_biz_agent/
 │   └── render_rag_eval_readable.py         # 评测结果可读报告
 ├── docs/                                   # 文档 & 评测报告
 │   ├── rag_optimization_2026-05-04.md      # RAG 优化总结
+│   ├── query_rewrite_implementation_report.md  # Query Rewrite 实现报告
 │   ├── rag_eval_dataset.json               # 评测数据集（60 题）
 │   └── rag_eval_results_*.json/xlsx        # 历次评测结果
 ├── tests/                                  # 测试
@@ -241,7 +249,11 @@ super_biz_agent/
 │       ├── test_keyword_search_service.py
 │       ├── test_memory_manager.py
 │       ├── test_rag_eval_metrics.py
-│       └── test_rag_eval_regression.py
+│       ├── test_rag_eval_regression.py
+│       ├── test_query_router.py            # 意图路由测试（25 用例）
+│       ├── test_query_rewriter.py          # 改写器测试（12 用例）
+│       ├── test_drift_guard.py             # 漂移检测测试（15 用例）
+│       └── test_query_rewrite_pipeline.py  # 管线集成测试（12 用例）
 ├── aiops-docs/                             # 运维知识库文档
 │   ├── cpu_high_usage.md
 │   ├── disk_high_usage.md
@@ -315,6 +327,12 @@ MCP_MONITOR_URL=http://localhost:8004/mcp
 # Prometheus 告警配置（可选）
 PROMETHEUS_ENABLED=false
 PROMETHEUS_BASE_URL=http://localhost:9090
+
+# Query Rewrite 配置（可选，需安装 Ollama）
+REWRITE_LOCAL_MODEL_NAME=qwen2.5:7b  # 改写模型，默认 qwen2.5:1.5b
+REWRITE_LOCAL_MODEL_URL=http://localhost:11434/v1
+REWRITE_LOCAL_MODEL_TEMPERATURE=0.1
+REWRITE_LOCAL_MODEL_TIMEOUT=10
 ```
 
 ## 🎯 AIOps 智能运维

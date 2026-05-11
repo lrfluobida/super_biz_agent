@@ -1,0 +1,3585 @@
+{
+  "dataset": "superbizagent-rag-eval-v1",
+  "base_url": "http://127.0.0.1:9900",
+  "retrieval_k": 5,
+  "mode": "normal",
+  "hybrid_search": "config",
+  "summary": {
+    "mode": "normal (agent)",
+    "total": 60,
+    "hit_at_3": 0.9333333333333333,
+    "hit_at_5": 0.9333333333333333,
+    "mrr": 0.7972222222222223,
+    "avg_point_hit_rate": 0.46111166666666664,
+    "avg_latency_seconds": 6.020416666666667,
+    "p95_latency_seconds": 11.526949999999998,
+    "hybrid_search": "config",
+    "recall_path_distribution": {
+      "both": 104,
+      "dense": 9,
+      "keyword": 6
+    }
+  },
+  "results": [
+    {
+      "id": "cpu_01",
+      "question": "HighCPUUsage 告警在什么条件下触发，通常会带来哪些直接影响？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的《CPU使用率过高告警处理方案》文档，**HighCPUUsage** 告警的触发条件及直接影响如下：\n\n### 1. 触发条件\n当服务器或容器的 **CPU使用率持续 5分钟超过 80%** 时，会触发此严重级别告警。\n\n### 2. 直接负面影响\n一旦触发该告警，系统通常会出现以下直接影响：\n*   **应用响应变慢**：由于CPU资源被大量占用，处理请求的速度显著降低。\n*   **请求超时增加**：服务处理时间延长，容易导致客户端等待超时。\n*   **系统负载过高**：整体系统运行压力增大，可能影响同一服务器上其他服务的正常运行。\n*   **引发雪崩效应**：在高并发场景下，个别服务的高负载可能导致依赖该服务的全链路出现连锁故障。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 内存使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighMemoryUsage` - **告警级别**: 严重 - **触发条件**: 内存使用率持续5分钟超过85%  ## 问题描述 当服务器或容器的内存使用率持续超过85%时，可能导致： - 应用频繁GC（垃圾回收） - OOM（Out Of Memory）错误 - 应用崩溃或...",
+          "recall_path": "both",
+          "queries": [
+            "HighCPUUsage 告警 触发条件 影响"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "HighCPUUsage 告警 触发条件 影响"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# CPU使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighCPUUsage` - **告警级别**: 严重 - **触发条件**: CPU使用率持续5分钟超过80%  ## 问题描述 当服务器或容器的CPU使用率持续超过80%时，可能导致： - 应用响应变慢 - 请求超时增加 - 系统负载过高 - 可能触发雪崩效应",
+          "recall_path": "dense",
+          "queries": [
+            "HighCPUUsage 告警 触发条件 影响"
+          ]
+        }
+      ],
+      "retrieval_rank": 3,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.3333333333333333,
+      "gold_answer_points": [
+        "CPU 使用率持续 5 分钟超过 80%",
+        "可能导致应用响应变慢",
+        "可能导致请求超时增加",
+        "可能造成系统负载过高或触发雪崩效应"
+      ],
+      "matched_points": [
+        "CPU 使用率持续 5 分钟超过 80%",
+        "可能导致应用响应变慢",
+        "可能导致请求超时增加",
+        "可能造成系统负载过高或触发雪崩效应"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 4.911,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_02",
+      "question": "CPU 使用率过高的常见原因有哪些？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库资料，CPU 使用率过高通常由以下几类原因引起：\n\n### 1. 数据库相关问题\n*   **慢查询 (Slow Queries)**：\n    *   **特征**：慢查询日志中有大量记录，数据库连接池接近满载，特定 SQL 执行时间长。\n    *   **影响**：复杂的查询语句或缺少索引会导致数据库服务器 CPU 飙升。\n\n### 2. 代码与逻辑性能问题\n*   **代码实现缺陷**：\n    *   **特征**：CPU 使用率高，但无明显外部依赖问题，特定代码路径执行缓慢。\n    *   **具体原因**： inefficient 的循环和递归、频繁的对象创建、使用了低效的数据结构、存在重复计算等。\n*   **缓存失效或穿透**：\n    *   **特征**：缓存命中率突然下降，日志中出现大量缓存 miss。\n    *   **影响**：原本应由缓存处理的请求直接打到后端或数据库，导致 CPU 瞬间负载激增。\n\n### 3. 外部依赖与网络问题\n*   **外部 API 调用超时**：\n    *   **特征**：日志中有第三方 API 调用记录，特定接口响应时间长或出现网络超时。\n    *   **影响**：如果缺乏合理的超时设置或熔断机制，线程会被长时间挂起等待，导致资源耗尽。\n*   **网络拥堵或延迟**：\n    *   **特征**：跨地域调用延迟高，网络丢包率增加。\n    *   **影响**：重试机制可能加剧 CPU 负担。\n\n### 4. 系统资源与架构限制\n*   **系统资源不足**：\n    *   **特征**：CPU 或内存持续高位运行，系统负载（Load Average）过高。\n    *   **原因**：可能是业务流量突增超过了当前实例的处理能力。\n*   **负载均衡不均**：\n    *   **特征**：某些实例 CPU 极高而其他实例较低。\n    *   **原因**：流量分配不均或个别节点异常导致“热点”效应。\n\n### 建议排查方向\n如果发现 CPU 使用率过高，建议优先检查：\n1.  **数据库慢查询日志**，优化 SQL 语句和索引。\n2.  **应用性能监控 (APM)**，定位执行耗时的代码方法。\n3.  **缓存命中率**，检查是否发生缓存雪崩或穿透。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 磁盘使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighDiskUsage` - **告警级别**: 警告（>80%）/ 严重（>90%） - **触发条件**: 磁盘使用率持续5分钟超过阈值  ## 问题描述 磁盘使用率过高会导致： - 无法写入新数据 - 日志无法记录 - 应用崩溃 - 数据库损坏 - 系统性能下降",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率过高 原因"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率过高 原因",
+            "CPU 使用率高 性能问题 代码优化"
+          ]
+        }
+      ],
+      "retrieval_rank": null,
+      "hit_at_3": 0,
+      "hit_at_5": 0,
+      "reciprocal_rank": 0.0,
+      "gold_answer_points": [
+        "死循环或无限递归",
+        "流量突增",
+        "定时任务重叠执行",
+        "数据库查询慢"
+      ],
+      "matched_points": [
+        "流量突增"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 10.274,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_03",
+      "question": "CPU 高告警处理完成后，应如何验证问题已经恢复？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的告警处理方案，CPU 高告警处理完成后，应按以下步骤进行验证：\n\n## CPU 高告警恢复验证步骤\n\n### 1. 确认 CPU 使用率恢复正常\n- **标准**：CPU 使用率应降至正常水平（通常 <70%）\n- **方法**：通过监控系统查看当前 CPU 使用率趋势\n- **注意**：触发条件为\"持续5分钟超过80%\"，因此需要确认已低于阈值并维持一段时间\n\n### 2. 观察 GC 频率和耗时（如适用）\n- 如果涉及 Java/JVM 应用，需检查 GC（垃圾回收）是否正常\n- 频繁 GC 可能导致 CPU 升高，处理后应观察：\n  - GC 频率是否恢复正常\n  - GC 耗时是否在合理范围内\n\n### 3. 检查应用日志\n- 确认应用日志中无 CPU 相关的错误或异常\n- 特别关注是否有 `HighCPUUsage`、`SlowResponse` 等告警标记\n- 检查响应时间是否恢复正常（之前因 CPU 高导致的慢请求应减少）\n\n### 4. 持续监控稳定性\n- **持续时间**：建议持续监控至少 30 分钟\n- **目的**：确保问题不会反复出现，系统运行稳定\n\n### 5. 验证业务指标\n- 确认应用响应时间恢复正常\n- 检查请求超时率是否下降\n- 确认系统负载（Load Average）处于正常范围\n\n---\n\n## 预防措施（长期优化）\n\n为避免 CPU 高告警再次发生，建议：\n1. **设置合理的告警阈值**：70% 预警，85% 严重\n2. **定期分析 CPU 使用趋势**：每周或每日回顾\n3. **代码优化**：修复性能瓶颈，优化算法复杂度\n4. **压力测试**：上线前进行充分的 CPU 压力测试\n5. **容量规划**：根据业务增长合理规划资源\n\n通过以上验证步骤，可以确保 CPU 高告警问题已彻底解决，系统恢复正常运行状态。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 高告警处理完成后验证恢复"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的准确时间   ### 步骤2: 查询应用性能日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-logs` ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 高告警处理完成后验证恢复"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# CPU使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighCPUUsage` - **告警级别**: 严重 - **触发条件**: CPU使用率持续5分钟超过80%  ## 问题描述 当服务器或容器的CPU使用率持续超过80%时，可能导致： - 应用响应变慢 - 请求超时增加 - 系统负载过高 - 可能触发雪崩效应",
+          "recall_path": "dense",
+          "queries": [
+            "CPU 高告警处理完成后验证恢复"
+          ]
+        }
+      ],
+      "retrieval_rank": 3,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.3333333333333333,
+      "gold_answer_points": [
+        "确认 CPU 使用率降到正常水平，一般低于 60%",
+        "检查应用响应时间恢复正常",
+        "确认没有新的错误日志产生",
+        "持续观察 30 分钟确保问题不再复现"
+      ],
+      "matched_points": [
+        "检查应用响应时间恢复正常"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 5.386,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_04",
+      "question": "收到 CPU 使用率过高告警后，推荐的首轮排查步骤是什么？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "收到 CPU 使用率过高告警后，推荐的首轮排查步骤如下：\n\n### 1. **立即定位告警时间**\n获取当前时间，明确告警发生的具体时间点，以便后续查询日志和监控数据。\n\n### 2. **查看 CPU 监控趋势**\n通过监控工具查询该服务近期的 CPU 使用率数据（如最近 1 小时），确认：\n- CPU 峰值出现的时间段\n- 是否持续高位运行还是瞬间飙升\n- 是否有周期性波动特征\n\n### 3. **查询相关应用日志**\n在告警时间段内搜索应用日志，重点关注：\n- 是否有异常或错误日志（`level:ERROR`）\n- 是否存在频繁 GC、OOM 等内存相关问题（可能引发频繁 GC 导致 CPU 飙升）\n- 是否有慢查询、死循环、大量计算等可疑行为\n\n### 4. **分析根本原因**\n结合日志和监控数据判断可能的原因：\n- **流量突增**：检查 QPS 是否异常升高\n- **代码问题**：如死循环、复杂计算、正则回溯等\n- **GC 频繁**：CPU 被大量消耗在垃圾回收上\n- **外部依赖阻塞**：等待数据库、API 响应等\n\n### 5. **紧急处理措施**\n如果影响业务，可考虑：\n- **限流**：控制入口流量，保护服务\n- **扩容**：增加实例数量分散压力\n- **重启实例**：快速恢复服务（临时方案）\n\n### 6. **后续优化**\n- 修复代码缺陷或优化算法\n- 完善监控告警阈值（建议 CPU >80% 预警，>90% 严重）\n- 定期压测，提前发现性能瓶颈",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率过高告警排查步骤"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录告警时间，用于日志查询   ### 步骤2: 查询系统磁盘使用情况 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率过高告警排查步骤"
+          ]
+        }
+      ],
+      "retrieval_rank": null,
+      "hit_at_3": 0,
+      "hit_at_5": 0,
+      "reciprocal_rank": 0.0,
+      "gold_answer_points": [
+        "先获取当前时间，确定告警时间范围",
+        "查询系统日志或 system-metrics 相关日志",
+        "分析 CPU 消耗进程信息，包括进程名、PID 和占用比例",
+        "再查询应用日志，重点看 ERROR 和 WARN"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 3.936,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_05",
+      "question": "如果想区分 CPU 高是流量突增还是代码死循环，应该重点看哪些特征？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据运维经验，区分 CPU 高是由流量突增还是代码死循环引起，可以重点观察以下特征：\n\n## 一、流量突增导致 CPU 高的特征\n\n| 特征维度 | 具体表现 |\n|---------|---------|\n| **CPU 趋势** | CPU 使用率**突然升高**，随后随流量回落而下降 |\n| **与流量关系** | CPU 升高与**请求量/并发数增长同步**，呈正相关 |\n| **影响范围** | **多个实例同时**出现 CPU 升高（分布式系统） |\n| **GC 情况** | GC 频率可能增加，但**GC 能够正常回收内存** |\n| **日志表现** | 应用日志显示**请求量激增**，无异常错误 |\n| **响应时间** | 响应变慢但服务仍可用，未出现线程卡死 |\n\n## 二、代码死循环导致 CPU 高的特征\n\n| 特征维度 | 具体表现 |\n|---------|---------|\n| **CPU 趋势** | CPU 使用率**持续高位**，即使流量下降也不会自然回落 |\n| **影响范围** | 通常只影响**个别线程或单个实例** |\n| **线程状态** | 线程堆栈显示**特定方法无限循环**（可通过 `jstack` 查看） |\n| **日志表现** | 可能出现**超时错误**、请求堆积，无明显的流量变化 |\n| **服务可用性** | 可能导致**服务不可用**或严重超时 |\n| **复现方式** | 通过特定接口调用或操作即可稳定复现 |\n\n## 三、快速排查手段\n\n1. **对比监控曲线**：将 CPU 使用率与 QPS/并发连接数曲线叠加对比，看是否同步变化\n2. **查看线程堆栈**：使用 `jstack <pid>` 查看是否有线程处于 RUNNABLE 状态的死循环\n3. **检查单实例 vs 多实例**：如果只有单个实例 CPU 高，大概率是代码问题；如果所有实例都高，大概率是流量问题\n4. **查看告警关联**：参考知识库，CPU 高告警 (`HighCPUUsage`) 常伴随频繁 GC (`FrequentGC`)，需要结合 GC 日志判断\n\n> **提示**：知识库中提到\"流量突增时 GC 能够回收大部分内存\"，而死循环或内存泄漏则会导致\"内存持续上升且无法释放\"，这一规律同样适用于 CPU 场景的判断。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 高 流量突增 代码死循环 区分特征",
+            "CPU 高 区分原因 流量突增 死循环"
+          ]
+        }
+      ],
+      "retrieval_rank": null,
+      "hit_at_3": 0,
+      "hit_at_5": 0,
+      "reciprocal_rank": 0.0,
+      "gold_answer_points": [
+        "死循环常见特征是单个进程 CPU 接近 100%",
+        "死循环常伴随大量重复错误堆栈",
+        "流量突增通常表现为多个进程 CPU 均匀升高",
+        "流量突增时请求量明显增加，响应变长但不一定有明显错误"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 7.639,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_06",
+      "question": "CPU 使用率在固定时间点周期性升高时，排查重点应该放在哪里？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "当 CPU 使用率在**固定时间点周期性升高**时，排查重点应放在以下方面：\n\n---\n\n## 🔍 排查重点方向\n\n### 1. **定时任务（CronJob / Crontab）**\n这是最常见的原因。检查系统中是否有配置在特定时间定期执行的定时任务：\n- 查看应用层配置的定时任务（如 Quartz、Celery Beat、Spring Scheduled 等）\n- 查看系统级 crontab 配置\n- 查看 Kubernetes CronJob 或 CloudWatch Events 等云平台的定时触发器\n\n### 2. **批量数据处理任务**\n- 数据同步/ETL 任务在固定时间执行\n- 报表生成、数据导出等批处理作业\n- 日志归档、清理任务\n\n### 3. **缓存预热或失效**\n- 某些系统在固定时间进行缓存预热，导致瞬时高负载\n- 大量缓存同时失效，引发数据库查询激增\n\n### 4. **监控与采集任务**\n- 监控系统自身的采集周期\n- 指标上报、日志收集任务的并发执行\n\n### 5. **外部依赖的定时调用**\n- 定时调用的第三方 API\n- 下游服务的心跳检测或健康检查\n\n---\n\n## 🛠️ 推荐排查步骤\n\n1. **确认周期性规律**\n   - 记录 CPU 升高的具体时间间隔（如每小时、每天凌晨2点等）\n   - 分析是否存在明确的触发条件\n\n2. **查询相关日志**\n   ```\n   # 查找定时任务相关的日志\n   level:INFO OR level:WARN AND (cron OR schedule OR periodic)\n   \n   # 检查是否有慢查询或性能警告\n   response_time:>3000 OR slow_query:true\n   ```\n\n3. **检查代码中的定时调度配置**\n   - 搜索项目中所有定时任务的定义\n   - 对比触发时间与 CPU 升高时间是否吻合\n\n4. **使用 APM 工具定位热点**\n   - 查看火焰图找出 CPU 热点方法\n   - 分析特定时间段的调用链路\n\n5. **评估是否需要优化**\n   - 如果业务需要，考虑拆分任务、错峰执行\n   - 优化代码性能，减少资源消耗\n   - 增加限流保护，避免雪崩效应",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 内存使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighMemoryUsage` - **告警级别**: 严重 - **触发条件**: 内存使用率持续5分钟超过85%  ## 问题描述 当服务器或容器的内存使用率持续超过85%时，可能导致： - 应用频繁GC（垃圾回收） - OOM（Out Of Memory）错误 - 应用崩溃或...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率周期性升高 排查"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "keyword",
+          "queries": [
+            "CPU 使用率周期性升高 排查",
+            "CPU周期性升高 定时任务 CronJob 排查方法"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# CPU使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighCPUUsage` - **告警级别**: 严重 - **触发条件**: CPU使用率持续5分钟超过80%  ## 问题描述 当服务器或容器的CPU使用率持续超过80%时，可能导致： - 应用响应变慢 - 请求超时增加 - 系统负载过高 - 可能触发雪崩效应",
+          "recall_path": "dense",
+          "queries": [
+            "CPU 使用率周期性升高 排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的准确时间   ### 步骤2: 查询应用性能日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-logs` ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU周期性升高 定时任务 CronJob 排查方法"
+          ]
+        }
+      ],
+      "retrieval_rank": 3,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.3333333333333333,
+      "gold_answer_points": [
+        "优先怀疑定时任务重叠执行",
+        "检查是否在特定时间点触发",
+        "查看日志中的定时任务执行记录",
+        "检查任务配置并调整执行时间，避免重叠"
+      ],
+      "matched_points": [
+        "检查是否在特定时间点触发",
+        "查看日志中的定时任务执行记录"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 5.784,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2,
+        "keyword": 1,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_07",
+      "question": "当应用 CPU 很高，但业务逻辑本身并不复杂时，下一步更应该排查什么？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md",
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "当应用 CPU 使用率很高，但业务逻辑本身并不复杂时，**下一步更应该排查以下几个方面**（按优先级排序）：\n\n---\n\n## 1. **频繁 GC（垃圾回收）** ⭐ 最常见原因\n这是最容易被忽视的原因。即使业务逻辑简单，如果存在大量短生命周期对象的创建和销毁，会导致 JVM 频繁进行 Young GC/Full GC，消耗大量 CPU 资源。\n\n**排查方法：**\n- 查看 GC 日志频率：`jstat -gc <pid> 1000`\n- 检查是否有 `FrequentGC` 告警\n- 观察 Full GC 是否频繁触发且耗时过长\n\n**关联特征：**\n- CPU 高伴随内存波动明显\n- 日志中出现大量 GC 记录\n- 可能伴随 `HighCPUUsage` 告警（参考文档明确提到\"可能伴随频繁GC\"）\n\n---\n\n## 2. **死循环或无效计算**\n虽然业务逻辑不复杂，但代码中可能存在：\n- 无限循环（如 `while(true)` 缺少退出条件）\n- 递归调用未正确终止\n- 对大数据集的重复计算\n\n**排查方法：**\n- 使用 APM 工具定位热点方法\n- 生成火焰图（flame graph）找出 CPU 占用最高的代码路径\n\n---\n\n## 3. **线程阻塞与竞争**\n- 线程死锁导致线程不断重试\n- 锁竞争激烈，大量线程自旋等待\n- 线程池配置不合理，线程反复创建销毁\n\n**排查方法：**\n- 使用 `jstack <pid>` 查看线程堆栈，寻找 BLOCKED/WAITING 状态的线程\n- 检查是否有大量线程处于自旋状态\n\n---\n\n## 4. **缓存失效导致请求激增**\n参考文档中提到\"缓存失效\"可能导致：\n- 缓存命中率突然下降\n- 数据库查询量激增\n- 所有请求集中打到后端，造成瞬时 CPU 高峰\n\n**排查方法：**\n- 检查缓存命中率指标\n- 查看特定时间点是否有缓存批量失效记录\n\n---\n\n## 5. **外部依赖超时导致的重试风暴**\n- 下游服务响应慢，上游不断重试\n- 超时时间设置过长，线程长时间阻塞\n\n---\n\n## ✅ 建议的排查步骤\n\n```\n1. 立即检查 GC 情况 → jstat -gc <pid> 1000\n2. 查看应用日志 → 是否有 OOM、GC overhead、超时等错误\n3. 获取线程快照 → jstack <pid> 分析线程状态\n4. 抓取堆转储（如需深入分析）→ jmap -dump:format=b,file=heap.hprof <pid>\n5. 使用 APM 工具定位热点代码\n```\n\n> **总结**：在业务逻辑简单的场景下，**高频 GC 是最需要优先排查的方向**，因为它既会导致 CPU 飙升，又可能与内存问题相互关联（如参考资料中提到的 `HighCPUUsage` 告警可能伴随 `FrequentGC`）。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录告警时间，用于日志查询   ### 步骤2: 查询系统磁盘使用情况 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics...",
+          "recall_path": "both",
+          "queries": [
+            "CPU使用率高排查 业务逻辑简单"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU使用率高排查 业务逻辑简单",
+            "CPU高 排查 GC 内存泄漏 线程死锁 循环"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# CPU使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighCPUUsage` - **告警级别**: 严重 - **触发条件**: CPU使用率持续5分钟超过80%  ## 问题描述 当服务器或容器的CPU使用率持续超过80%时，可能导致： - 应用响应变慢 - 请求超时增加 - 系统负载过高 - 可能触发雪崩效应",
+          "recall_path": "dense",
+          "queries": [
+            "CPU使用率高排查 业务逻辑简单"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "CPU高 排查 GC 内存泄漏 线程死锁 循环"
+          ]
+        }
+      ],
+      "retrieval_rank": 3,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.3333333333333333,
+      "gold_answer_points": [
+        "优先排查数据库查询慢的问题",
+        "查看是否有慢查询日志",
+        "检查数据库连接池占用情况",
+        "关注是否存在全表扫描、缺少索引或需要增加缓存"
+      ],
+      "matched_points": [
+        "优先排查数据库查询慢的问题"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 6.816,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_08",
+      "question": "某实例 CPU 接近 100%，应用日志里还有大量重复错误堆栈，这种情况最像什么问题，应该如何处理？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的故障排查指南，**“CPU 接近 100% + 大量重复错误堆栈”**是典型的 **死循环或无限递归** 问题。\n\n### 🔍 最可能的原因：死循环或无限递归\n\n**特征匹配：**\n- ✅ 单个进程 CPU 占用接近 100%\n- ✅ 应用日志中有大量重复的错误堆栈\n- ✅ 内存使用也可能同步增长（如果递归深度较深）\n\n**其他可能原因对比：**\n| 原因 | 典型特征 | 是否匹配 |\n|------|----------|----------|\n| 死循环/无限递归 | 单进程高 CPU + 重复错误堆栈 | ✅ **完全匹配** |\n| 流量突增 | 多进程均匀升高 + 响应变慢但无错误 | ❌ 不匹配 |\n| 定时任务重叠 | 周期性升高 + 特定时间点出现 | ❌ 不匹配 |\n| 数据库慢查询 | 业务逻辑简单 + 慢SQL记录 | ❌ 不匹配 |\n\n---\n\n### 🛠️ 处理方案\n\n#### 立即操作（5分钟内）\n1. **重启受影响的服务实例** — 快速恢复服务可用性\n2. **查看应用日志** — 定位触发重复错误的代码位置\n3. **回滚到上一个稳定版本** — 如果是最近部署导致的问题\n\n#### 短期措施（30分钟内）\n4. **分析根本原因** — 确定是哪段代码进入了死循环/递归\n5. **联系开发团队修复 Bug** — 提供具体的错误堆栈和时间点\n6. **持续监控 CPU 使用率** — 确认恢复正常（<60%）\n\n#### 长期优化\n7. **代码性能优化** — 增加递归深度限制、超时机制\n8. **完善监控告警** — 设置更细粒度的 CPU 和错误日志告警\n9. **定期压力测试** — 提前发现潜在的代码问题\n\n---\n\n### 📞 联系方式\n- **运维团队**: ops-team@company.com\n- **开发团队**: dev-team@company.com\n- **紧急电话**: 400-xxx-xxxx",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围，用于后续日志查询   ### 步骤2: 查询系统日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` (广州) - **日志主题**: `system...",
+          "recall_path": "dense",
+          "queries": [
+            "CPU 100% 重复错误堆栈 故障排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **快速清理**: - 删除大日志文件 - 清理临时文件 - 删除不必要的文件   2. **释放空间**: ```bash # 查找最大的10个文件 du -ah / | sort -rh | head -n 10  # 查找最大的10个目录 du -h --max-depth=1 / | sor...",
+          "recall_path": "keyword",
+          "queries": [
+            "CPU 100% 重复错误堆栈 故障排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像死循环或无限递归",
+        "可以先立即重启受影响实例止血",
+        "随后查看应用日志定位代码问题",
+        "必要时回滚到上一个稳定版本并通知开发修复"
+      ],
+      "matched_points": [
+        "更像死循环或无限递归",
+        "随后查看应用日志定位代码问题"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 4.451,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "dense": 1,
+        "keyword": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_09",
+      "question": "多个进程的 CPU 同时升高，响应时间变长但没有明显错误日志，这更可能是哪类问题？建议怎么应对？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，多个进程的 CPU 同时升高、响应时间变长但无明显错误日志，更可能是 **流量突增** 导致的问题。\n\n## 判断依据\n\n根据参考资料，**流量突增的典型特征**包括：\n- ✅ 多个进程 CPU 使用率均匀升高\n- ✅ 请求量明显增加\n- ✅ 响应时间变长但无明显错误\n\n这与你的描述完全吻合。\n\n## 建议应对措施\n\n### 立即操作（5分钟内）\n1. **检查流量来源**：确认是否有营销活动、突发业务高峰或异常流量\n2. **启动自动扩容机制**：增加应用实例数量，分散负载压力\n3. **启用限流策略**：如果怀疑是恶意流量或非正常访问，限制请求频率\n\n### 短期措施（30分钟内）\n1. **分析日志趋势**：查看请求量是否确实激增，确认与流量相关\n2. **监控关键指标**：持续观察 CPU 使用率、响应时间和请求量变化\n3. **评估是否需要手动干预**：如扩容后的效果验证\n\n### 长期优化\n1. **完善自动扩缩容策略**：根据历史流量模式预设弹性伸缩规则\n2. **增加监控告警阈值**：细化不同场景下的告警条件\n3. **定期进行压力测试**：验证系统在高峰期容量的应对能力\n\n> ⚠️ **排除其他可能性**：如果排查后发现不是流量问题，还需考虑定时任务重叠执行（周期性升高）或数据库慢查询等情况，可进一步分析日志和 SQL 执行情况。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 升高 响应时间变长 无错误日志"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 死循环或无限递归 **特征**: - 单个进程CPU占用接近100% - 应用日志中有大量重复的错误堆栈 - 内存使用也可能同步增长   **处理方案**: 1. 立即重启受影响的服务实例 2. 查看应用日志定位代码问题 3. 回滚到上一个稳定版本 4. 通知开发团队修复代码bug   ### 原因2: 流量突增 *...",
+          "recall_path": "dense",
+          "queries": [
+            "CPU 升高 响应时间变长 无错误日志"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "更像流量突增",
+        "检查是否有营销活动或突发流量",
+        "启动自动扩容或增加实例",
+        "如怀疑恶意流量，可启用限流策略"
+      ],
+      "matched_points": [
+        "检查是否有营销活动或突发流量",
+        "启动自动扩容或增加实例",
+        "如怀疑恶意流量，可启用限流策略"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 3.813,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_10",
+      "question": "如果 CPU 告警总在特定时间段出现，并且日志里能看到定时任务执行记录，应该优先采取哪些动作？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的排查思路，当 CPU 告警呈现周期性特征且日志中存在定时任务记录时，建议优先采取以下动作：\n\n### 1. 确认告警与任务的时间关联性\n*   **获取精确时间**：记录 CPU 告警首次和持续发生的具体时间点。\n*   **比对调度时间**：将告警时间与系统中定时任务的执行计划（Cron Schedule）进行交叉比对，确认告警是否严格对应某个特定任务的启动或执行高峰。\n\n### 2. 深入分析定时任务日志\n在告警时间段内，重点检索该定时任务的执行日志：\n*   **关注资源消耗指标**：查找任务执行期间是否有 `cpu_usage`、`memory_usage` 等系统指标飙升的记录。\n*   **识别异常耗时**：检查是否存在 `response_time:>3000` 或任务处理时长远超预期的记录。\n*   **排查错误堆栈**：查看是否有 `ERROR` 或 `FATAL` 级别的报错，特别是死循环、内存泄漏或数据库连接耗尽相关的异常。\n\n### 3. 关联查询系统资源监控数据\n*   **使用工具查询**：调用 `query_cpu_metrics` 和 `query_memory_metrics`，以 5 分钟（`\"5m\"`）为粒度拉取告警时段前后的 CPU/内存趋势图。\n*   **定位峰值点**：观察 CPU 使用率的尖峰是否与日志中定时任务的起止时间完全重合，排除其他并发请求的干扰。\n\n### 4. 优化与规避措施\n基于上述分析结果，通常可采取以下优先动作：\n*   **错峰执行**：如果多个高负载任务在同一时间触发，尝试调整它们的执行时间（如错开 10-30 分钟）。\n*   **增加限流与超时**：在代码层面为定时任务添加线程池限制或数据库查询超时控制，防止单次执行拖垮整个服务。\n*   **扩容或升级配置**：如果任务是正常的高负载计算，考虑在任务执行窗口期临时扩容实例，或优化算法复杂度。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的准确时间   ### 步骤2: 查询应用性能日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-logs` ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU告警 定时任务 周期性 排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "CPU告警 定时任务 周期性 排查"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录告警时间，用于日志查询   ### 步骤2: 查询系统磁盘使用情况 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics...",
+          "recall_path": "both",
+          "queries": [
+            "CPU告警 定时任务 周期性 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": null,
+      "hit_at_3": 0,
+      "hit_at_5": 0,
+      "reciprocal_rank": 0.0,
+      "gold_answer_points": [
+        "优先判断为定时任务重叠执行",
+        "检查并调整定时任务配置和执行时间",
+        "避免多个任务在同一时间重叠",
+        "必要时增加任务互斥锁并优化任务逻辑"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 4.782,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_11",
+      "question": "CPU 使用率过高和服务响应变慢在排查重点上有什么区别？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md",
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "## CPU 使用率过高 vs 服务响应变慢：排查重点的区别\n\n虽然两者经常同时出现（CPU 过高会导致响应变慢），但**排查的侧重点完全不同**：\n\n---\n\n### 🔍 **CPU 使用率过高的排查重点**\n\n核心目标：**找出\"谁\"在占用大量 CPU**\n\n1. **定位高 CPU 进程/线程**\n   - 查看系统级 CPU 分布，识别具体哪个进程消耗资源\n   - 分析是否由某个特定服务引起\n\n2. **检查应用日志中的性能警告**\n   - 查找代码执行路径中的热点方法\n   - 查看是否有循环、递归、重复计算等低效逻辑\n\n3. **分析系统负载趋势**\n   - 确认 CPU 飙升的时间点与什么操作相关\n   - 排查是否有异常流量或突发请求\n\n4. **代码层面优化**\n   - 优化算法复杂度\n   - 减少不必要的对象创建\n   - 引入异步处理或非关键逻辑解耦\n\n> **一句话总结**：CPU 问题关注的是 **\"计算资源被谁占用了\"**\n\n---\n\n### 🐌 **服务响应变慢的排查重点**\n\n核心目标：**找出请求链路上\"哪个环节\"拖慢了整体响应**\n\n根据知识库中的常见原因，排查重点包括：\n\n| 排查方向 | 特征 | 排查手段 |\n|---------|------|---------|\n| **数据库慢查询** | 慢查询日志多、连接池满载 | 分析最慢 SQL、检查索引、查看 EXPLAIN |\n| **外部 API 超时** | 第三方调用记录、网络超时错误 | 调整超时时间、熔断降级、缓存数据 |\n| **缓存失效** | 命中率骤降、DB 查询激增 | 缓存预热、布隆过滤器、过期策略优化 |\n| **网络问题** | 跨地域延迟、丢包率高 | CDN 加速、就近访问、压缩传输 |\n| **系统资源不足** | CPU/内存/磁盘 IO 高 | 扩容实例、负载均衡、限流降级 |\n| **代码性能问题** | 特定代码路径慢、APM 定位到慢方法 | 火焰图分析、优化数据结构、异步处理 |\n\n> **一句话总结**：响应慢问题关注的是 **\"请求经过了哪些环节，哪里卡住了\"**\n\n---\n\n### ⚡ **两者的关系**\n\n- **CPU 过高可能是响应变慢的原因之一**，但不是唯一原因\n- **响应变慢时，CPU 不一定高**（例如：等待数据库、等待外部 API、网络延迟）\n- **排查顺序建议**：先确认是全局性响应慢还是个别接口慢 → 如果是全局性的，再排查 CPU/内存/网络等资源指标；如果是局部慢，则进一步分析依赖链路\n\n**简言之：CPU 问题是\"算力瓶颈\"，响应慢问题是\"链路瓶颈\"。**",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 磁盘使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighDiskUsage` - **告警级别**: 警告（>80%）/ 严重（>90%） - **触发条件**: 磁盘使用率持续5分钟超过阈值  ## 问题描述 磁盘使用率过高会导致： - 无法写入新数据 - 日志无法记录 - 应用崩溃 - 数据库损坏 - 系统性能下降",
+          "recall_path": "both",
+          "queries": [
+            "CPU 使用率过高排查方法"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢排查方法"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢排查方法"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/cpu_high_usage.md",
+          "file_name": "cpu_high_usage.md",
+          "headers": [
+            "CPU使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# CPU使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighCPUUsage` - **告警级别**: 严重 - **触发条件**: CPU使用率持续5分钟超过80%  ## 问题描述 当服务器或容器的CPU使用率持续超过80%时，可能导致： - 应用响应变慢 - 请求超时增加 - 系统负载过高 - 可能触发雪崩效应",
+          "recall_path": "dense",
+          "queries": [
+            "CPU 使用率过高排查方法"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢排查方法"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "CPU 高更关注进程消耗、死循环、流量突增和定时任务重叠",
+        "慢响应更关注慢查询、外部 API 超时、缓存失效和系统资源瓶颈",
+        "CPU 高强调先看 system-metrics 与进程级特征",
+        "慢响应强调结合应用性能日志、慢查询日志和响应时间指标排查"
+      ],
+      "matched_points": [
+        "慢响应更关注慢查询、外部 API 超时、缓存失效和系统资源瓶颈"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 6.116,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 4,
+        "dense": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "cpu_12",
+      "question": "CPU 高和内存高在典型现象与排查关注点上分别有什么不同？",
+      "gold_docs": [
+        "aiops-docs/cpu_high_usage.md",
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据对知识库的检索结果，目前获取到的详细信息主要集中在**内存高**的处理方案上。关于**CPU 高**，知识库中仅简要提及它可能与频繁的垃圾回收（GC）有关。\n\n以下是基于检索资料整理的对比分析：\n\n### 1. 内存高 (Memory High)\n\n#### **典型现象**\n*   **持续增长**：内存使用率呈现持续、缓慢上升的趋势，应用运行时间越长，占用越高。\n*   **回收困难**：在进行 Full GC（全量垃圾回收）后，内存依然无法有效释放。\n*   **日志异常**：应用日志中出现大量 GC 记录，严重时会出现 `OutOfMemoryError` (OOM) 错误。\n\n#### **排查关注点**\n根据知识库中的《内存使用率过高告警处理方案》，排查应重点关注以下 5 个原因：\n1.  **内存泄漏**：\n    *   **特征**：Full GC 后内存不降，随着时间推移占用越来越高。\n    *   **动作**：重启实例释放内存，并在重启前 `dump` 内存快照，使用 MAT 工具分析堆转储文件定位代码问题。\n2.  **流量突增**：\n    *   **特征**：内存突然升高，且与业务请求量激增同步，GC 能回收大部分内存。\n    *   **动作**：立即扩容、启用限流保护，或临时增加内存配置。\n3.  **缓存配置不当**：\n    *   **特征**：缓存占用过大、命中率低、数据长时间不过期。\n    *   **动作**：调整缓存大小上限，设置合理的过期策略（TTL），启用 LRU 淘汰机制。\n4.  **大文件或大数据处理**：\n    *   **特征**：特定时间点（如定时任务、上传文件时）内存突增，处理完成后可恢复。\n    *   **动作**：改为流式处理、分批处理或异步队列处理，避免一次性加载。\n5.  **JVM 参数配置不合理**：\n    *   **特征**：堆内存配置过小，或新生代/老年代比例失调。\n    *   **动作**：调整 `-Xmx`/`-Xms` 等参数，选择合适的 GC 算法。\n\n---\n\n### 2. CPU 高 (CPU High)\n\n*注：知识库中关于 CPU 高的详细排查步骤较少，以下内容结合了知识库中提到的关联信息及常规运维经验。*\n\n#### **典型现象**\n*   **伴随高频 GC**：知识库特别指出，CPU 使用率高经常伴随着**频繁的垃圾回收（FrequentGC）**。当内存不足触发频繁 GC 时，会消耗大量 CPU 资源。\n*   **响应变慢**：由于 CPU 被占用，服务的接口响应时间通常会显著增加。\n\n#### **排查关注点**\n1.  **检查 GC 状态**：首先排查是否因内存问题导致 CPU 飙升（即上述内存排查流程）。\n2.  **热点线程分析**：通常需通过 `top -H -p <pid>` 找到占用 CPU 最高的线程，再结合 `jstack` 分析这些线程是否在跑死循环或执行复杂计算。\n3.  **锁竞争**：排查是否存在严重的线程锁竞争导致 CPU 空转。\n\n### 总结\n*   **内存高**的核心在于“**留不住**”对象（泄漏、缓存、容量不足），排查重点是 Dump 快照和分析对象引用。\n*   **CPU 高**的核心在于“**算得累**”（计算量大、死循环）或“**忙着扫垃圾**”（频繁 GC），排查重点通常是结合内存监控，看是否由 GC 引起。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "CPU 高 典型现象 排查",
+            "内存高 典型现象 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "CPU 高常表现为响应慢、超时增加和系统负载过高",
+        "内存高常表现为频繁 GC、OOM、应用崩溃或 swap 频繁",
+        "CPU 高更关注高占用进程、流量和定时任务",
+        "内存高更关注内存泄漏、缓存配置、大对象处理和 JVM 参数"
+      ],
+      "matched_points": [
+        "内存高更关注内存泄漏、缓存配置、大对象处理和 JVM 参数"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 14.989,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_01",
+      "question": "HighMemoryUsage 告警在什么条件下触发，通常会带来哪些典型风险？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，关于 **HighMemoryUsage** 告警的触发条件和典型风险如下：\n\n## 一、触发条件\n通常设置两个级别的阈值进行分级告警：\n- **预警级别（Warning）**：内存使用率持续超过 **70%**\n- **严重级别（Critical）**：内存使用率持续超过 **85%**\n\n当系统检测到内存使用率持续高于这些阈值时，就会触发相应的告警。\n\n## 二、典型风险\n内存使用率过高会带来以下严重风险：\n\n1. **OOM（Out of Memory）错误**  \n   - 应用可能抛出 `OutOfMemoryError`，导致服务崩溃或重启\n\n2. **频繁 GC（垃圾回收）**  \n   - 触发 `FrequentGC` 告警，大量时间消耗在垃圾回收上，影响性能\n\n3. **CPU 使用率升高**  \n   - 伴随 `HighCPUUsage` 告警，频繁的 GC 会占用大量 CPU 资源\n\n4. **响应时间变长**  \n   - 触发 `SlowResponse` 告警，用户请求处理延迟增加\n\n5. **服务不可用**  \n   - 极端情况下会导致应用完全无法响应，需要紧急重启实例\n\n6. **数据丢失风险**  \n   - 如果应用在内存不足时写入数据失败，可能导致数据不一致或丢失\n\n## 三、建议的应对措施\n- **立即操作**：重启高内存实例、扩容、限流\n- **短期措施**：分析日志、dump 内存快照、调整 JVM 参数\n- **长期优化**：修复内存泄漏、完善监控、定期进行压力测试",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "HighMemoryUsage 告警触发条件风险"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 磁盘使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighDiskUsage` - **告警级别**: 警告（>80%）/ 严重（>90%） - **触发条件**: 磁盘使用率持续5分钟超过阈值  ## 问题描述 磁盘使用率过高会导致： - 无法写入新数据 - 日志无法记录 - 应用崩溃 - 数据库损坏 - 系统性能下降",
+          "recall_path": "both",
+          "queries": [
+            "HighMemoryUsage 告警触发条件风险"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "内存使用率持续 5 分钟超过 85%",
+        "可能导致频繁 GC",
+        "可能出现 OOM",
+        "可能导致应用崩溃、重启或 swap 频繁"
+      ],
+      "matched_points": [
+        "内存使用率持续 5 分钟超过 85%",
+        "可能导致频繁 GC"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 3.794,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_02",
+      "question": "内存使用率过高的常见原因有哪些？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，内存使用率过高的常见原因主要有以下五类：\n\n## 1. 内存泄漏\n**特征表现：**\n- 内存使用率持续缓慢上升\n- Full GC后内存无法释放\n- 应用运行时间越长，内存占用越高\n- 日志中有大量GC记录\n\n**处理方案：**\n1. **紧急措施**：重启应用释放内存\n2. **获取堆转储**：在重启前dump内存快照\n3. **分析内存泄漏**：使用MAT工具分析堆转储文件\n4. **定位代码问题**：找出持有大量对象引用的代码\n5. **修复并发布**：修复内存泄漏代码并重新部署\n\n---\n\n## 2. 流量突增导致对象激增\n**特征表现：**\n- 内存使用率突然升高\n- 与流量增长同步\n- GC能够回收大部分内存\n- 应用日志显示请求量激增\n\n**处理方案：**\n1. **立即扩容**：增加应用实例数量\n2. **启用限流**：保护系统不被压垮\n3. **优化缓存**：检查缓存策略是否合理\n4. **增加内存**：如果是合理的业务增长，考虑增加内存配置\n\n---\n\n## 3. 缓存配置不当\n**特征表现：**\n- 缓存占用内存过大\n- 缓存命中率低\n- 缓存数据长时间不过期\n- 日志中有缓存相关警告\n\n**处理方案：**\n1. **调整缓存大小**：减少缓存容量上限\n2. **优化过期策略**：设置合理的TTL（生存时间）\n3. **启用LRU淘汰**：确保缓存能自动淘汰旧数据\n4. **监控缓存指标**：持续观察缓存命中率和内存占用\n\n---\n\n## 4. 大文件或大数据处理\n**特征表现：**\n- 特定时间点内存突增\n- 日志中有文件上传或数据导入记录\n- 处理完成后内存可以释放\n- 与定时任务或用户操作相关\n\n**处理方案：**\n1. **优化处理逻辑**：改为流式处理，避免一次性加载到内存\n2. **限制文件大小**：设置上传文件大小限制\n3. **分批处理**：大数据处理改为分批次进行\n4. **异步处理**：将大数据处理任务放到后台队列\n\n---\n\n## 5. JVM参数配置不合理\n**特征表现：**\n- 堆内存配置过小\n- 新生代和老年代比例不合理\n- GC算法选择不当\n- 元空间（Metaspace）溢出\n\n**处理方案：**\n1. **调整堆内存**：增加 `-Xmx` 和 `-Xms` 参数\n2. **优化GC参数**：根据应用特点选择合适的GC算法\n3. **调整代际比例**：优化 `-XX:NewRatio` 参数\n4. **增加元空间**：调整 `-XX:MetaspaceSize` 参数\n\n---\n\n**排查建议：**\n首先确认是哪种情况导致的内存过高，再针对性地采取相应措施。对于线上紧急问题，可以先通过重启应用恢复服务，同时保留内存快照用于后续分析。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率过高 原因"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率过高 原因"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "内存泄漏",
+        "流量突增导致对象激增",
+        "缓存配置不当",
+        "大文件或大数据处理",
+        "JVM 参数配置不合理"
+      ],
+      "matched_points": [
+        "内存泄漏",
+        "流量突增导致对象激增",
+        "缓存配置不当",
+        "大文件或大数据处理",
+        "JVM 参数配置不合理"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 4.917,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_03",
+      "question": "内存告警恢复后，应该用哪些标准来验证服务已经稳定？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的《内存使用率过高告警处理方案》，在内存告警恢复后，建议按照以下 **4 个核心标准** 进行验证，以确保服务真正恢复稳定：\n\n1. **内存使用率恢复正常水位**\n   - 必须确认当前内存使用率已降至 **70% 以下**。这为后续可能的业务流量波峰预留了足够的缓冲空间。\n2. **垃圾回收（GC）状态健康**\n   - 观察 GC（Garbage Collection）的频率和单次耗时是否回归到基线正常范围。如果 GC 依然频繁且耗时长，说明内存中仍存在大量不可回收对象，随时可能再次触发告警。\n3. **应用日志无异常报错**\n   - 排查并确认应用在恢复后的运行日志中 **未出现 `OutOfMemoryError (OOM)` 或 `GC overhead`** 等关键错误信息，证明内存分配机制已恢复正常。\n4. **持续观察期达标**\n   - 不能仅看瞬间指标，需要保持对上述指标的 **持续监控至少 30 分钟**。只有在这段时间内各项指标均平稳波动，才判定该次内存危机已彻底解除。\n\n💡 **建议**：完成验证后，可进一步调优监控阈值（建议设置 **70% 预警、85% 严重**），并定期开展压力测试，以防范此类问题复发。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "内存告警 恢复 验证 稳定 标准"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "确认内存使用率降到正常水平，一般低于 70%",
+        "观察 GC 频率和耗时是否恢复正常",
+        "确认应用日志中没有 OOM 错误",
+        "持续监控 30 分钟确保稳定"
+      ],
+      "matched_points": [
+        "观察 GC 频率和耗时是否恢复正常",
+        "确认应用日志中没有 OOM 错误",
+        "持续监控 30 分钟确保稳定"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 5.549,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_04",
+      "question": "收到内存使用率过高告警后，推荐的首轮排查步骤是什么？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的《内存使用率过高告警处理方案》，推荐的首轮排查步骤如下：\n\n## 首轮排查步骤（5分钟内紧急操作）\n\n### 1. **立即重启高内存实例**\n   - 快速释放内存，恢复服务正常运行\n   - 这是最快速的止损措施\n\n### 2. **分析应用日志**\n   - 确定内存增长的根本原因\n   - 重点关注是否有OOM错误、频繁GC记录等异常信息\n\n### 3. **Dump内存快照**\n   - 保留现场数据用于后续深入分析\n   - 命令示例：`jmap -dump:format=b,file=heap.hprof <pid>`\n\n### 4. **检查JVM内存状态**\n   - 查看堆内存使用情况：`jmap -heap <pid>`\n   - 观察GC频率：`jstat -gc <pid> 1000`\n\n---\n\n## 常见原因及对应特征（辅助判断）\n\n| 原因 | 特征 | 处理方式 |\n|------|------|----------|\n| **内存泄漏** | 内存持续缓慢上升，Full GC后无法释放 | 重启+dump分析 |\n| **流量突增** | 内存突然升高，与流量同步 | 扩容+限流 |\n| **缓存配置不当** | 缓存占用大、命中率低 | 调整缓存策略 |\n| **大文件处理** | 特定时点突增，可释放 | 改为流式处理 |\n| **JVM参数不合理** | 堆内存配置过小 | 调整-Xmx等参数 |\n\n---\n\n## 验证是否恢复正常\n- 确认内存使用率降到正常水平（<70%）\n- 观察GC频率和耗时是否正常\n- 检查应用日志无OOM错误\n- 持续监控30分钟确保稳定",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率过高告警 排查步骤"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录告警时间，用于日志查询   ### 步骤2: 查询系统磁盘使用情况 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率过高告警 排查步骤"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先获取当前时间确定告警范围",
+        "查询 system-metrics 等系统监控日志",
+        "再查询应用日志，重点看 OutOfMemoryError 和 GC overhead",
+        "分析堆内存、GC 频率、是否有泄漏迹象和大对象分配"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 4.024,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_05",
+      "question": "怎样判断当前高内存问题更像内存泄漏，而不是短时流量波动？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "判断高内存问题是“内存泄漏”还是“短时流量波动”，核心在于观察**内存变化的趋势性**、**GC（垃圾回收）的表现**以及**与业务流量的相关性**。\n\n结合知识库中的排查方案与工具建议，可以通过以下四个维度进行综合判断：\n\n### 1. 观察内存增长的趋势（最直观的判断）\n*   **短时流量波动**：内存使用率通常表现为**“脉冲式”**变化。随着流量突增，内存使用率随之上升；但当流量回落（如促销结束、晚高峰过去）后，内存使用率能够**迅速下降并恢复到基线水平**。\n*   **内存泄漏**：内存使用率表现为**“阶梯式”或“持续上涨”**。即使在低负载期间，内存也无法回落到初始水位，每次 Full GC 后的剩余内存都比上一次更高，最终导致系统耗尽。\n\n### 2. 分析 GC（垃圾回收）的频率与效果\n根据资料中的**“验证步骤”**和**“监控指标”**，GC 的表现是区分两者的关键依据：\n*   **短时流量波动**：虽然流量高峰期可能会增加 GC 频率（Minor GC 变多），但在压力解除后，GC 能够成功回收大量不再使用的对象，内存空间得到有效释放。\n*   **内存泄漏**：会出现**“频繁 Full GC 但内存不降反升”**的现象。这是因为泄露的对象被根对象引用，GC 无法回收。此时系统往往伴随着极高的 GC 开销，甚至可能引发 `OutOfMemoryError` (OOM)。\n    *   *建议操作*：使用 `jstat -gc <pid> 1000` 命令实时观察 GC 日志。\n\n### 3. 关联业务日志与监控数据\n通过对比应用日志中的 QPS（每秒查询率）与内存监控曲线：\n*   **短时流量波动**：内存峰值与**业务流量峰值高度重合**。例如，在数据库慢查询或外部 API 调用超时期间（参考资料 1 中的原因 1 和 2），连接池等待导致的线程堆积可能会消耗大量内存，但这通常是并发量的体现，而非对象本身未释放。\n*   **内存泄漏**：内存的增长往往与**请求次数成正比**（每处理一个请求就泄露一点），而与当前的瞬时并发量（QPS）关系不大。\n\n### 4. 利用工具进行深层诊断\n如果上述现象难以直接确认，可以使用知识库中推荐的工具进行深入分析：\n*   **生成堆转储（Heap Dump）**：当内存过高时，执行 `jmap -dump:format=b,file=heap.hprof <pid>` 生成快照。使用分析工具查看堆中占用内存最大的对象类型。如果是特定的业务对象（如 List、Map）数量异常膨胀，则大概率为代码逻辑导致的泄漏。\n*   **重启测试**：作为紧急措施（参考资料 2），重启实例可以瞬间释放内存。重启后如果在**正常负载下内存仍缓慢爬升**，即可确诊为内存泄漏；如果重启后内存保持稳定直到下一次流量高峰，则说明原因为流量波动。\n\n### 总结\n| 特征 | 短时流量波动 | 内存泄漏 |\n| :--- | :--- | :--- |\n| **内存趋势** | 有起有落，流量退去即恢复 | 只涨不跌，呈阶梯状累积 |\n| **GC 表现** | GC 后可有效释放内存 | 频繁 Full GC，内存仍居高不下 |\n| **OOM 风险** | 较低（除非流量极大超出容量） | 极高（最终必然 OOM） |\n| **主要手段** | 限流、扩容、优化并发处理 | 定位泄露代码、修复 Bug |",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "内存泄漏 判断方法 区分 流量波动"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "内存泄漏 判断方法 区分 流量波动"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "内存泄漏通常表现为内存持续缓慢上升",
+        "Full GC 后内存无法有效释放",
+        "应用运行时间越长占用越高",
+        "日志中往往有大量 GC 记录"
+      ],
+      "matched_points": [
+        "内存泄漏通常表现为内存持续缓慢上升",
+        "Full GC 后内存无法有效释放"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 17.051,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_06",
+      "question": "如果应用日志里已经出现 OutOfMemoryError 或 GC overhead，接下来应该重点做什么？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "当应用日志中出现 `OutOfMemoryError` (OOM) 或 `GC overhead limit exceeded` (GC 开销过大) 时，说明 JVM 内存空间已耗尽或花费过多时间进行垃圾回收却回收不到多少内存。\n\n根据运维标准处理流程，建议按以下四个阶段重点开展工作：\n\n### 1. 紧急止血（5分钟内）\n首要目标是恢复服务可用性，防止业务中断扩大。\n*   **重启实例**：如果是单点故障，立即重启高内存占用的实例以快速释放内存。\n*   **扩容与限流**：增加应用实例数量分散压力；如果是流量突增导致的，立即启用限流保护系统不被压垮。\n*   **清理缓存**：手动清理不必要的缓存数据，降低内存峰值。\n\n### 2. 保留现场（关键步骤）\n在重启前或重启过程中，务必保留内存快照，否则后续无法定位根本原因。\n*   **生成堆转储 (Heap Dump)**：使用命令 `jmap -dump:format=b,file=heap.hprof <pid>` 生成堆转储文件。这是分析内存泄漏最核心的证据。\n*   **查看当前状态**：使用 `jstat -gc <pid> 1000` 观察 GC 频率和耗时情况。\n\n### 3. 根因分析与定位\n根据 OOM 的常见类型进行针对性排查：\n\n| 可能原因 | 典型特征 | 重点排查方向 |\n| :--- | :--- | :--- |\n| **内存泄漏** | 内存使用率持续缓慢上升，Full GC 后无法释放，运行越久占用越高 | 使用 **MAT (Memory Analyzer Tool)** 分析堆转储文件，查找持有大量对象引用的代码（如未关闭的连接、静态集合类无限增长）。 |\n| **流量突增** | 内存突然升高，与流量曲线同步，GC 能正常回收部分内存 | 检查监控图表确认请求量激增；评估是否需要临时扩容或优化缓存策略。 |\n| **缓存配置不当** | 缓存占用过大，但命中率低，数据长时间不过期 | 检查缓存 TTL 设置；调整缓存容量上限；确认是否启用了 LRU 淘汰策略。 |\n| **大对象处理** | 特定时间点（如定时任务、上传文件）内存突增 | 检查是否有一次性加载大文件或超大 List 的代码；改为**流式处理**或**分批处理**。 |\n| **JVM 参数不合理** | 堆内存配置过小，新生代/老年代比例失调 | 检查 `-Xmx` (最大堆), `-Xms` (初始堆) 及 GC 算法配置；考虑调大元空间 (`-XX:MetaspaceSize`)。 |\n\n### 4. 长期治理与预防\n*   **代码优化**：修复发现的内存泄漏点，优化大对象的创建逻辑。\n*   **监控完善**：设置合理的内存告警阈值（建议 70% 预警，85% 严重）；定期分析内存使用趋势。\n*   **压力测试**：在上线前进行充分的内存压力测试，模拟高峰流量下的内存表现。\n\n**总结建议**：遇到此类问题时，**不要直接重启了事**，一定要先尝试抓取 Heap Dump，否则很难从代码层面解决潜在的内存泄漏问题。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "OutOfMemoryError GC overhead 内存溢出 排查"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "OutOfMemoryError GC overhead 内存溢出 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先采取紧急措施，比如重启高内存实例释放内存",
+        "在重启前尽量获取堆转储文件保留现场",
+        "分析堆内存和 GC 情况，排查是否存在泄漏",
+        "必要时调整 JVM 参数或修复代码后重新部署"
+      ],
+      "matched_points": [
+        "在重启前尽量获取堆转储文件保留现场"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 7.757,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_07",
+      "question": "如果怀疑是缓存配置不当引起的高内存，应该重点检查和调整哪些点？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的高内存处理方案，如果怀疑是**缓存配置不当**引起的高内存问题，应重点检查和调整以下几个关键点：\n\n### 1. **调整缓存容量上限**\n   - **检查点**：当前缓存设置的容量限制是否过大？\n   - **调整建议**：减少缓存的容量上限（max-size/max-memory），确保缓存占用的内存不会无限增长。\n\n### 2. **优化过期策略（TTL设置）**\n   - **检查点**：缓存数据是否设置了合理的过期时间（TTL）？是否存在长时间不过期的数据？\n   - **调整建议**：为缓存项设置合理的生存时间（Time-To-Live），避免无用数据长期驻留内存。\n\n### 3. **启用淘汰策略（如LRU）**\n   - **检查点**：缓存达到上限时是否有自动淘汰旧数据的机制？\n   - **调整建议**：启用 LRU（最近最少使用）或 LFU（最不经常使用）等淘汰算法，确保缓存能自动清理不常用的数据。\n\n### 4. **监控缓存命中率与内存占用**\n   - **检查点**：缓存命中率是否过低？低命中率意味着大量缓存写入但未被有效利用，造成内存浪费。\n   - **调整建议**：持续观察缓存命中率、缓存大小和内存占用指标，结合业务需求动态调整缓存策略。\n\n---\n\n### 📋 快速排查清单\n| 检查项 | 说明 |\n|--------|------|\n| 缓存大小限制 | 是否设置了合理的 max-size |\n| TTL过期时间 | 是否为缓存项设置了过期策略 |\n| 淘汰算法 | 是否启用了 LRU/LFU 等淘汰机制 |\n| 缓存命中率 | 命中率是否低于预期（如 <60%） |\n| 缓存日志警告 | 是否有缓存相关的错误或警告日志 |\n\n通过以上调整，可以有效降低缓存对内存的占用，缓解高内存压力。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "缓存配置 高内存 优化 调整"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "检查缓存是否占用过多内存",
+        "查看缓存命中率是否偏低",
+        "检查缓存数据是否长时间不过期",
+        "调整缓存大小、TTL，并启用 LRU 等淘汰策略"
+      ],
+      "matched_points": [
+        "检查缓存数据是否长时间不过期",
+        "调整缓存大小、TTL，并启用 LRU 等淘汰策略"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 4.406,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_08",
+      "question": "内存使用率持续缓慢升高，而且 Full GC 后仍无法明显下降，这种现象更像什么问题，应如何处理？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "## 问题判断：这更像**内存泄漏（Memory Leak）**\n\n根据知识库中的分析，你描述的现象具有以下典型特征：\n\n| 特征 | 说明 |\n|------|------|\n| **内存持续缓慢上升** | 不是突发性的，而是随时间逐步增长 |\n| **Full GC后无法明显下降** | 说明有对象被长期引用，GC无法回收 |\n| **应用运行时间越长，占用越高** | 典型的内存泄漏表现 |\n\n---\n\n## 处理方案\n\n### 🚨 紧急措施（立即执行）\n1. **重启应用**：快速释放内存，恢复服务可用性\n2. **先 Dump 堆转储**：在重启前务必保留现场\n   ```bash\n   jmap -dump:format=b,file=heap.hprof <pid>\n   ```\n\n### 🔍 排查分析\n3. **分析内存快照**：使用 MAT（Memory Analyzer Tool）分析 heap.hprof 文件\n4. **定位泄漏代码**：找出持有大量对象引用的代码路径\n5. **查看 GC 日志辅助判断**：\n   ```bash\n   jstat -gc <pid> 1000\n   ```\n\n### 🛠️ 修复与优化\n6. **修复并重新部署**：修复内存泄漏代码后发布新版本\n\n### 📊 其他可能原因排查\n如果排除内存泄漏，还需检查：\n- **缓存配置不当**：缓存是否设置了合理的 TTL 和 LRU 淘汰策略\n- **JVM 参数不合理**：堆内存、新生代/老年代比例是否合适\n- **大对象一次性加载**：是否有大数据处理未采用流式或分批方式\n\n### ✅ 验证步骤\n- 确认内存使用率降到正常水平（<70%）\n- 观察 GC 频率和耗时是否正常\n- 检查应用日志无 OOM 错误\n- 持续监控 30 分钟确保稳定\n\n---\n\n**总结**：Full GC 后内存仍无法释放是内存泄漏的\"铁证\"，应优先按此方向排查。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率升高 Full GC 无法下降 内存泄漏"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像内存泄漏",
+        "先重启应用临时释放内存",
+        "在重启前 dump 堆快照",
+        "使用 MAT 等工具分析堆转储并定位持有大量对象引用的代码"
+      ],
+      "matched_points": [
+        "更像内存泄漏",
+        "在重启前 dump 堆快照",
+        "使用 MAT 等工具分析堆转储并定位持有大量对象引用的代码"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.54,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_09",
+      "question": "内存突然随流量一起升高，但 GC 能回收大部分内存，这种情况更可能是哪类问题？建议怎么处理？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，**内存突然随流量一起升高，但 GC 能回收大部分内存**，这种情况更可能是：\n\n## **原因2: 流量突增导致对象激增**\n\n### 📋 判断依据\n该问题的典型特征完全匹配你描述的情况：\n- ✅ **内存使用率突然升高**\n- ✅ **与流量增长同步**\n- ✅ **GC能够回收大部分内存**（区别于内存泄漏——Full GC后无法释放）\n- ✅ 应用日志显示请求量激增\n\n### 🛠️ 建议处理方案\n\n#### 立即措施\n1. **扩容**: 增加应用实例数量，分散内存压力\n2. **限流**: 启用限流保护系统不被压垮\n3. **重启高内存实例**: 快速释放内存，恢复服务\n\n#### 短期排查\n4. **检查缓存策略**: 确认缓存配置是否合理\n5. **分析日志**: 确认流量来源和增长趋势\n6. **dump内存快照**: 保留现场用于后续分析\n\n#### 长期优化\n7. **优化缓存**: 调整缓存大小、设置合理TTL、启用LRU淘汰\n8. **增加内存配置**: 如果是合理的业务增长，考虑增加JVM堆内存（`-Xmx`参数）\n9. **容量规划**: 根据业务增长合理规划资源\n\n### 🔍 如何区分与其他问题？\n\n| 类型 | 内存变化 | GC效果 | 持续时间 |\n|------|---------|--------|---------|\n| **流量突增** | 突然升高，随流量回落 | **能回收大部分** | 短暂 |\n| **内存泄漏** | 持续缓慢上升 | Full GC后仍无法释放 | 越来越严重 |\n| **大文件处理** | 特定时间点突增 | 处理后释放 | 一次性 |\n| **缓存不当** | 逐步堆积 | 部分可回收 | 持续增长 |\n\n如果内存能在流量下降后自动回落，基本可以确定是**流量突增**导致的问题，优先从扩容和限流入手即可。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "内存随流量升高 GC回收 问题类型"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像流量突增导致对象激增",
+        "可以先扩容分散压力",
+        "必要时启用限流保护系统",
+        "检查缓存策略和内存配置是否需要优化"
+      ],
+      "matched_points": [
+        "更像流量突增导致对象激增",
+        "必要时启用限流保护系统",
+        "检查缓存策略和内存配置是否需要优化"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.766,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_10",
+      "question": "某次大文件上传或大数据导入后内存突增，但任务完成后内存可以释放，这种情况通常该如何优化？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md"
+      ],
+      "answer": "这种情况通常是由**一次性加载大量数据到内存**导致的。根据知识库中的处理方案，建议从以下几个方面进行优化：\n\n## 优化方案\n\n### 1. **改为流式处理（推荐）**\n- 避免一次性将整个文件/数据集加载到内存中\n- 使用流式读取（如 Java 的 `InputStream`、Python 的生成器等）逐块处理数据\n- 每处理完一块数据后立即释放内存\n\n### 2. **分批处理大数据**\n- 将大数据集拆分为多个小批次（如每次处理 1000 条记录）\n- 每批处理完成后主动触发 GC 或等待系统回收\n- 设置合理的批次大小，平衡性能和内存占用\n\n### 3. **设置文件大小限制**\n- 在上传接口层面对文件大小进行限制\n- 超过阈值时拒绝请求或提示用户分片上传\n- 防止超大文件导致内存溢出\n\n### 4. **异步处理**\n- 将大文件上传或数据导入任务放入后台队列（如消息队列）\n- 由独立的消费者异步处理，不阻塞主线程\n- 可以结合定时任务或工作队列管理并发量\n\n### 5. **JVM/运行时参数调优**\n- 适当增加堆内存配置（如 `-Xmx`、`-Xms`）\n- 优化 GC 算法，选择合适的垃圾回收器\n- 监控 Full GC 频率和耗时\n\n## 典型场景对比\n\n| 特征 | 内存泄漏 | 大文件/大数据处理 |\n|------|---------|------------------|\n| 内存趋势 | 持续缓慢上升，无法释放 | 突增后任务完成可释放 |\n| GC效果 | Full GC 后仍无法回收 | GC 能正常回收内存 |\n| 触发时机 | 任意时间 | 特定操作（上传、导入） |\n\n由于您描述的情况是\"任务完成后内存可以释放\"，说明**不是内存泄漏**，而是正常的临时性内存峰值。核心优化思路就是**减少单次内存占用**，采用流式或分批的方式处理大数据。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "大文件上传 大数据导入 内存突增 优化"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "大文件上传 大数据导入 内存突增 优化"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像大文件或大数据处理造成的短时内存压力",
+        "应改为流式处理，避免一次性加载",
+        "对大任务采用分批处理或异步处理",
+        "必要时限制文件大小或调整处理方式"
+      ],
+      "matched_points": [
+        "应改为流式处理，避免一次性加载"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 4.555,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_11",
+      "question": "内存使用率过高和 CPU 使用率过高，在典型日志特征和处置优先级上有什么不同？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md",
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库信息，内存使用率过高和 CPU 使用率过高在**典型日志特征**和**处置优先级**上有以下显著不同：\n\n---\n\n## 一、典型日志特征对比\n\n### 🔴 内存使用率过高的日志特征\n\n| 原因 | 典型日志特征 |\n|------|-------------|\n| **内存泄漏** | - Full GC 后内存无法释放<br>- 应用运行时间越长，内存占用越高<br>- 日志中有大量 GC 记录 |\n| **流量突增** | - 与流量增长同步的内存突增<br>- 应用日志显示请求量激增<br>- GC 能够回收大部分内存 |\n| **缓存配置不当** | - 日志中有缓存相关警告<br>- 缓存命中率低<br>- 缓存数据长时间不过期 |\n| **大文件/大数据处理** | - 特定时间点内存突增<br>- 日志中有文件上传或数据导入记录<br>- 处理完成后内存可释放 |\n| **JVM 参数不合理** | - 堆内存配置过小<br>- 元空间（Metaspace）溢出 |\n\n### 🟠 CPU 使用率过高的日志特征\n\n根据参考资料中关于\"服务响应时间过长\"的分析，CPU 过高的典型关联场景包括：\n\n| 原因 | 典型日志特征 |\n|------|-------------|\n| **数据库慢查询** | - 慢查询日志中有大量记录<br>- 特定 SQL 执行时间长<br>- 数据库连接池接近满载 |\n| **代码性能问题** | - CPU 使用率高伴随特定代码路径执行慢<br>- 日志中有性能警告<br>- 无明显外部依赖问题 |\n| **缓存失效/穿透** | - 缓存命中率突然下降<br>- 数据库查询量激增<br>- 日志中有缓存 miss 记录 |\n| **系统资源不足** | - CPU 或内存使用率同时偏高<br>- 磁盘 IO 繁忙<br>- 系统负载过高 |\n| **网络超时/重试** | - 日志中有第三方 API 调用记录<br>- 网络超时错误<br>- 下游服务响应慢导致重试 |\n\n---\n\n## 二、处置优先级对比\n\n### 🔴 内存使用率过高 — 优先顺序\n\n1. **紧急措施（立即）**：**重启应用释放内存**\n   - 但在重启前需先获取堆转储（heap dump），以便后续分析内存泄漏\n   \n2. **短期措施（30分钟内）**：\n   - 调整缓存大小和过期策略\n   - 增加实例数量或内存配置\n   - 启用限流保护\n\n3. **长期优化**：\n   - 使用 MAT 工具分析堆转储文件定位内存泄漏\n   - 修复持有大量对象引用的代码\n   - 优化 JVM 参数（-Xmx、-Xms、GC 算法等）\n\n> ⚠️ **关键特点**：内存问题通常是**累积性**的，可能不会立即导致崩溃，但会导致服务逐渐变慢甚至 OOM 杀死进程。\n\n### 🟠 CPU 使用率过高 — 优先顺序\n\n1. **紧急措施（立即）**：\n   - 找出最慢的 SQL 语句并优化（加索引或改写）\n   - 设置合理超时，避免无限等待\n   - 实施熔断/降级策略\n\n2. **短期措施（30分钟内）**：\n   - 扩容实例（水平扩展）\n   - 启用限流保护\n   - 检查负载均衡配置，确保流量均匀分布\n\n3. **长期优化**：\n   - 使用 APM 工具和火焰图定位热点代码\n   - 优化循环、递归和数据结构\n   - 实现异步处理和消息队列解耦\n\n> ⚠️ **关键特点**：CPU 问题通常表现为**瞬时性**的高负载，直接影响响应时间和吞吐量，用户感知更明显。\n\n---\n\n## 三、核心差异总结\n\n| 维度 | 内存使用率过高 | CPU 使用率过高 |\n|------|--------------|--------------|\n| **变化趋势** | 持续缓慢上升或突发突降 | 随流量波动，瞬时峰值 |\n| **日志关键词** | `Full GC`、`OutOfMemoryError`、`heap dump`、`缓存miss` | `慢查询`、`timeout`、`performance warning`、`retry` |\n| **紧急处置** | 重启 + 保留堆转储 | 限流 + 熔断 + 优化慢查询 |\n| **分析手段** | MAT 堆分析、GC 日志分析 | APM 火焰图、慢查询日志、SQL EXPLAIN |\n| **影响范围** | 可能导致 OOM 进程被杀，服务不可用 | 响应时间变长，吞吐量下降 |\n\n如需进一步排查具体服务的内存或 CPU 问题，可以提供服务名称，我可以帮您查询实时监控数据和日志。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 磁盘使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighDiskUsage` - **告警级别**: 警告（>80%）/ 严重（>90%） - **触发条件**: 磁盘使用率持续5分钟超过阈值  ## 问题描述 磁盘使用率过高会导致： - 无法写入新数据 - 日志无法记录 - 应用崩溃 - 数据库损坏 - 系统性能下降",
+          "recall_path": "both",
+          "queries": [
+            "CPU使用率过高 日志特征 处置优先级",
+            "内存使用率过高 日志特征 处置优先级",
+            "CPU使用率过高 日志特征 常见原因 处理方案"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "内存使用率过高 日志特征 处置优先级"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "CPU使用率过高 日志特征 常见原因 处理方案"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "内存高更常见 GC 频繁、OOM、Full GC 后无法释放等特征",
+        "CPU 高更常见单进程打满、重复错误堆栈或多进程均匀升高",
+        "内存高处置上常优先重启实例并保留堆快照",
+        "CPU 高处置上更偏向扩容、限流、重启异常实例或回滚代码"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 8.835,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "mem_12",
+      "question": "如果服务已经不可用，同时还观察到 OOM 或频繁 GC，排查时应如何理解内存问题与服务不可用之间的关系？",
+      "gold_docs": [
+        "aiops-docs/memory_high_usage.md",
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的资料，当服务不可用且同时观察到 OOM 或频繁 GC 时，可以从以下几个维度理解它们之间的关系：\n\n---\n\n## 一、内存问题与服务不可用的因果关系\n\n| 现象 | 与服务的关联 |\n|------|------------|\n| **OOM (OutOfMemoryError)** | 内存溢出是服务不可用的**直接原因**。当 JVM 堆内存耗尽且无法通过 GC 回收时，会抛出 OOM 异常，导致应用崩溃或服务完全停止响应 |\n| **频繁 GC** | 频繁 GC 是服务不可用的**前兆或渐进表现**。Full GC 期间会发生 Stop-The-World（STW），所有应用线程被暂停，导致响应时间急剧增加甚至超时 |\n\n**核心逻辑**：内存问题是**因**，服务不可用是**果**。\n\n---\n\n## 二、常见场景分析\n\n根据知识库中的分类，内存问题导致服务不可用主要有以下五种原因：\n\n### 1. 内存泄漏（最常见）\n- **特征**：内存使用率持续缓慢上升，Full GC 后内存无法释放，应用运行时间越长内存占用越高\n- **机制**：某些对象被错误地持有引用无法被回收 → 内存逐渐耗尽 → 最终触发 OOM → 服务不可用\n\n### 2. 流量突增导致对象激增\n- **特征**：内存使用率突然升高，与流量增长同步，GC 能够回收大部分内存\n- **机制**：瞬时大量请求创建大量临时对象 → GC 来不及回收 → 内存峰值超过阈值 → OOM 或服务慢到超时\n\n### 3. 缓存配置不当\n- **特征**：缓存占用内存过大，缓存命中率低，缓存数据长时间不过期\n- **机制**：缓存无限增长占满堆内存 → GC 压力增大 → 性能下降或 OOM\n\n### 4. 大文件或大数据处理\n- **特征**：特定时间点内存突增，日志中有文件上传或数据导入记录\n- **机制**：一次性加载大量数据到内存 → 超出堆容量 → OOM\n\n### 5. JVM 参数配置不合理\n- **特征**：堆内存配置过小，新生代和老年代比例不合理，GC 算法选择不当\n- **机制**：合理的负载下仍频繁触发 Full GC → 性能严重下降 → 服务不可用\n\n---\n\n## 三、排查时的关键关联点\n\n在排查过程中，应重点关注以下指标间的关联：\n\n1. **内存使用率 vs GC 频率**\n   - 内存持续增长 + GC 频率升高 = 可能是内存泄漏\n   - 内存突然飙升 + GC 无法回收 = 可能是流量突增或大对象加载\n\n2. **GC 耗时 vs 响应时间**\n   - Full GC 耗时长 → 应用线程被阻塞 → SlowResponse 告警 → 服务超时不可用\n\n3. **CPU 使用率 vs GC 频率**\n   - 频繁 GC 会导致 CPU 使用率升高（HighCPUUsage 告警），因为 GC 本身消耗 CPU 资源\n\n---\n\n## 四、紧急处理建议\n\n根据知识库的处置方案，优先采取以下措施恢复服务：\n\n1. **立即操作（5 分钟内）**\n   - 重启高内存实例：快速释放内存，恢复服务\n   - 扩容：增加实例数量分散内存压力\n   - 限流：如果是流量问题，启用限流保护\n\n2. **保留现场**\n   - 在重启前 dump 内存快照：`jmap -dump:format=b,file=heap.hprof <pid>`\n   - 查看 GC 状态：`jstat -gc <pid> 1000`\n\n3. **根因分析**\n   - 使用 MAT 工具分析堆转储文件定位内存泄漏\n   - 检查代码中是否存在大对象创建或集合未释放的问题\n\n---\n\n**总结**：OOM 或频繁 GC 是 JVM 内存管理出现问题的明确信号，它们直接导致服务响应变慢甚至崩溃。排查时应以内存为切入点，结合 GC 日志、监控数据和业务上下文，快速定位根本原因并采取相应措施。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "both",
+          "queries": [
+            "OOM 内存溢出 频繁 GC Garbage Collection 服务不可用 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "内存不足或 OOM 可能直接导致应用崩溃，从而引发服务不可用",
+        "应同时查看应用日志和系统事件日志，确认是否有 OOM kill 或启动失败",
+        "短期需要先恢复服务，例如重启实例或扩容",
+        "后续再分析内存增长根因并修复配置或代码问题"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 9.004,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_01",
+      "question": "HighDiskUsage 告警的触发阈值是什么，磁盘使用率过高会带来哪些风险？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库信息，为您详细解答如下：\n\n### 🔔 HighDiskUsage 告警触发阈值\n| 告警级别 | 触发阈值 | 说明 |\n| :--- | :--- | :--- |\n| **警告 (Warning)** | **> 80%** | 磁盘使用率超过80%，需引起关注 |\n| **严重 (Critical)** | **> 90%** | 磁盘使用率超过90%，属于高危状态 |\n\n**触发规则**：磁盘使用率需**持续5分钟**超过上述阈值才会真正触发告警，避免瞬时波动导致误报。\n\n> 💡 **建议**：运维团队通常还会设置 **60%** 作为早期预警线，以便提前介入处理。\n\n---\n\n### ⚠️ 磁盘使用率过高带来的风险\n1. **无法写入新数据**：磁盘空间耗尽后，任何新的文件写入操作都会失败。\n2. **日志无法记录**：应用和系统日志无法写入，导致故障排查时缺乏关键线索。\n3. **应用崩溃**：依赖磁盘缓存或临时文件的应用可能因无法分配空间而直接崩溃。\n4. **数据库损坏**：数据库在写入事务时若磁盘已满，可能导致数据文件损坏或事务回滚失败。\n5. **系统性能下降**：磁盘接近满载时，读写延迟会显著增加，影响整体系统响应速度。\n\n---\n\n### 🛡️ 预防与应对建议\n- **监控告警**：保持 60%（预警）、80%（警告）、90%（严重）三级告警机制。\n- **定期清理**：通过定时任务自动清理临时文件和过期日志（如保留7天前的日志）。\n- **容量规划**：根据业务增长趋势提前扩容云盘或实施冷热数据分离归档。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "HighDiskUsage 告警 阈值 磁盘使用率 风险"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "磁盘使用率超过 80% 为警告，超过 90% 为严重",
+        "可能导致无法写入新数据",
+        "可能导致日志无法记录、应用崩溃或数据库损坏",
+        "还会造成系统性能下降"
+      ],
+      "matched_points": [
+        "磁盘使用率超过 80% 为警告，超过 90% 为严重",
+        "可能导致无法写入新数据",
+        "可能导致日志无法记录、应用崩溃或数据库损坏",
+        "还会造成系统性能下降"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 7.368,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_02",
+      "question": "磁盘使用率过高的常见原因有哪些？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库资料，磁盘使用率过高的常见原因主要有以下几类：\n\n## 1. 日志文件过大\n- **特征**：`/var/log` 目录占用大量空间，应用日志持续增长，没有日志轮转或日志级别设置为 DEBUG\n- **处理**：清理大日志文件、配置 logrotate 日志轮转、优化日志级别（生产环境建议 INFO 或 WARN）\n\n## 2. 临时文件堆积\n- **特征**：`/tmp` 目录占用大量空间，大量临时文件未清理，缓存文件过多\n- **处理**：定期清理临时文件（如删除7天前的文件）、设置定时任务、使用流式处理避免产生临时文件\n\n## 3. 数据文件增长过快\n- **特征**：数据库文件持续增长、业务数据量激增、没有数据归档策略\n- **处理**：删除过期数据、建立数据归档策略、冷热数据分离、必要时扩容磁盘\n\n## 4. 备份文件占用空间\n- **特征**：备份目录占用大量空间、多个历史备份未清理、备份文件未压缩\n- **处理**：只保留最近N天的备份、压缩备份文件、将备份转移到对象存储或专用存储\n\n## 5. 应用缓存文件过多\n- **特征**：缓存目录占用大量空间、缓存文件未过期清理、缓存命中率低\n- **处理**：清理无用缓存（如 Maven 缓存、Docker 缓存）、设置缓存过期时间、限制缓存大小、使用 Redis 等外部缓存\n\n## 6. Docker 镜像和容器占用\n- **特征**：大量未使用的镜像、停止的容器未清理、容器日志过大\n- **处理**：执行 `docker system prune -a` 清理无用资源、配置容器日志驱动并限制大小、使用多阶段构建减小镜像体积\n\n---\n\n### 快速排查建议\n如果发现磁盘使用率告警，可以立即执行以下命令找出占用空间最大的文件和目录：\n```bash\n# 查找最大的10个文件\ndu -ah / | sort -rh | head -n 10\n\n# 查找最大的10个目录\ndu -h --max-depth=1 / | sort -rh | head -n 10\n```\n\n如果无法快速清理，应优先执行紧急扩容操作，确保系统正常运行。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高 常见原因"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "日志文件过大",
+        "临时文件堆积",
+        "数据文件增长过快",
+        "备份文件占用空间",
+        "应用缓存文件过多",
+        "Docker 镜像和容器占用空间"
+      ],
+      "matched_points": [
+        "日志文件过大",
+        "临时文件堆积",
+        "数据文件增长过快",
+        "备份文件占用空间",
+        "应用缓存文件过多",
+        "Docker 镜像和容器占用空间"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 4.138,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_03",
+      "question": "排查磁盘占用时，文档中推荐了哪些常用命令？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的《磁盘使用率过高告警处理方案》文档，排查磁盘占用时推荐的常用命令如下：\n\n## 一、查看类命令\n\n| 用途 | 命令 |\n|------|------|\n| **查看磁盘使用率** | `df -h` |\n| **查看目录大小** | `du -sh /var/log` |\n| **查找大文件（如大于1G）** | `find / -type f -size +1G` |\n| **查看inode使用情况** | `df -i` |\n| **查找最大的10个文件** | `du -ah / \\| sort -rh \\| head -n 10` |\n| **查找最大的10个目录** | `du -h --max-depth=1 / \\| sort -rh \\| head -n 10` |\n\n## 二、清理类命令\n\n| 用途 | 命令 |\n|------|------|\n| **清空文件内容（保留文件）** | `> /var/log/large.log` |\n| **删除N天前的文件** | `find /path -mtime +N -delete` |\n| **压缩日志文件** | `gzip /var/log/*.log` |\n| **清理包管理器缓存** | `yum clean all`（CentOS）或 `apt-get clean`（Ubuntu） |\n\n## 三、针对具体场景的命令\n\n- **查找大日志文件**：`find /var/log -type f -size +100M`\n- **删除过期备份**：`find /backup -name \"*.bak\" -mtime +30 -delete`\n- **清理临时文件**：`find /tmp -type f -mtime +7 -delete`\n\n这些命令可以帮助快速定位磁盘空间占用问题并进行相应处理。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常用命令"
+          ],
+          "preview": "## 常用命令   ### 查看磁盘使用情况 ```bash # 查看磁盘使用率 df -h  # 查看目录大小 du -sh /var/log  # 查找大文件 find / -type f -size +1G  # 查看inode使用情况 df -i ```   ### 清理命令 ```bash # 清空文件内容（保留文件） > /var/log/lar...",
+          "recall_path": "both",
+          "queries": [
+            "排查磁盘占用 常用命令"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "df -h 查看磁盘使用率",
+        "du -sh 查看目录大小",
+        "find / -type f -size +1G 查找大文件",
+        "df -i 查看 inode 使用情况"
+      ],
+      "matched_points": [
+        "df -h 查看磁盘使用率",
+        "du -sh 查看目录大小",
+        "find / -type f -size +1G 查找大文件",
+        "df -i 查看 inode 使用情况"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 3.39,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_04",
+      "question": "收到磁盘使用率过高告警后，建议的首轮排查步骤是什么？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "收到磁盘使用率过高告警后，建议的首轮排查步骤如下：\n\n### 第一步：确认告警状态并记录时间\n- 获取当前时间，作为后续日志查询的时间基准。\n\n### 第二步：查询系统监控日志，定位异常\n通过 `system-metrics` 主题（最近30分钟）查询磁盘使用情况：\n```\n查询条件: disk_usage > 80 OR filesystem:full\n```\n确认哪些实例、哪个分区触发了告警。\n\n### 第三步：分析应用日志中的相关报错\n查询 `application-logs` 主题，搜索以下关键字：\n```\nNo space left on device OR disk full\n```\n查看是否有因磁盘满导致的应用异常。\n\n### 第四步：分析磁盘占用情况\n在确认告警主机后，登录服务器进行以下操作：\n\n#### 1. 快速定位大文件和大目录\n```bash\n# 查找最大的10个文件\ndu -ah / | sort -rh | head -n 10\n\n# 查找最大的10个目录\ndu -h --max-depth=1 / | sort -rh | head -n 10\n```\n\n#### 2. 重点关注常见原因\n根据知识库分析，磁盘使用率过高的常见原因及对应检查点：\n\n| 原因 | 检查目录/特征 |\n|------|-------------|\n| **日志文件过大** | `/var/log` 目录下是否有持续增长的大日志文件 |\n| **临时文件堆积** | `/tmp` 目录是否有大量未清理的临时文件 |\n| **数据文件增长过快** | 数据库文件、业务数据目录是否异常膨胀 |\n| **备份文件占用空间** | `/backup` 等备份目录是否有过多历史备份 |\n| **应用缓存文件过多** | `/app/cache` 等缓存目录是否未及时清理 |\n\n### 第五步：紧急处理措施（5分钟内）\n如果磁盘已接近满载，立即执行：\n1. **清空大日志文件**：`> /var/log/application.log`\n2. **清理临时文件**：`find /tmp -type f -mtime +7 -delete`\n3. **删除过期备份**：`find /backup -name \"*.bak\" -mtime +30 -delete`\n4. **如无法快速清理，立即扩容磁盘**\n\n### 第六步：短期优化（30分钟内）\n- 配置日志轮转（logrotate）\n- 清理应用缓存和过期数据\n- 设置完善的磁盘监控告警",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高告警 排查步骤"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先获取当前时间记录告警发生时间",
+        "查询系统磁盘使用相关日志",
+        "再查询应用日志，关注 No space left on device 或 disk full",
+        "分析是哪个目录、日志、临时文件或数据文件占用空间"
+      ],
+      "matched_points": [
+        "查询系统磁盘使用相关日志",
+        "再查询应用日志，关注 No space left on device 或 disk full",
+        "分析是哪个目录、日志、临时文件或数据文件占用空间"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.748,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_05",
+      "question": "如果需要快速定位到底是哪些文件或目录占用了磁盘空间，应该怎么做？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的资料，快速定位占用磁盘空间的文件或目录，可以使用以下方法：\n\n## 1. 查找占用空间最大的文件\n\n```bash\n# 查找系统中最大的10个文件\ndu -ah / | sort -rh | head -n 10\n```\n\n## 2. 查找占用空间最大的目录\n\n```bash\n# 查找根目录下最大的10个目录（递归深度为1）\ndu -h --max-depth=1 / | sort -rh | head -n 10\n```\n\n如果需要更深层次的目录分析，可以调整 `--max-depth` 参数，例如 `--max-depth=2`。\n\n## 3. 针对常见占用源进行排查\n\n### 日志文件\n```bash\n# 查找超过100M的日志文件\nfind /var/log -type f -size +100M\n\n# 按大小排序查看日志占用\ndu -sh /var/log/* | sort -rh | head -n 10\n```\n\n### 临时文件\n```bash\n# 查找大临时文件\nfind /tmp -type f -size +100M\n\n# 查看/tmp目录总占用\ndu -sh /tmp\n```\n\n### 备份文件\n```bash\n# 查找备份文件\nfind /backup -name \"*.bak\" -mtime +30\n```\n\n### 应用缓存\n```bash\n# 查看缓存目录占用\ndu -sh /app/cache/*\n```\n\n## 4. 其他常用命令\n\n- **`df -h`**：查看各分区整体使用情况\n- **`du -sh <目录>`**：查看指定目录的总占用大小\n- **`lsof | grep deleted`**：查找已删除但被进程占用的文件（释放空间用）\n\n通过这些命令，可以快速定位到占用空间最大的文件和目录，从而有针对性地进行清理或优化。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录告警时间，用于日志查询   ### 步骤2: 查询系统磁盘使用情况 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics...",
+          "recall_path": "both",
+          "queries": [
+            "磁盘空间占用 文件目录 定位 分析"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先使用 du 查看最大的目录",
+        "再用 find 查找大文件",
+        "结合日志分析哪些目录增长最快",
+        "重点关注 /var/log、/tmp、备份目录、缓存目录和 Docker 目录"
+      ],
+      "matched_points": [
+        "先使用 du 查看最大的目录",
+        "再用 find 查找大文件"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 4.022,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_06",
+      "question": "如果应用已经出现“无法写日志”或“No space left on device”，下一步应优先检查什么？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的处理方案，当应用出现 **\"无法写日志\"** 或 **\"No space left on device\"** 错误时，下一步应**优先检查磁盘空间使用情况**。\n\n## 优先检查步骤：\n\n### 1. **检查磁盘使用率**\n```bash\ndf -h\n```\n查看各分区的磁盘使用情况，确认是否真的空间已满。\n\n### 2. **检查inode使用情况**\n```bash\ndf -i\n```\n有时磁盘空间充足但**inode耗尽**（大量小文件），也会导致无法写入新文件。这是容易被忽略的关键点。\n\n### 3. **定位占用空间最大的目录/文件**\n```bash\n# 查找最大的10个目录\ndu -h --max-depth=1 / | sort -rh | head -n 10\n\n# 查找大日志文件\nfind /var/log -type f -size +100M\n\n# 查找临时文件\nfind /tmp -type f -size +100M\n```\n\n## 常见原因及快速处理：\n\n| 原因 | 典型特征 | 紧急处理 |\n|------|---------|---------|\n| **日志文件过大** | `/var/log` 占用大量空间 | `> /var/log/application.log` 清空日志 |\n| **临时文件堆积** | `/tmp` 目录满 | `find /tmp -mtime +7 -delete` 清理旧临时文件 |\n| **缓存文件过多** | 应用缓存目录过大 | `rm -rf /app/cache/*` 清理缓存 |\n| **备份文件占用** | 备份目录膨胀 | 删除过期备份或转移到对象存储 |\n| **数据文件增长** | 数据库/业务数据激增 | 归档历史数据或扩容磁盘 |\n\n## 验证恢复：\n1. 确认磁盘使用率降到安全水平（<70%）\n2. 验证日志可以正常写入\n3. 持续监控磁盘使用情况\n\n> **注意**：如果磁盘已完全写满，先执行紧急清理释放空间，然后再排查根本原因并配置日志轮转等预防措施。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "无法写日志 No space left on device 磁盘空间不足",
+            "No space left on device 处理步骤 优先检查 inode"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "无法写日志 No space left on device 磁盘空间不足"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先确认磁盘是否已经接近写满",
+        "检查日志文件是否过大且没有轮转",
+        "查看临时文件、备份或缓存是否堆积",
+        "必要时先快速清理释放空间，再继续定位根因"
+      ],
+      "matched_points": [
+        "查看临时文件、备份或缓存是否堆积"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 5.306,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_07",
+      "question": "如果怀疑是临时文件堆积导致磁盘高，推荐的排查和处理动作有哪些？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，如果怀疑是临时文件堆积导致磁盘高，推荐的排查和处理动作如下：\n\n## 一、排查步骤\n\n### 1. 确认告警时间\n首先获取当前时间，确定告警发生的时间范围。\n\n### 2. 查询系统监控日志\n通过系统指标日志确认磁盘使用情况：\n- **查询条件**: `disk_usage > 80 OR disk_full:true`\n- **重点关注**: 哪个目录占用空间最大\n\n### 3. 检查 /tmp 目录特征\n临时文件堆积的典型特征包括：\n- `/tmp` 目录占用大量空间\n- 存在大量未清理的临时文件\n- 文件上传临时目录已满\n- 缓存文件过多\n\n---\n\n## 二、处理方案\n\n### 1. 立即清理临时文件\n```bash\n# 查找大临时文件（大于100M）\nfind /tmp -type f -size +100M\n\n# 删除7天前的临时文件\nfind /tmp -type f -mtime +7 -delete\n\n# 清理应用临时目录\nrm -rf /app/temp/*\n```\n\n### 2. 设置定期清理机制\n- **定时任务**: 设置 crontab 定期清理临时文件\n- **应用启动时**: 在应用启动时自动清理旧的临时文件\n- **即时删除**: 文件处理完成后立即删除临时文件\n\n### 3. 优化临时文件使用\n- **流式处理**: 使用流式处理避免产生临时文件\n- **限制大小**: 限制单个临时文件的大小\n- **内存替代**: 使用内存缓存替代磁盘临时文件\n\n---\n\n## 三、预防措施\n\n1. **配置日志轮转**（如果临时文件包含日志）\n2. **建立数据归档策略**\n3. **实施冷热数据分离**\n4. **监控磁盘使用趋势**，提前预警",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "临时文件堆积 磁盘高 排查 处理"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "临时文件堆积 磁盘高 排查 处理"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "重点检查 /tmp 和应用临时目录",
+        "查找大临时文件和长期未清理文件",
+        "删除过期临时文件并清理应用临时目录",
+        "后续增加定时清理和优化临时文件使用方式"
+      ],
+      "matched_points": [
+        "重点检查 /tmp 和应用临时目录",
+        "删除过期临时文件并清理应用临时目录"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 6.559,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_08",
+      "question": "如果 /var/log 占用大量空间，而且生产环境日志级别开到了 DEBUG，这更像什么问题，怎么处理？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的信息，这种情况更像是一个**配置不当导致的人为问题**，而非系统故障。以下是详细分析和处理方案：\n\n---\n\n## 问题定性\n\n**这更像是一个\"生产环境日志级别配置错误\"的问题。**\n\n### 原因分析\n- `/var/log` 占用大量空间 + 日志级别设为 DEBUG，这是典型的**日志文件过大**特征\n- DEBUG 级别会记录所有调试信息（包括变量值、流程追踪等），日志量是 INFO 级别的数十倍甚至上百倍\n- 生产环境本应使用 INFO 或 WARN 级别，DEBUG 通常仅用于开发/测试环境\n\n---\n\n## 处理方案\n\n### 1. 立即清理（应急措施）\n\n```bash\n# 查找大日志文件\nfind /var/log -type f -size +100M\n\n# 清空日志文件（保留文件句柄）\n> /var/log/application.log\n\n# 删除7天前的旧日志\nfind /var/log -name \"*.log.*\" -mtime +7 -delete\n\n# 压缩旧日志\ngzip /var/log/*.log.1\n```\n\n### 2. 修改日志级别（根本解决）\n\n将生产环境的日志级别从 `DEBUG` 改为 `INFO` 或 `WARN`：\n\n```yaml\n# application.yml 示例\nlogging:\n  level:\n    root: INFO          # 或 WARN\n    com.company.app: INFO\n```\n\n- **避免打印大对象**：减少不必要的日志输出\n- **生产环境最佳实践**：使用 INFO/WARN 级别，DEBUG 仅用于排查问题时临时开启\n\n### 3. 配置日志轮转（长期预防）\n\n启用 logrotate，设置：\n- 日志保留天数（如7天）\n- 日志压缩\n- 限制单个日志文件大小\n\n### 4. 预防措施\n\n| 措施 | 说明 |\n|------|------|\n| **监控告警** | 设置60%预警，80%严重告警 |\n| **定期清理** | 每周自动清理临时文件和旧日志 |\n| **容量规划** | 根据增长趋势提前扩容 |\n| **日志管理** | 实施统一的日志管理策略 |\n| **数据归档** | 建立数据归档和清理机制 |\n\n---\n\n## 总结\n\n| 维度 | 说明 |\n|------|------|\n| **问题类型** | 配置不当（生产环境误开 DEBUG） |\n| **紧急程度** | 中（需尽快处理，避免磁盘写满） |\n| **根本原因** | 日志级别设置错误 + 缺少日志轮转机制 |\n| **处理方式** | 先清空间 → 改级别 → 配轮转 → 建监控 |",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常用命令"
+          ],
+          "preview": "## 常用命令   ### 查看磁盘使用情况 ```bash # 查看磁盘使用率 df -h  # 查看目录大小 du -sh /var/log  # 查找大文件 find / -type f -size +1G  # 查看inode使用情况 df -i ```   ### 清理命令 ```bash # 清空文件内容（保留文件） > /var/log/lar...",
+          "recall_path": "both",
+          "queries": [
+            "/var/log 日志空间占用 DEBUG 级别 生产环境"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像日志文件过大且日志管理不当",
+        "可以先清空或压缩大日志文件释放空间",
+        "删除过旧日志并启用日志轮转",
+        "将生产环境日志级别调整为 INFO 或 WARN"
+      ],
+      "matched_points": [
+        "更像日志文件过大且日志管理不当",
+        "将生产环境日志级别调整为 INFO 或 WARN"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 5.813,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_09",
+      "question": "如果备份目录积累了大量历史备份文件导致磁盘告警，应该如何处理？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的磁盘使用率过高告警处理方案，当备份目录因积累大量历史备份文件导致磁盘告警时，可以采取以下处理措施：\n\n---\n\n## 一、紧急处理：清理旧备份文件\n\n### 1. 查找并删除过期备份\n```bash\n# 查找备份文件（如 .bak 文件）\nfind /backup -name \"*.bak\" -mtime +30\n\n# 删除30天前的备份文件\nfind /backup -name \"*.bak\" -mtime +30 -delete\n```\n\n> **说明**：`-mtime +30` 表示修改时间在30天之前的文件，可根据实际策略调整天数。\n\n### 2. 验证清理效果\n```bash\n# 查看磁盘使用率是否恢复正常\ndf -h\n\n# 确认备份目录占用空间\ndu -sh /backup\n```\n\n---\n\n## 二、优化备份策略（预防措施）\n\n| 措施 | 说明 |\n|------|------|\n| **只保留最近N天的备份** | 配置备份任务自动清理超过保留期的文件 |\n| **压缩备份文件** | 减少单个备份文件的存储空间占用 |\n| **实现增量备份** | 相比全量备份，显著降低存储需求 |\n| **备份转移到对象存储** | 将备份文件上传至云存储服务（如OSS），本地仅保留近期备份 |\n| **定期清理本地备份** | 设置定时任务自动清理旧备份文件 |\n\n---\n\n## 三、后续验证与监控\n\n1. **确认磁盘使用率降到安全水平**（建议 < 70%）\n2. **检查应用运行正常**，确保备份清理未影响业务\n3. **持续监控磁盘使用情况**，设置预警阈值：\n   - 60% 预警\n   - 80% 严重告警\n\n---\n\n## 四、相关参考\n\n如需进一步了解磁盘管理最佳实践，可参考内部文档：\n- [磁盘管理最佳实践](internal-docs/disk-management.md)\n- [数据归档策略](internal-docs/data-archiving.md)\n\n如有紧急情况，请联系运维团队：**ops-team@company.com** 或拨打紧急电话 **400-xxx-xxxx**。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "备份目录磁盘告警 清理历史备份文件"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先查找并清理过期备份文件",
+        "只保留最近 N 天的备份",
+        "对备份文件进行压缩",
+        "将备份转移到对象存储或专用存储"
+      ],
+      "matched_points": [
+        "先查找并清理过期备份文件",
+        "只保留最近 N 天的备份",
+        "将备份转移到对象存储或专用存储"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.23,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_10",
+      "question": "如果磁盘空间主要被 Docker 镜像、容器和卷占满，应该优先做哪些操作？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "当磁盘空间主要被 Docker 相关组件占满时，建议按照以下优先级进行排查与清理操作。这些操作基于 Docker 官方最佳实践及运维标准流程：\n\n### 🔍 第一步：快速定位占用源\n在清理前，先使用以下命令直观查看各类资源的磁盘占用排名：\n```bash\ndocker system df          # 概览容器、镜像、卷、构建缓存的占用量\ndocker system df -v       # 详细列出每个对象的具体大小\ndu -sh /var/lib/docker/*  # 从宿主机视角查看底层目录占用\n```\n\n---\n\n### 🧹 第二步：按优先级执行清理\n\n#### 1. 清理“僵尸”容器（风险最低，立竿见影）\n已停止且不再需要的容器会持续占用文件系统层。\n```bash\n# 安全删除所有已停止的容器\ndocker container prune\n\n# 若需彻底释放空间，可连带未被任何容器引用的网络一起清理\ndocker network prune\n```\n\n#### 2. 清理无用镜像（核心大头）\n旧版本镜像、构建中间层镜像通常是磁盘杀手。\n```bash\n# 清理所有带 <none> 标签的悬空镜像（Dangling images）\ndocker image prune\n\n# 深度清理：删除所有未被任何容器引用的镜像（⚠️ 谨慎操作，确保业务不依赖）\ndocker image prune -a\n```\n\n#### 3. 清理未挂载的数据卷（Volume）\n测试或废弃服务留下的数据卷会静默吃满磁盘。\n```bash\n# 删除所有未被任何容器使用的匿名卷\ndocker volume prune\n\n# 若要指定清理某个项目的卷，可使用过滤条件\ndocker volume prune --filter \"label=project=xxx\"\n```\n\n#### 4. 清理 Buildx 构建缓存（常被忽略）\n频繁执行 `docker build` 会积累大量缓存层。\n```bash\ndocker builder prune -a   # 清除所有构建缓存\n```\n\n---\n\n### ⚠️ 第三步：重点排查并治理“容器日志”\nDocker 默认会将容器的 stdout/stderr 输出直接追加到宿主机的 JSON 日志文件中。**这往往是导致磁盘爆满的真正元凶**，尤其是运行时间长的服务。\n\n**临时应急：**\n```bash\n# 找到占用最大的日志文件并清空（保留文件句柄，避免重启进程）\ntruncate -s 0 /var/lib/docker/containers/<container-id>/<id>-json.log\n```\n\n**根本解决（配置日志轮转）：**\n编辑或创建 `/etc/docker/daemon.json`，添加全局日志限制：\n```json\n{\n  \"log-driver\": \"json-file\",\n  \"log-opts\": {\n    \"max-size\": \"100m\",\n    \"max-file\": \"3\"\n  }\n}\n```\n保存后重启 Docker 服务生效：`systemctl restart docker`\n\n---\n\n### 🛡️ 第四步：建立长效预防机制\n1. **定期自动化清理**：通过 Crontab 每周执行一次 `docker system prune -f --volumes`（生产环境建议去掉 `--volumes` 参数以防误删持久化数据）。\n2. **镜像瘦身**：在多阶段构建（Multi-stage builds）中减小基础镜像体积，减少单次拉取和存储开销。\n3. **监控告警**：对 `/var/lib/docker` 所在分区设置容量监控（如超过 75% 触发预警），避免突发宕机。\n\n> 💡 **操作提示**：执行 `prune` 类命令前，请确认当前无正在运行的核心业务容器依赖即将被删除的资源。建议先备份关键数据卷再执行深度清理。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "Docker 磁盘空间清理 镜像 容器 卷",
+            "Docker 清理镜像 容器 卷 磁盘空间 docker system prune"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "Docker 磁盘空间清理 镜像 容器 卷",
+            "Docker 清理镜像 容器 卷 磁盘空间 docker system prune"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "清理未使用的镜像、停止的容器和未使用的卷",
+        "必要时执行 docker system prune 等清理命令",
+        "限制容器日志大小并配置轮转",
+        "后续优化镜像体积和资源管理策略"
+      ],
+      "matched_points": [
+        "清理未使用的镜像、停止的容器和未使用的卷",
+        "必要时执行 docker system prune 等清理命令"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 11.302,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_11",
+      "question": "磁盘使用率过高和服务不可用在故障影响和排查起点上有什么不同？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md",
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的信息，**磁盘使用率过高**和**服务不可用**在故障影响和排查起点上存在显著差异：\n\n### 一、故障影响不同\n\n| 维度 | **服务不可用 (ServiceUnavailable)** | **磁盘使用率过高 (HighDiskUsage)** |\n|------|-------------------------------------|-----------------------------------|\n| **告警级别** | **紧急** | **警告 (>80%) / 严重 (>90%)** |\n| **直接表现** | 用户无法访问服务，业务完全中断 | 系统性能下降，可能无法写入新数据 |\n| **影响范围** | 业务完全中断，直接影响所有用户 | 可能引发应用崩溃、日志无法记录、数据库损坏等 |\n| **后果严重程度** | 立即造成经济损失和公司声誉影响 | 可能导致间接的系统性故障（如后续服务不可用） |\n\n### 二、排查起点不同\n\n#### **服务不可用的排查起点：**\n- **触发条件**：健康检查失败或错误率超过50%\n- **核心关注点**：服务的可用性状态和请求处理情况\n- **排查方向**：服务进程是否存活、网络连接、依赖服务是否正常、错误率统计\n\n#### **磁盘使用率过高的排查起点：**\n- **触发条件**：磁盘使用率持续5分钟超过阈值\n- **核心关注点**：磁盘空间占用情况和文件分布\n- **常见原因及排查方向**：\n  1. **日志文件过大**：检查 `/var/log` 目录，查看是否有未轮转的日志\n  2. **临时文件堆积**：检查 `/tmp` 目录和应用临时目录\n  3. **数据文件增长过快**：检查数据库文件和业务数据量\n  4. **备份文件占用**：检查备份目录中未清理的历史备份\n  5. **缓存文件过多**：检查应用缓存目录\n\n### 三、关键区别总结\n\n1. **紧迫性不同**：服务不可用是**紧急故障**，需要立即响应；磁盘使用率过高通常有缓冲时间，但需及时处理以防演变为更严重的故障。\n\n2. **因果关系**：磁盘使用率过高往往是**根因**，可能导致服务不可用这一**结果**。因此，当出现服务不可用时，也需要排查是否存在磁盘空间不足的问题。\n\n3. **排查复杂度**：服务不可用排查侧重于服务状态和网络层面；磁盘使用率过高则需要深入文件系统，定位具体占用空间的文件和目录。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高 服务不可用 故障影响 排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 磁盘使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighDiskUsage` - **告警级别**: 警告（>80%）/ 严重（>90%） - **触发条件**: 磁盘使用率持续5分钟超过阈值  ## 问题描述 磁盘使用率过高会导致： - 无法写入新数据 - 日志无法记录 - 应用崩溃 - 数据库损坏 - 系统性能下降",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高 服务不可用 故障影响 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "磁盘高更偏向容量问题，核心是定位哪个目录或文件占满磁盘",
+        "服务不可用更偏向业务中断，需要先确认服务状态、错误日志和依赖状态",
+        "磁盘高通常先清理空间恢复写入能力",
+        "服务不可用通常先恢复可用性，例如回滚、重启、降级或摘除故障实例"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 5.893,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "disk_12",
+      "question": "磁盘使用率过高和服务响应变慢在典型表现与优化方向上分别有什么不同？",
+      "gold_docs": [
+        "aiops-docs/disk_high_usage.md",
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库资料，**磁盘使用率过高**与**服务响应变慢**在典型表现和优化方向上有以下区别：\n\n---\n\n## 一、典型表现对比\n\n### **磁盘使用率过高的表现：**\n1. **系统层面**：无法写入新数据、日志无法记录、数据库损坏风险\n2. **应用层面**：应用崩溃（特别是因日志无法写入或缓存文件满导致）\n3. **特征现象**：\n   - `/var/log` 目录占用大量空间\n   - `/tmp` 临时文件堆积\n   - 数据库文件持续增长\n   - 备份文件未清理占用空间\n4. **告警级别**：警告（>80%）/ 严重（>90%），持续5分钟超过阈值\n\n### **服务响应变慢的表现：**\n1. **用户层面**：请求超时、响应时间显著增加\n2. **系统层面**：CPU/内存资源瓶颈、数据库连接池耗尽、依赖服务故障\n3. **常见关联原因**：\n   - 流量突增导致对象激增\n   - JVM Full GC 频繁，内存无法释放\n   - 缓存命中率低，频繁读取后端存储\n   - 大文件或大数据一次性加载导致内存飙升\n   - 线程池/连接池耗尽\n\n---\n\n## 二、优化方向对比\n\n### **磁盘使用率过高的优化方向：**\n\n| 优化维度 | 具体措施 |\n|---------|---------|\n| **立即清理** | 清空大日志文件、删除过期临时文件和旧备份 |\n| **日志管理** | 启用 logrotate、配置日志轮转、限制单个文件大小、生产环境使用 INFO/WARN 级别 |\n| **数据归档** | 建立冷热数据分离策略、定期归档历史数据到对象存储 |\n| **临时文件治理** | 设置定时任务清理、流式处理替代临时文件、限制临时文件大小 |\n| **容量规划** | 设置60%预警、80%严重告警、根据增长趋势提前扩容 |\n\n### **服务响应变慢的优化方向：**\n\n| 优化维度 | 具体措施 |\n|---------|---------|\n| **紧急措施** | 重启应用、扩容实例、启用限流保护系统 |\n| **代码优化** | 改为流式处理避免一次性加载、分批处理大数据、异步处理耗时任务 |\n| **缓存优化** | 调整缓存大小、设置合理 TTL、启用 LRU 淘汰、监控命中率 |\n| **JVM 调优** | 调整堆内存参数（-Xmx/-Xms）、优化 GC 算法、调整代际比例 |\n| **架构优化** | 实现熔断降级、控制重试次数、添加超时机制、隔离故障依赖 |\n| **资源扩容** | 增加内存配置、增加应用实例数量、调整连接池参数 |\n\n---\n\n## 三、核心差异总结\n\n| 对比项 | 磁盘使用率过高 | 服务响应变慢 |\n|--------|---------------|-------------|\n| **本质问题** | **存储空间不足** | **性能瓶颈**（CPU/内存/IO/网络） |\n| **影响范围** | 主要是写入操作受阻 | 所有请求都受影响 |\n| **排查重点** | 查找大文件、检查日志轮转、分析数据增长 | 分析 CPU/内存指标、GC 日志、线程状态、依赖调用链 |\n| **解决思路** | **清理+归档+扩容** | **优化+限流+扩容** |\n| **预防手段** | 监控告警、定期清理、容量规划 | 压测演练、资源预留、弹性伸缩 |\n\n简而言之：**磁盘问题重在\"管住存量、控制增量\"**，而**响应慢问题重在\"提升效率、保障资源\"**。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢 典型表现 优化方向"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高 典型表现 优化方向"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢 典型表现 优化方向"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "磁盘高更多表现为无法写入、日志失败、应用崩溃或数据库风险",
+        "慢响应更多表现为响应时间超阈值、请求堆积和用户体验下降",
+        "磁盘高优化重点是清理空间、轮转日志、归档数据和扩容",
+        "慢响应优化重点是慢查询、外部依赖、缓存策略和性能优化"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 7.53,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_01",
+      "question": "ServiceUnavailable 告警通常在什么情况下触发，会带来哪些影响？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "## ServiceUnavailable 告警详解\n\n### 触发条件\n根据知识库信息，**ServiceUnavailable**（服务不可用）告警在以下两种情况下触发：\n\n1. **服务健康检查失败** — 服务实例无法通过健康检查，表明服务处于异常状态\n2. **错误率超过 50%** — 服务的错误请求比例达到或超过 50%\n\n该告警属于**紧急级别**的告警。\n\n---\n\n### 带来的影响\n\nServiceUnavailable 是最严重的故障类型，会造成：\n\n| 影响项 | 说明 |\n|--------|------|\n| **用户无法访问服务** | 客户端请求无法正常得到响应 |\n| **业务完全中断** | 依赖该服务的所有业务流程停止 |\n| **经济损失** | 直接影响营收和客户转化 |\n| **公司声誉受损** | 长期不可用会损害品牌信任度 |\n\n---\n\n### 常见原因\n\n虽然 ServiceUnavailable 本身是结果性告警，但常见诱因包括：\n- **数据库连接失败**（如连接池满载、慢查询导致超时）\n- **外部 API 调用超时**（下游服务响应慢）\n- **系统资源不足**（CPU/内存爆满）\n- **代码性能问题**（热点方法执行过慢）\n- **缓存失效或穿透**（流量直接打到数据库）\n- **网络问题**（跨地域延迟高、丢包）\n\n---\n\n### 处理流程要点\n\n| 时间节点 | 行动 |\n|----------|------|\n| **1 分钟内** | 确认故障，启动应急响应，摘除故障实例或启用备用服务 |\n| **5 分钟内** | 快速定位原因，决策修复或回滚 |\n| **15 分钟内** | 恢复服务，验证核心功能可用 |\n| **30 分钟内** | 全面验证所有功能，发布公告，初步总结 |\n\n**升级机制**：15分钟未恢复升级到技术总监；30分钟未恢复到CTO；1小时未恢复则启动最高级别应急响应。\n\n如需了解具体服务的排查步骤，可以提供服务名称，我可以帮你进一步分析。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "ServiceUnavailable 告警 触发条件 影响"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "ServiceUnavailable 告警 触发条件 影响"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "服务健康检查失败或错误率超过 50%",
+        "会导致用户无法访问服务",
+        "会造成业务完全中断",
+        "可能带来经济损失和声誉影响"
+      ],
+      "matched_points": [
+        "服务健康检查失败或错误率超过 50%",
+        "会导致用户无法访问服务",
+        "会造成业务完全中断"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.526,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_02",
+      "question": "服务不可用的常见原因有哪些？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库资料，服务不可用通常由以下几种常见原因导致：\n\n### 1. **系统资源不足**\n- **特征**: CPU或内存使用率高、磁盘IO繁忙、网络带宽占用高、系统负载过高\n- **处理方案**: \n  - 资源扩容（水平扩展增加实例数量，垂直扩展升级实例规格）\n  - 负载均衡检查，确保流量均匀分布\n  - 启用限流降级，优先保证核心业务\n\n### 2. **数据库慢查询**\n- **特征**: 慢查询日志中有大量记录、数据库CPU使用率高、特定SQL执行时间长、数据库连接池接近满载\n- **处理方案**:\n  - 立即优化：找出最慢的SQL语句、检查索引、查看执行计划\n  - 短期措施：增加数据库连接池大小、启用查询缓存\n  - 长期优化：定期分析慢查询日志、优化表结构、考虑分库分表\n\n### 3. **外部API调用超时**\n- **特征**: 日志中有第三方API调用记录、特定接口响应时间长、可能有网络超时错误\n- **处理方案**:\n  - 设置合理超时时间，避免无限等待\n  - 实施熔断机制和降级策略\n  - 并行调用多个API或使用批量接口\n\n### 4. **代码性能问题**\n- **特征**: CPU使用率高、特定代码路径执行慢、无明显外部依赖问题\n- **处理方案**:\n  - 使用APM工具定位慢方法，分析火焰图\n  - 优化循环和递归、减少不必要的对象创建\n  - 非关键逻辑异步执行，使用消息队列解耦\n\n### 5. **缓存失效或缓存穿透**\n- **特征**: 缓存命中率突然下降、数据库查询量激增、日志中有缓存miss记录\n- **处理方案**:\n  - 重启后立即预热热点数据\n  - 对空值也进行缓存，使用布隆过滤器\n  - 设置合理的过期时间，实现多级缓存\n\n### 6. **网络问题**\n- **特征**: 跨地域调用延迟高、网络丢包率增加、日志中有网络超时错误\n- **处理方案**:\n  - 使用CDN加速、优化网络路由\n  - 部署多地域实例，智能DNS解析\n  - 启用GZIP压缩，优化数据传输格式\n\n### 7. **磁盘使用率过高**\n- **常见原因**:\n  - 日志文件过大（没有日志轮转、日志级别设置为DEBUG）\n  - 临时文件堆积未清理\n  - 数据文件增长过快\n  - 备份文件占用空间\n  - 应用缓存文件过多\n\n当服务健康检查失败或错误率超过50%时，会触发`ServiceUnavailable`紧急告警，需要立即排查以上原因并恢复服务。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用 常见原因"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用 常见原因"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "keyword",
+          "queries": [
+            "服务不可用 常见原因"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "应用崩溃或无法启动",
+        "数据库连接失败",
+        "依赖服务故障",
+        "配置错误",
+        "资源耗尽",
+        "网络故障"
+      ],
+      "matched_points": [
+        "数据库连接失败"
+      ],
+      "point_hit_rate": 0.1667,
+      "latency_seconds": 5.217,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2,
+        "keyword": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_03",
+      "question": "服务不可用故障处理时，文档给出的应急时间线大致是怎样的？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据文档中的服务不可用告警处理方案，应急时间线如下：\n\n## 服务不可用故障应急时间线\n\n### **1分钟内**\n- **确认故障**：通过监控和日志确认服务确实不可用\n- **启动应急**：通知相关人员，启动应急响应流程\n- **止损措施**：\n  - 部分实例故障：摘除故障实例\n  - 全部故障：启用备用服务或维护页面\n\n### **5分钟内**\n- **快速定位**：查看日志和监控，快速定位问题原因\n- **决策处理**：\n  - 能快速修复 → 立即修复\n  - 无法快速修复 → 执行回滚\n  - 依赖故障 → 启用降级\n\n### **15分钟内**\n- **恢复服务**：通过回滚、修复或降级恢复服务\n- **验证功能**：确认核心功能可用\n- **监控观察**：持续监控服务状态\n\n### **30分钟内**\n- **全面验证**：验证所有功能正常\n- **通知用户**：如果影响用户，发布公告\n- **初步总结**：记录故障原因和处理过程\n\n---\n\n## 升级机制\n- **15分钟未恢复**：升级到技术总监\n- **30分钟未恢复**：升级到CTO\n- **1小时未恢复**：启动最高级别应急响应\n\n## 恢复后验证步骤\n1. 健康检查：确认所有实例通过健康检查\n2. 功能测试：测试核心业务功能\n3. 性能验证：确认响应时间和吞吐量正常\n4. 错误率：确认错误率降到正常水平（<1%）\n5. 持续监控：观察30分钟确保稳定",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "紧急处理流程"
+          ],
+          "preview": "## 紧急处理流程   ### 第一时间（1分钟内） 1. **确认故障**: 通过监控和日志确认服务确实不可用 2. **启动应急**: 通知相关人员，启动应急响应流程 3. **止损措施**: - 如果是部分实例故障，摘除故障实例 - 如果是全部故障，启用备用服务或维护页面   ### 5分钟内 1. **快速定位**: 查看日志和监控，快速定位问题原因...",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用故障处理 应急时间线"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "第一时间确认故障、启动应急并采取止损措施",
+        "5 分钟内快速定位问题并决定修复、回滚或降级",
+        "15 分钟内恢复服务并验证核心功能",
+        "30 分钟内完成全面验证、通知和初步总结"
+      ],
+      "matched_points": [
+        "5 分钟内快速定位问题并决定修复、回滚或降级",
+        "15 分钟内恢复服务并验证核心功能",
+        "30 分钟内完成全面验证、通知和初步总结"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 3.643,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_04",
+      "question": "收到服务不可用告警后，推荐的第一轮排查步骤是什么？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的《服务不可用告警处理方案》，收到服务不可用告警后，推荐的**第一轮排查步骤**如下：\n\n---\n\n### 第一轮排查步骤\n\n#### **步骤1: 获取当前时间**\n- **目的**: 记录故障发生时间，用于后续分析\n- **工具**: `get_current_time`\n\n#### **步骤2: 查询服务状态日志**\n- **地域**: `ap-guangzhou`\n- **日志主题**: `application-logs`\n- **时间范围**: 最近15分钟\n- **查询条件**: `level:ERROR OR level:FATAL OR status:500`\n- **目的**: 查看应用层是否有异常报错或致命错误\n\n#### **步骤3: 查询系统事件日志**\n- **地域**: `ap-guangzhou`\n- **日志主题**: `system-events`\n- **查询条件**: `event:restart OR event:crash OR event:oom_kill`\n- **目的**: 检查服务是否发生了重启、崩溃或OOM（内存溢出）等系统级事件\n\n#### **步骤4: 检查依赖服务状态**\n- **地域**: `ap-guangzhou`\n- **日志主题**: `application-logs`\n- **查询条件**: `downstream_service OR database OR redis OR mq`\n- **目的**: 排查是否因数据库、Redis、消息队列等下游依赖服务故障导致的服务不可用\n\n---\n\n### 常见原因速查\n完成上述四步排查后，可根据日志结果定位以下常见问题之一：\n1. **应用崩溃/无法启动** → 检查启动日志和OOM记录\n2. **数据库连接失败** → 检查\"Connection refused\"或连接池耗尽\n3. **依赖服务故障** → 检查Redis/MQ等中间件状态\n4. **配置错误** → 检查最近的配置变更\n5. **资源耗尽** → 检查磁盘空间、文件描述符、内存使用\n6. **网络故障** → 检查网络连通性、DNS解析、负载均衡器\n\n如果排查过程中需要进一步深入分析（如CPU/内存监控、Prometheus告警等），可以继续执行第二轮排查。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用告警 排查步骤"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先获取当前时间记录故障时间",
+        "查询 application-logs，重点看 ERROR、FATAL 和 500 状态",
+        "查询 system-events，查看 restart、crash 或 oom_kill",
+        "继续检查数据库、Redis、MQ 等依赖服务状态"
+      ],
+      "matched_points": [
+        "先获取当前时间记录故障时间",
+        "查询 application-logs，重点看 ERROR、FATAL 和 500 状态",
+        "查询 system-events，查看 restart、crash 或 oom_kill",
+        "继续检查数据库、Redis、MQ 等依赖服务状态"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 3.932,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_05",
+      "question": "如果要区分是应用自身崩溃，还是依赖服务故障导致服务不可用，应该重点看什么？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的处理方案，区分**应用自身崩溃**还是**依赖服务故障导致服务不可用**，需要重点关注以下几个维度：\n\n## 一、查看日志内容（最直接的方式）\n\n| 特征 | 应用自身崩溃 | 依赖服务故障 |\n|------|-------------|-------------|\n| **关键日志** | 启动失败记录、OOM（内存溢出）、致命错误 | 调用第三方服务失败、连接超时错误 |\n| **错误类型** | `OutOfMemoryError`、StackOverflow、段错误等 | `Connection refused`、`TimeoutException`、网络超时 |\n| **影响范围** | 所有实例同时失败 | 可能只有部分请求失败，或出现级联故障 |\n\n## 二、查看监控指标\n\n- **应用自身崩溃**：\n  - CPU使用率突然归零（进程已退出）\n  - 内存使用异常（OOM前会飙升）\n  - 健康检查全部失败\n  \n- **依赖服务故障**：\n  - 应用CPU/内存可能正常\n  - 但特定接口响应时间显著变长\n  - 日志中出现大量下游调用超时\n\n## 三、检查依赖服务状态\n\n根据知识库中的分类，依赖服务故障的典型表现包括：\n- Redis、MQ等中间件不可用\n- 数据库连接池耗尽（\"Too many connections\"）\n- 外部API调用超时\n- 网络连接超时\n\n## 四、快速判断流程\n\n```\n1. 先看日志 → 是否有 OOM / 启动失败？ → 是 → 应用自身问题\n                  ↓ 否\n2. 是否报连接超时 / 下游调用失败？ → 是 → 依赖服务故障\n                  ↓ 否  \n3. 检查配置变更记录 → 有变更 → 可能是配置错误\n                  ↓ 无\n4. 检查资源使用情况 → 磁盘满/文件描述符耗尽 → 资源问题\n```\n\n## 五、对应的处理方案\n\n- **应用自身崩溃**：立即回滚版本、检查配置文件、修复后重新部署\n- **依赖服务故障**：启用熔断机制、跳过非关键依赖、恢复依赖服务、实施降级策略\n\n> **核心建议**：排查时优先查看**应用启动日志**和**运行时错误日志**，结合**监控数据**（CPU、内存、健康检查）综合判断。如果日志中明确出现\"Connection refused\"或\"Timeout\"且依赖服务监控异常，则大概率是依赖服务故障；如果出现OOM或启动失败记录，则是应用自身问题。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "应用崩溃 依赖服务故障 服务不可用 排查方法"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "应用崩溃 依赖服务故障 服务不可用 排查方法"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "应用崩溃通常会出现启动失败、OOM、致命错误和健康检查全部失败",
+        "依赖故障通常会出现数据库、Redis、MQ 或下游服务调用失败日志",
+        "需要同时看应用日志和系统事件日志",
+        "再判断是回滚、重启应用还是先恢复依赖服务"
+      ],
+      "matched_points": [
+        "应用崩溃通常会出现启动失败、OOM、致命错误和健康检查全部失败"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 5.905,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_06",
+      "question": "如果日志里出现“Connection refused”或“Too many connections”，排查方向应该怎么展开？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的排查方案，当日志中出现 **\"Connection refused\"** 或 **\"Too many connections\"** 时，通常指向**数据库连接失败**问题。以下是系统化的排查方向：\n\n---\n\n## 一、快速定位原因\n\n### 1. 检查数据库状态\n- **确认数据库服务是否正常运行**（进程是否存在、端口是否监听）\n- **检查当前数据库连接数**，对比最大连接数限制\n- **查看数据库错误日志**，寻找是否有OOM、僵死连接等记录\n\n### 2. 分析具体错误类型\n\n| 错误类型 | 可能原因 | 排查重点 |\n|---------|---------|---------|\n| **Connection refused** | 数据库未启动 / 端口不通 / 防火墙拦截 | 网络连通性、数据库进程状态 |\n| **Too many connections** | 连接池耗尽 / 连接泄漏 | 连接池配置、应用层连接释放 |\n\n---\n\n## 二、恢复措施\n\n### 立即可操作\n1. **重启应用重建连接池** — 释放僵死连接，重新建立连接\n2. **增加数据库最大连接数** — 临时缓解压力\n3. **清理无效/僵死连接** — 在数据库中执行相关命令\n\n### 应用层处理\n4. **调整连接池配置** — 如增大 maxActive、设置合理的 idleTimeout\n5. **实现连接重试机制** — 避免瞬时故障导致请求失败\n6. **检查代码中是否存在连接未关闭的情况**（防止连接泄漏）\n\n---\n\n## 三、深层排查步骤\n\n```\n步骤1: 查询最近15分钟的应用日志\n       → 过滤 level:ERROR 且包含 \"connection\" 的日志\n\n步骤2: 检查依赖服务状态\n       → 确认数据库、Redis、MQ等中间件是否正常\n\n步骤3: 测试网络连通性\n       → ping / telnet 目标数据库IP和端口\n\n步骤4: 监控资源使用情况\n       → CPU、内存、文件描述符是否耗尽\n```\n\n---\n\n## 四、预防措施\n\n- **设置连接池监控告警** — 连接使用率达到80%时预警\n- **定期审查连接配置** — 确保 maxConnections 与实际负载匹配\n- **代码审查** — 重点关注 try-with-resources 或 finally 块中的连接关闭逻辑\n- **压测验证** — 上线前进行连接池压力测试\n\n> **核心原则**：先恢复服务（重启应用/扩容），再定位根因（连接泄漏/配置不当/数据库过载）。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "Connection refused Too many connections 排查"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **重启高内存实例**: 快速释放内存，恢复服务 2. **扩容**: 增加实例数量，分散内存压力 3. **限流**: 如果是流量问题，启用限流保护   ### 短期措施（30分钟内） 1. **分析日志**: 确定内存增长的根本原因 2. **dump内存快照**: 保留现场用于后续分析 3. ...",
+          "recall_path": "keyword",
+          "queries": [
+            "Connection refused Too many connections 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先判断为数据库连接失败问题",
+        "检查数据库服务是否正常运行",
+        "检查数据库连接数和错误日志",
+        "必要时增加最大连接数、释放僵死连接，并重启应用重建连接池"
+      ],
+      "matched_points": [
+        "检查数据库服务是否正常运行",
+        "检查数据库连接数和错误日志",
+        "必要时增加最大连接数、释放僵死连接，并重启应用重建连接池"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 5.043,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1,
+        "keyword": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_07",
+      "question": "如果服务不可用前刚发生过配置变更，建议怎样排查和处理？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中关于“服务不可用”的常见原因分析，如果服务在配置变更后立即不可用，这通常属于**原因4：配置错误**。\n\n建议按照以下步骤进行排查和处理：\n\n### 1. 核心处理方案（按优先级执行）\n\n*   **第一步：立即回滚配置（最优先）**\n    *   将配置恢复到上一个正确的版本，以尽快恢复服务可用性。\n    *   这是解决此类问题最快的方式，避免因反复调试配置导致故障时间延长。\n\n*   **第二步：排查与修复**\n    *   **检查语法**：查看配置文件是否存在格式或语法错误。\n    *   **验证变量**：确认所需的环境变量是否缺失或被错误覆盖。\n    *   **对比差异**：将变更后的配置与之前的正确配置进行对比，找出具体修改错误的项。\n    *   **修正并重载**：修正错误后重新加载配置并重启服务。\n\n*   **第三步：配置管理优化**\n    *   建议使用**配置中心**统一管理配置，避免本地文件修改带来的风险。\n    *   建立配置变更的**审批机制**，并保留历史版本记录，以便随时回溯。\n\n### 2. 排查特征（辅助判断）\n\n如果在排查过程中观察到以下特征，可进一步确认为配置问题：\n*   **近期有动作**：故障前刚进行过配置变更操作。\n*   **日志报错**：应用日志中出现“配置加载错误”、“Missing Environment Variable”等提示。\n*   **启动失败**：服务因启动参数错误或关键配置缺失而无法启动。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用 配置变更 排查处理"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先怀疑配置错误",
+        "先回滚到上一个正确配置",
+        "检查配置文件语法、环境变量和启动参数",
+        "修复配置后重新加载或重新部署"
+      ],
+      "matched_points": [
+        "先回滚到上一个正确配置",
+        "检查配置文件语法、环境变量和启动参数"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 8.928,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_08",
+      "question": "新版本发布后所有实例健康检查都失败，这种情况最优先的处理动作是什么？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的服务不可用告警处理方案，**新版本发布后所有实例健康检查都失败**时，最优先的处理动作是：\n\n## **立即回滚到上一个稳定版本**\n\n### 理由分析：\n\n1. **故障特征判断**：\n   - 新发布版本导致**全部实例**健康检查失败，属于严重故障（ServiceUnavailable 级别）\n   - 根据处理流程，这属于\"全部故障\"情况，无法通过摘除部分实例解决\n\n2. **为什么回滚是最优选择**：\n   - 如果是代码或配置问题导致的新版本缺陷，快速修复的难度和时间通常大于回滚\n   - 知识库明确指出：\"如果无法快速修复，执行回滚\"\n   - 回滚是最快恢复服务的止损措施\n\n3. **紧急时间线要求**：\n   - **1分钟内**：确认故障、启动应急、启用备用服务或维护页面\n   - **5分钟内**：快速定位问题，决策是否回滚\n   - **15分钟内**：必须通过回滚、修复或降级恢复服务\n\n### 同时需要配合的动作：\n\n- 查看日志和监控，快速定位健康检查失败的具体原因\n- 通知运维、开发值班人员（运维：400-xxx-1111 / 开发：400-xxx-2222）\n- 如影响用户，及时发布公告\n- 若15分钟未恢复，需升级到技术总监；30分钟未恢复升级到CTO\n\n### 后续预防措施：\n为避免此类问题再次发生，建议实施**灰度发布、蓝绿部署或金丝雀发布**策略，确保新版本先小范围验证后再全量发布。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "紧急处理流程"
+          ],
+          "preview": "## 紧急处理流程   ### 第一时间（1分钟内） 1. **确认故障**: 通过监控和日志确认服务确实不可用 2. **启动应急**: 通知相关人员，启动应急响应流程 3. **止损措施**: - 如果是部分实例故障，摘除故障实例 - 如果是全部故障，启用备用服务或维护页面   ### 5分钟内 1. **快速定位**: 查看日志和监控，快速定位问题原因...",
+          "recall_path": "both",
+          "queries": [
+            "版本发布 健康检查失败 实例"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "版本发布 健康检查失败 实例"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先判断为应用崩溃或无法启动",
+        "如果和发布相关，应立即回滚到上一个稳定版本",
+        "随后查看启动日志、配置和依赖服务状态",
+        "必要时启用备用服务或维护页面止损"
+      ],
+      "matched_points": [
+        "如果和发布相关，应立即回滚到上一个稳定版本",
+        "必要时启用备用服务或维护页面止损"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 4.27,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_09",
+      "question": "如果应用日志显示 Redis、MQ 或其他下游服务调用失败，服务已经对外不可用，应如何应对？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的**服务不可用告警处理方案**，当应用日志显示 Redis、MQ 或其他下游服务调用失败导致服务对外不可用时，应按以下步骤应对：\n\n### 1. 快速降级（立即止血）\n*   **启用熔断机制**：防止对故障下游服务的持续调用占用线程资源。\n*   **跳过非关键依赖**：如果 Redis/MQ 用于非核心功能（如日志记录、异步通知），直接跳过调用。\n*   **使用缓存数据或默认值**：返回本地缓存的旧数据或默认响应，保证页面可加载。\n*   **实现超时控制**：确保下游调用有明确的超时时间，避免线程无限等待。\n\n### 2. 恢复依赖服务\n*   **检查状态**：确认 Redis、MQ 等服务是否正常运行，查看其错误日志。\n*   **重启故障节点**：如果确认是中间件进程挂死，尝试重启该服务实例。\n*   **修复网络问题**：检查应用与中间件之间的网络连通性（防火墙、安全组、DNS等）。\n\n### 3. 隔离故障\n*   **限制重试次数**：避免因疯狂重试加重下游压力，形成“重试风暴”。\n*   **防止故障扩散**：通过舱壁模式（Bulkhead）隔离不同依赖，防止一个下游故障拖垮整个应用。\n\n### 4. 其他排查方向\n如果上述措施无效，还需检查以下常见原因：\n*   **配置错误**：检查最近是否有配置变更，导致连接参数（IP/端口/密码）错误。如有，立即回滚配置。\n*   **资源耗尽**：检查应用服务器的磁盘空间、文件描述符、内存是否耗尽（OOM），必要时清理资源或扩容。\n*   **版本问题**：如果是新版本发布后出现，考虑立即回滚到上一个稳定版本。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "下游服务调用失败 Redis MQ 服务不可用 应对"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "下游服务调用失败 Redis MQ 服务不可用 应对"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先判断为依赖服务故障",
+        "先做快速降级，例如启用熔断、跳过非关键依赖或使用缓存数据",
+        "再检查并恢复 Redis、MQ 等依赖状态",
+        "控制重试次数和超时，防止级联故障继续扩散"
+      ],
+      "matched_points": [
+        "先做快速降级，例如启用熔断、跳过非关键依赖或使用缓存数据",
+        "再检查并恢复 Redis、MQ 等依赖状态"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 4.258,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_10",
+      "question": "如果服务访问超时、负载均衡器异常、DNS 解析失败同时出现，这类问题更偏向哪一类故障？建议怎么处理？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "## 故障类型判断\n\n**这类问题更偏向于「网络故障」**。\n\n根据知识库中的服务不可用告警处理方案，\"负载均衡器异常\"和\"DNS解析失败\"被明确归类为**网络故障**的典型特征（参考资料2）。而服务访问超时往往是网络问题的结果表现。\n\n---\n\n## 建议处理步骤\n\n### 1. **快速排查网络连通性**\n- 使用 `ping`、`telnet` 测试基本网络连通性\n- 检查防火墙规则和安全组配置\n- 验证 DNS 解析是否正常（可用 `nslookup` 或 `dig`）\n\n### 2. **修复网络组件**\n| 故障点 | 处理措施 |\n|--------|----------|\n| **DNS 解析失败** | 检查 DNS 配置；切换备用域名；更新 DNS 记录 |\n| **负载均衡器异常** | 检查负载均衡器健康状态；修正后端实例配置；切换到备用负载均衡 |\n| **服务访问超时** | 检查网络连接是否通畅；确认目标服务是否可访问 |\n\n### 3. **流量切换与恢复**\n- 切换到备用地域或备用链路\n- 启用 CDN 加速或备用域名\n- 重启相关网络服务\n\n### 4. **后续优化**\n- 部署多地域实例，实现智能 DNS 解析\n- 配置冗余的负载均衡器\n- 设置合理的超时和重试机制，避免级联故障\n\n---\n\n**总结**：这类复合型问题本质是**基础设施层面的网络故障**，应优先从网络层入手排查，而非深入应用代码层面。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "服务访问超时 负载均衡器异常 DNS 解析失败"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "服务访问超时 负载均衡器异常 DNS 解析失败"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "更偏向网络故障",
+        "应检查网络连通性、防火墙、安全组和 DNS 解析",
+        "必要时修复路由、重启网络服务或更新负载均衡配置",
+        "可以切换到备用地域、备用域名或备用网络"
+      ],
+      "matched_points": [
+        "更偏向网络故障",
+        "应检查网络连通性、防火墙、安全组和 DNS 解析",
+        "可以切换到备用地域、备用域名或备用网络"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.839,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_11",
+      "question": "服务不可用和服务响应变慢在故障等级、症状和处理优先级上有什么区别？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md",
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的告警处理方案，**服务不可用（ServiceUnavailable）**与**服务响应变慢（SlowResponse）**在故障等级、症状表现和处理优先级上存在显著差异。具体对比如下：\n\n### 1. 故障等级 (Fault Level)\n* **服务不可用**：**【紧急】**\n  * 属于最严重的故障等级。一旦触发，意味着核心业务链路已断裂。\n* **服务响应变慢**：**【警告】**\n  * 严重程度次之。虽然影响了服务质量，但服务本身仍在运行，尚未完全中断。\n\n### 2. 症状与触发条件 (Symptoms & Triggers)\n| 维度 | 服务不可用 (`ServiceUnavailable`) | 服务响应变慢 (`SlowResponse`) |\n| :--- | :--- | :--- |\n| **触发条件** | 服务健康检查失败，或错误率超过 **50%**。 | P99 响应时间持续 5 分钟超过 **3 秒**。 |\n| **主要症状** | 所有实例无法响应；用户彻底无法访问服务；日志中出现启动失败、OOM 或致命错误。 | 用户体验明显下降；请求出现排队堆积；部分边缘请求可能因等待过久触发超时错误。 |\n| **业务影响** | **业务完全中断**。可能导致直接的经济损失，并严重损害公司声誉。 | **体验受损**。虽未完全停服，但会拖慢下游依赖服务的处理速度，甚至引发级联雪崩。 |\n\n### 3. 处理优先级与策略 (Priority & Response Strategy)\n* **服务不可用（最高优先级 - 争分夺秒）**\n  * **处理原则**：**保可用性优先**。首要目标是尽快让系统恢复正常对外提供服务的能力。\n  * **首选动作**：如果是新版本发布导致，**立即回滚**至上一稳定版本；若是配置问题则快速回滚配置；若资源耗尽则清理磁盘或重启实例。必要时可启用备用服务或维护页面进行隔离。\n\n* **服务响应变慢（高优先级 - 快速止血）**\n  * **处理原则**：**保护系统不被压垮 + 逐步优化**。重点在于防止系统因请求堆积而崩溃。\n  * **5分钟内（紧急操作）**：立即**扩容**（增加实例）、**限流**（拒绝多余请求）或**降级**（关闭非核心功能）。\n  * **30分钟内（短期措施）**：通过日志分析定位根因（如慢 SQL、缓存失效、外部API超时），并进行针对性优化（加索引、调整缓存策略等）。\n\n**总结建议：**\n在实际运维中，**服务不可用**必须作为 P0/P1 级事故处理，要求全员即时响应并优先恢复服务；而**服务响应变慢**通常作为 P2/P3 级事件处理，要求在保障系统不崩溃的前提下，快速缓解性能瓶颈并排查深层原因。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "服务不可用 服务响应变慢 故障等级 症状 处理优先级",
+            "故障等级 P0 P1 P2 定义 SLA SLO"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **扩容**: 如果是资源不足，立即增加实例 2. **限流**: 保护系统不被压垮 3. **降级**: 关闭非核心功能 4. **重启**: 如果是内存泄漏等问题，重启受影响实例   ### 短期措施（30分钟内） 1. **定位根因**: 通过日志分析找出慢的环节 2. **临时优化**: -...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢 延迟高 P99 故障等级",
+            "故障等级 P0 P1 P2 定义 SLA SLO"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "服务不可用表示业务中断，故障等级更高，通常先恢复可用性",
+        "服务响应变慢仍可能可访问，重点是性能退化而非完全不可用",
+        "服务不可用优先做止损、回滚、降级和故障隔离",
+        "慢响应优先做性能定位、扩容、限流和慢点优化"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 11.494,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "svc_12",
+      "question": "资源耗尽导致的服务不可用，与单纯的磁盘使用率过高相比，排查时应该如何把握范围？",
+      "gold_docs": [
+        "aiops-docs/service_unavailable.md",
+        "aiops-docs/disk_high_usage.md"
+      ],
+      "answer": "根据知识库中的处理方案，**资源耗尽导致的服务不可用**与**单纯的磁盘使用率过高**在排查范围上有显著区别：\n\n---\n\n## 一、排查范围的差异\n\n### **1. 资源耗尽导致服务不可用**\n属于**紧急级别（ServiceUnavailable）**故障，排查范围是**全局性、多维度**的：\n\n- **涉及系统**：CPU、内存、磁盘IO、网络带宽、数据库连接池等所有关键资源\n- **影响面**：用户无法访问、业务完全中断\n- **触发条件**：健康检查失败或错误率超过50%\n\n**需要排查的维度包括：**\n| 维度 | 排查内容 |\n|------|----------|\n| CPU/内存 | 查询监控数据，确认是否资源满载 |\n| 日志分析 | 查找 `No space left on device`、OOM Killer、线程阻塞等关键字 |\n| 数据库 | 慢查询、连接池满载、锁等待 |\n| 外部依赖 | API超时、下游服务响应慢 |\n| 缓存 | 缓存命中率下降、缓存穿透 |\n| 网络 | 跨地域延迟、丢包率、带宽占用 |\n\n---\n\n### **2. 单纯的磁盘使用率过高**\n属于**局部性问题**，排查范围相对**聚焦**：\n\n- **涉及系统**：仅关注磁盘空间/文件系统\n- **影响面**：应用可能写入失败、性能下降，但不一定直接导致服务不可用\n- **常见原因**：\n  - 日志文件过大（未轮转）\n  - 临时文件堆积\n  - 数据文件增长过快\n  - 备份文件占用空间\n  - 缓存文件过多\n\n**排查步骤更集中：**\n1. 使用 `df -h` 查看磁盘使用率\n2. 使用 `du -sh /目录` 定位大目录\n3. 清理日志、临时文件、过期数据\n4. 验证磁盘使用率降至安全水平（<70%）\n\n---\n\n## 二、核心区别总结\n\n| 对比项 | 资源耗尽（服务不可用） | 磁盘使用率过高 |\n|--------|---------------------|---------------|\n| **告警级别** | 紧急 | 警告/严重 |\n| **排查范围** | **全栈**：CPU、内存、磁盘、网络、数据库、中间件 | **单一**：仅磁盘空间 |\n| **紧迫程度** | 必须立即恢复业务 | 可逐步处理 |\n| **关联因素** | 可能是多个资源同时耗尽 | 通常是单一原因 |\n| **处理策略** | 限流降级 → 扩容 → 根因排查 | 清理文件 → 优化配置 → 定期维护 |\n\n---\n\n## 三、建议的排查思路\n\n**当遇到服务不可用时：**\n1. **先看整体资源水位**（CPU、内存、磁盘、网络），判断是否全面耗尽\n2. **再看日志和监控**，定位具体瓶颈点\n3. **优先止血**：限流、降级、扩容，恢复服务可用性\n4. **最后根因分析**：找到根本原因并修复\n\n**当只是磁盘使用率过高时：**\n1. **定位大文件**：哪个目录/文件占用了最多空间\n2. **清理无效数据**：日志、临时文件、旧备份\n3. **优化配置**：日志轮转、数据归档、容量规划\n\n> **关键原则**：资源耗尽问题要**全局观照、快速止血**；磁盘问题要**精准定位、彻底清理**。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "资源耗尽服务不可用排查"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/disk_high_usage.md",
+          "file_name": "disk_high_usage.md",
+          "headers": [
+            "磁盘使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 日志文件过大 **特征**: - /var/log 目录占用大量空间 - 应用日志文件持续增长 - 没有日志轮转或轮转失败 - 日志级别设置为DEBUG   **处理方案**: 1. **立即清理**: ```bash # 查找大日志文件 find /var/log -type f -size +100M  # 清空...",
+          "recall_path": "both",
+          "queries": [
+            "磁盘使用率过高排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务响应时间过长告警处理方案   ## 告警名称 - **告警名**: `SlowResponse` - **告警级别**: 警告 - **触发条件**: P99响应时间持续5分钟超过3秒  ## 问题描述 当服务的响应时间持续超过阈值时，会导致： - 用户体验下降 - 请求堆积 - 可能触发超时错误 - 影响下游服务",
+          "recall_path": "both",
+          "queries": [
+            "资源耗尽服务不可用排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "资源耗尽是更大的类目，可能包括磁盘满、文件描述符耗尽、端口占用或内存不足",
+        "磁盘高只是资源耗尽中的一种具体情况",
+        "当服务不可用时，需要先判断到底是哪类资源耗尽导致服务挂掉",
+        "如果确认是磁盘问题，再继续按大文件、日志、临时文件和备份等方向细查"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 7.973,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_01",
+      "question": "SlowResponse 告警通常在什么条件下触发，会造成哪些影响？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的《服务响应时间过长告警处理方案》，**SlowResponse（慢响应）告警**的相关信息如下：\n\n### 触发条件\n当服务的响应时间超过预设的阈值时，系统会触发 SlowResponse 告警。通常意味着用户请求的处理时间明显延长，影响了用户体验和系统性能。\n\n### 可能造成的影响\n1. **用户体验下降**: 页面加载或接口响应变慢，导致用户等待时间增加。\n2. **业务中断风险**: 如果响应时间过长，可能导致前端超时，表现为请求失败或服务不可用。\n3. **资源占用过高**: 慢响应通常伴随着高 CPU、内存或数据库连接占用，可能引发连锁反应，如连接池耗尽。\n4. **级联故障**: 在微服务架构中，一个服务的慢响应可能导致上游服务线程阻塞，进而引发雪崩效应。\n\n### 常见原因及特征\n知识库详细列出了导致慢响应的六大常见原因：\n\n| 原因 | 典型特征 |\n|------|----------|\n| **数据库慢查询** | 慢查询日志多、CPU 高、SQL 执行时间长、连接池满载 |\n| **外部 API 调用超时** | 第三方接口响应慢、网络超时、下游服务延迟 |\n| **代码性能问题** | CPU 高、特定路径执行慢、APM 显示热点方法 |\n| **缓存失效/穿透** | 缓存命中率骤降、数据库查询激增、大量 cache miss |\n| **系统资源不足** | CPU/内存/磁盘 IO/网络带宽占用高、系统负载高 |\n| **网络问题** | 跨地域延迟高、丢包率增加、网络拥堵 |\n\n### 建议处理措施\n- **立即优化**: 定位最慢 SQL 或代码路径，检查索引、执行计划或热点方法。\n- **设置超时与降级**: 为外部调用设置合理超时，启用熔断机制，避免无限等待。\n- **资源扩容**: 水平扩展实例或升级规格，缓解资源瓶颈。\n- **缓存优化**: 实施缓存预热，防止缓存穿透，使用多级缓存策略。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务不可用告警处理方案   ## 告警名称 - **告警名**: `ServiceUnavailable` - **告警级别**: 紧急 - **触发条件**: 服务健康检查失败或错误率超过50%  ## 问题描述 服务不可用是最严重的故障，会导致： - 用户无法访问服务 - 业务完全中断 - 可能造成经济损失 - 影响公司声誉",
+          "recall_path": "both",
+          "queries": [
+            "SlowResponse 告警 触发条件 影响"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "SlowResponse 告警 触发条件 影响"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 内存使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighMemoryUsage` - **告警级别**: 严重 - **触发条件**: 内存使用率持续5分钟超过85%  ## 问题描述 当服务器或容器的内存使用率持续超过85%时，可能导致： - 应用频繁GC（垃圾回收） - OOM（Out Of Memory）错误 - 应用崩溃或...",
+          "recall_path": "both",
+          "queries": [
+            "SlowResponse 告警 触发条件 影响"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "P99 响应时间持续 5 分钟超过 3 秒",
+        "会导致用户体验下降",
+        "可能造成请求堆积",
+        "可能进一步触发超时错误并影响下游服务"
+      ],
+      "matched_points": [
+        "会导致用户体验下降"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 5.375,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 3
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_02",
+      "question": "服务响应时间过长的常见原因有哪些？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的资料，服务响应时间过长的常见原因主要包括以下6个方面：\n\n---\n\n### 1. 数据库慢查询\n**特征：**\n- 慢查询日志中有大量记录\n- 数据库CPU使用率高\n- 特定SQL执行时间长\n- 数据库连接池接近满载\n\n**处理方案：**\n- **立即优化**：找出最慢的SQL语句，检查是否缺少索引，查看执行计划（EXPLAIN），临时添加索引或优化SQL\n- **短期措施**：增加数据库连接池大小、启用查询缓存、考虑读写分离\n- **长期优化**：定期分析慢查询日志、优化数据库表结构、建立合适的索引策略、考虑分库分表\n\n---\n\n### 2. 外部API调用超时\n**特征：**\n- 日志中有第三方API调用记录\n- 特定接口响应时间长\n- 可能有网络超时错误\n- 下游服务响应慢\n\n**处理方案：**\n- **设置合理超时**：调整HTTP客户端超时时间，避免无限等待\n- **实施降级策略**：启用熔断机制，返回默认值或缓存数据，异步处理非关键调用\n- **优化调用方式**：并行调用多个API、使用批量接口减少调用次数、增加本地缓存\n\n---\n\n### 3. 代码性能问题\n**特征：**\n- CPU使用率高\n- 特定代码路径执行慢\n- 日志中有性能警告\n- 无明显外部依赖问题\n\n**处理方案：**\n- **性能分析**：使用APM工具定位慢方法，查看火焰图找出热点\n- **代码优化**：优化循环和递归、减少不必要的对象创建、使用更高效的数据结构、避免重复计算\n- **异步处理**：非关键逻辑异步执行、使用消息队列解耦\n\n---\n\n### 4. 缓存失效或缓存穿透\n**特征：**\n- 缓存命中率突然下降\n- 数据库查询量激增\n- 特定时间点响应变慢\n- 日志中有缓存miss记录\n\n**处理方案：**\n- **缓存预热**：重启后立即预热热点数据，定时刷新缓存\n- **防止缓存穿透**：对空值也进行缓存、使用布隆过滤器、参数校验防止恶意查询\n- **优化缓存策略**：设置合理的过期时间、使用多级缓存、实现缓存更新机制\n\n---\n\n### 5. 系统资源不足\n**特征：**\n- CPU或内存使用率高\n- 磁盘IO繁忙\n- 网络带宽占用高\n- 系统负载过高\n\n**处理方案：**\n- **资源扩容**：增加实例数量（水平扩展）、升级实例规格（垂直扩展）\n- **负载均衡**：检查负载均衡配置，确保流量均匀分布\n- **限流降级**：启用限流保护，降级非核心功能，优先保证核心业务\n\n---\n\n### 6. 网络问题\n**特征：**\n- 跨地域调用延迟高\n- 网络丢包率增加\n- 特定时间段网络拥堵\n- 日志中有网络超时错误\n\n**处理方案：**\n- **网络优化**：使用CDN加速、优化网络路由、启用HTTP/2或QUIC\n- **就近访问**：部署多地域实例、智能DNS解析、边缘计算\n- **压缩传输**：启用GZIP压缩、优化数据传输格式、减少传输数据量\n\n---\n\n建议排查时从数据库、缓存、外部依赖三个高频原因入手，同时结合监控指标（CPU、内存、网络）快速定位瓶颈所在。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 内存泄漏 **特征**: - 内存使用率持续缓慢上升 - Full GC后内存无法释放 - 应用运行时间越长，内存占用越高 - 日志中有大量GC记录   **处理方案**: 1. **紧急措施**: 重启应用释放内存 2. **获取堆转储**: 在重启前dump内存快照 3. **分析内存泄漏**: 使用MAT工具分...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应时间过长 原因"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "dense",
+          "queries": [
+            "服务响应时间过长 原因"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "紧急处理流程"
+          ],
+          "preview": "## 紧急处理流程   ### 第一时间（1分钟内） 1. **确认故障**: 通过监控和日志确认服务确实不可用 2. **启动应急**: 通知相关人员，启动应急响应流程 3. **止损措施**: - 如果是部分实例故障，摘除故障实例 - 如果是全部故障，启用备用服务或维护页面   ### 5分钟内 1. **快速定位**: 查看日志和监控，快速定位问题原因...",
+          "recall_path": "keyword",
+          "queries": [
+            "服务响应时间过长 原因"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "数据库慢查询",
+        "外部 API 调用超时",
+        "代码性能问题",
+        "缓存失效或缓存穿透",
+        "系统资源不足",
+        "网络问题"
+      ],
+      "matched_points": [
+        "数据库慢查询",
+        "外部 API 调用超时",
+        "代码性能问题",
+        "缓存失效或缓存穿透",
+        "系统资源不足",
+        "网络问题"
+      ],
+      "point_hit_rate": 1.0,
+      "latency_seconds": 5.201,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1,
+        "dense": 1,
+        "keyword": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_03",
+      "question": "排查慢响应时，应该重点关注哪些监控指标？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的服务响应时间过长告警处理方案，排查慢响应时应重点关注以下监控指标：\n\n## 核心性能指标\n- **响应时间**：重点关注 P50、P90、P99、P999 分位值，尤其是 P99 是否超过正常水平（<1秒）\n- **吞吐量**：QPS（每秒查询数）、TPS（每秒事务数）的变化趋势\n- **错误率**：4xx 和 5xx 错误的比例变化\n\n## 系统资源指标\n- **CPU使用率**：关注是否触发 `HighCPUUsage` 告警\n- **内存使用率**：关注是否触发 `HighMemoryUsage` 告警\n- **网络带宽**：网络吞吐量和连接数\n- **磁盘IO**：读写延迟和使用率\n\n## 数据库相关指标\n- **慢查询数量**：关注是否触发 `DatabaseSlowQuery` 告警\n- **连接池使用率**：是否接近上限导致请求排队\n- **查询执行时间**：SQL 平均执行时间和慢查询占比\n\n## 缓存相关指标\n- **命中率**：缓存命中率的下降可能增加后端压力\n- **失效率**：缓存失效导致的额外请求\n\n## 常见告警信号\n排查时可优先检查以下告警：\n- `HighCPUUsage` - CPU使用率过高\n- `HighMemoryUsage` - 内存使用率过高  \n- `DatabaseSlowQuery` - 数据库慢查询\n- `HighErrorRate` - 错误率过高\n- `ServiceTimeout` - 服务超时\n\n这些指标可以帮助快速定位慢响应的根因是资源瓶颈、数据库问题还是代码层面的性能缺陷。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的准确时间   ### 步骤2: 查询应用性能日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-logs` ...",
+          "recall_path": "both",
+          "queries": [
+            "慢响应 监控指标 性能排查"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "慢响应 监控指标 性能排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "响应时间指标，如 P50、P90、P99、P999",
+        "吞吐量指标，如 QPS、TPS",
+        "错误率，如 4xx 和 5xx 比例",
+        "资源使用指标和数据库、缓存相关指标"
+      ],
+      "matched_points": [
+        "响应时间指标，如 P50、P90、P99、P999",
+        "错误率，如 4xx 和 5xx 比例",
+        "资源使用指标和数据库、缓存相关指标"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 4.029,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_04",
+      "question": "收到服务响应时间过长告警后，推荐的首轮排查步骤是什么？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "收到服务响应时间过长告警后，推荐的首轮排查步骤如下：\n\n## 首轮排查步骤\n\n### 步骤1: 获取当前时间\n- **目的**: 确定告警发生的准确时间范围\n\n### 步骤2: 查询应用性能日志\n- **日志主题**: `application-logs`\n- **时间范围**: 最近30分钟\n- **查询条件**: `response_time > 3000 AND level:WARN`\n- **说明**: 定位具体的慢请求和对应的接口\n\n### 步骤3: 查询数据库慢查询日志\n- **日志主题**: `database-slow-query`\n- **时间范围**: 与告警时间一致\n- **查询条件**: `query_time > 1000`\n- **说明**: 检查是否有数据库慢查询导致的服务延迟\n\n### 步骤4: 查询系统资源使用情况\n- **日志主题**: `system-metrics`\n- **查询条件**: `cpu_usage OR memory_usage OR disk_io`\n- **说明**: 排除因CPU、内存或磁盘IO瓶颈导致的性能问题\n\n通过这四个步骤，可以快速定位响应时间过长的根本原因（应用层、数据库层或基础设施层），为后续处理提供依据。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应时间过长告警 排查步骤"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的准确时间   ### 步骤2: 查询应用性能日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-logs` ...",
+          "recall_path": "dense",
+          "queries": [
+            "服务响应时间过长告警 排查步骤"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "紧急处理流程"
+          ],
+          "preview": "## 紧急处理流程   ### 第一时间（1分钟内） 1. **确认故障**: 通过监控和日志确认服务确实不可用 2. **启动应急**: 通知相关人员，启动应急响应流程 3. **止损措施**: - 如果是部分实例故障，摘除故障实例 - 如果是全部故障，启用备用服务或维护页面   ### 5分钟内 1. **快速定位**: 查看日志和监控，快速定位问题原因...",
+          "recall_path": "keyword",
+          "queries": [
+            "服务响应时间过长告警 排查步骤"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "先获取当前时间确定告警时间范围",
+        "查询应用性能日志，关注 response_time 和 slow_query 相关记录",
+        "查询数据库慢查询日志",
+        "再结合系统资源使用情况一起分析"
+      ],
+      "matched_points": [
+        "先获取当前时间确定告警时间范围",
+        "查询应用性能日志，关注 response_time 和 slow_query 相关记录",
+        "查询数据库慢查询日志"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 3.188,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1,
+        "dense": 1,
+        "keyword": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_05",
+      "question": "如果要区分是数据库慢查询还是外部 API 调用超时导致慢响应，应该怎么判断？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的服务响应时间过长告警处理方案，可以通过以下特征来区分：\n\n---\n\n## 一、数据库慢查询的特征\n\n1. **日志表现**：慢查询日志中有大量记录，特定SQL执行时间长\n2. **资源指标**：数据库CPU使用率高\n3. **连接状态**：数据库连接池接近满载\n4. **排查方法**：查询 `database-slow-query` 主题，条件 `query_time:>1000`\n\n### 快速验证方式\n- 检查最慢的 SQL 语句（通过 `EXPLAIN` 查看执行计划）\n- 确认是否缺少索引或表结构不合理\n\n---\n\n## 二、外部 API 调用超时的特征\n\n1. **日志表现**：日志中有第三方 API 调用记录，特定接口响应时间长，可能有网络超时错误\n2. **依赖状态**：下游服务响应慢\n3. **排查方法**：在应用日志中查询 `downstream_service` 或外部接口调用相关关键字\n\n### 快速验证方式\n- 检查 HTTP 客户端是否有超时错误日志\n- 确认是否为某个特定第三方接口的调用耗时过长\n\n---\n\n## 三、快速定位步骤\n\n| 步骤 | 操作 | 目的 |\n|------|------|------|\n| 1 | 查询应用性能日志 (`response_time:>3000 OR slow_query:true`) | 确认哪些请求慢 |\n| 2 | 查询数据库慢查询日志 (`query_time:>1000`) | 判断是否有数据库瓶颈 |\n| 3 | 查询下游服务/外部调用日志 | 判断是否为外部依赖问题 |\n| 4 | 检查系统资源使用率 (CPU/Memory/Disk) | 排除资源不足因素 |\n\n---\n\n## 四、总结对比\n\n| 维度 | 数据库慢查询 | 外部 API 超时 |\n|------|-------------|--------------|\n| 关键日志 | `database-slow-query` 主题 | 应用日志中的下游服务调用记录 |\n| 资源表现 | 数据库 CPU 高、连接池满 | 无明显数据库资源异常 |\n| 典型错误 | 慢 SQL 执行记录 | 网络超时、HTTP 5xx |\n| 解决方向 | 优化 SQL、加索引、读写分离 | 设置超时、熔断降级、并行调用 |\n\n**核心判断原则**：如果数据库慢查询日志有大量记录且伴随数据库资源紧张，则为数据库问题；如果日志中显示特定外部接口调用耗时过长且无数据库异常，则为外部 API 超时问题。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "数据库慢查询 外部API调用超时 慢响应 区分判断"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "数据库慢查询 外部API调用超时 慢响应 区分判断"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "慢查询问题通常会在数据库慢查询日志中出现大量记录",
+        "还可能伴随数据库 CPU 高和连接池接近满载",
+        "外部 API 超时通常会在日志中出现第三方调用记录或网络超时错误",
+        "可以根据慢点落在数据库层还是外部依赖层决定优化方向"
+      ],
+      "matched_points": [
+        "还可能伴随数据库 CPU 高和连接池接近满载"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 4.971,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_06",
+      "question": "如果怀疑慢响应和缓存失效或缓存穿透有关，应重点检查哪些现象？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的资料，如果怀疑慢响应与**缓存失效或缓存穿透**有关，应重点检查以下现象：\n\n## 关键排查现象\n\n### 1. **缓存命中率突然下降**\n- 监控缓存系统的命中率指标\n- 正常情况应保持较高命中率（如95%以上），若出现断崖式下跌则需警惕\n\n### 2. **数据库查询量激增**\n- 缓存失效会导致大量请求直接打到数据库\n- 观察数据库的QPS/TPS是否短时间内大幅上升\n\n### 3. **特定时间点响应变慢**\n- 如果在某个时间点后系统响应明显变慢，可能是缓存批量过期导致\n- 特别是定时任务执行后或配置变更后出现的延迟\n\n### 4. **日志中有缓存miss记录**\n- 检查应用日志中是否有大量的 `cache miss` 或 `缓存未命中` 相关记录\n- 这些日志可以帮助确认请求是否真的绕过了缓存\n\n---\n\n## 进一步处理建议\n\n| 问题类型 | 推荐措施 |\n|---------|---------|\n| **缓存失效** | 实施缓存预热、定时刷新、避免缓存同时失效 |\n| **缓存穿透** | 对空值也进行缓存、使用布隆过滤器、参数校验防止恶意查询 |\n| **整体优化** | 设置合理过期时间、使用多级缓存、实现缓存更新机制 |\n\n如需进一步排查，建议查看缓存服务的监控数据以及应用日志中的缓存操作记录。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "缓存失效 缓存穿透 慢响应 排查"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "缓存失效 缓存穿透 慢响应 排查"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "查看缓存命中率是否突然下降",
+        "检查数据库查询量是否激增",
+        "关注日志中的缓存 miss 记录",
+        "排查是否存在热点缓存失效、空值未缓存或恶意查询"
+      ],
+      "matched_points": [
+        "查看缓存命中率是否突然下降",
+        "检查数据库查询量是否激增",
+        "关注日志中的缓存 miss 记录"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 3.605,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_07",
+      "question": "如果判断慢响应主要来自系统资源不足，推荐的处理方向有哪些？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的信息，如果判断慢响应主要来自**系统资源不足**（如CPU、内存、磁盘IO或网络带宽等资源瓶颈），推荐的处理方向包括以下几个方面：\n\n### 1. 资源扩容\n- **水平扩展**：增加服务实例的数量，通过增加节点来分散负载\n- **垂直扩展**：升级当前实例的规格（如更高配置的CPU、更多内存）\n- **优化资源分配**：调整资源配置策略，确保关键服务获得足够资源\n\n### 2. 负载均衡优化\n- 检查当前的负载均衡配置是否合理\n- 确保流量能够均匀分布到各个实例\n- 移除或隔离存在异常的实例，避免其影响整体性能\n\n### 3. 限流与降级\n- **启用限流保护**：对请求进行限制，防止系统过载\n- **降级非核心功能**：暂时关闭或简化非关键业务逻辑\n- **优先保证核心业务**：在资源紧张时，确保核心业务的可用性和响应速度\n\n这些措施可以有效缓解因系统资源不足导致的慢响应问题，建议根据实际场景选择合适的方案组合使用。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "系统资源不足 慢响应 处理方向"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "可以先增加实例数量做水平扩展",
+        "或升级实例规格做垂直扩展",
+        "检查负载均衡配置，确保流量均匀分布",
+        "必要时启用限流和降级，优先保障核心业务"
+      ],
+      "matched_points": [
+        "检查负载均衡配置，确保流量均匀分布"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 3.432,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 1
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_08",
+      "question": "如果 P99 响应时间持续超过 3 秒，同时慢查询日志很多，这种情况最该优先做什么？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的处理方案，当 **P99 响应时间持续超过 3 秒**且伴随大量慢查询日志时，最该优先做以下操作：\n\n## 🔴 立即操作（5分钟内）\n\n### 1. **定位根因 — 检查数据库慢查询**\n由于您提到\"慢查询日志很多\"，这通常是性能问题的核心原因。应优先查询数据库慢查询日志，找出执行时间最长的 SQL 语句。\n\n**关键排查点：**\n- 是否有缺失索引的查询？\n- 是否存在 N+1 查询问题？\n- 是否有全表扫描的大查询？\n\n### 2. **紧急止血措施**（如果系统负载高）\n在定位根因的同时，为防止情况恶化，可同步执行：\n- **限流**：保护系统不被压垮\n- **降级**：关闭非核心功能，释放资源给核心业务\n- **扩容**：如果是资源不足导致，立即增加实例\n\n### 3. **临时优化**（30分钟内）\n针对慢查询采取快速缓解措施：\n- **优化慢SQL**：为高频慢查询添加索引\n- **增加缓存**：对热点数据引入或优化缓存策略\n- **调整超时时间**：避免长事务阻塞连接池\n\n## 📋 后续验证步骤\n完成上述操作后，需确认：\n- P99 响应时间降到正常水平（<1秒）\n- 错误率是否下降\n- 观察用户投诉是否减少\n- 持续监控 30 分钟确保稳定\n\n---\n\n**总结**：优先顺序应为 → **查慢SQL根因 → 必要时限流/降级止血 → 快速优化SQL和缓存**。因为慢查询往往是导致响应时间飙升的直接原因，找到并优化它们是解决问题的关键。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **扩容**: 如果是资源不足，立即增加实例 2. **限流**: 保护系统不被压垮 3. **降级**: 关闭非核心功能 4. **重启**: 如果是内存泄漏等问题，重启受影响实例   ### 短期措施（30分钟内） 1. **定位根因**: 通过日志分析找出慢的环节 2. **临时优化**: -...",
+          "recall_path": "both",
+          "queries": [
+            "P99响应时间 慢查询 性能优化 优先处理"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "P99响应时间 慢查询 性能优化 优先处理"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "优先判断为数据库慢查询导致的慢响应",
+        "找出最慢的 SQL 并查看执行计划",
+        "检查是否缺少索引或存在低效 SQL",
+        "短期可优化 SQL、加索引、调连接池或加缓存"
+      ],
+      "matched_points": [],
+      "point_hit_rate": 0.0,
+      "latency_seconds": 3.922,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_09",
+      "question": "如果某个接口慢主要是第三方 API 响应慢造成的，应该如何止损和优化？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库中的资料，当接口慢主要由第三方 API 响应慢造成时，可以从**止损（紧急处理）**和**优化（长期改进）**两个层面进行处理：\n\n### 一、 紧急止损措施（立即执行）\n\n1. **设置合理超时**\n   * 调整 HTTP 客户端的超时时间，避免无限等待。\n   * 分别设置连接超时（Connection Timeout）和读取超时（Read Timeout），确保请求能快速失败，而不是挂起很久。\n\n2. **实施熔断机制**\n   * 启用熔断器（Circuit Breaker）。当检测到第三方 API 响应持续过慢或失败率过高时，自动切断对该服务的调用，防止雪崩效应拖垮自己的系统。\n\n3. **返回降级数据**\n   * 在第三方 API 不可用或超时时，返回默认值、缓存数据或空值（视业务场景而定）。\n   * 对于非关键功能，直接跳过该调用或异步处理，优先保证核心业务流程的正常响应。\n\n4. **限流保护**\n   * 对涉及第三方调用的接口进行限流，防止因外部依赖故障导致本地资源被大量占用。\n\n---\n\n### 二、 中长期优化方案\n\n1. **增加本地缓存**\n   * 如果第三方 API 的数据更新频率不高，可以增加本地缓存层。\n   * 缓存命中时直接返回数据，减少对第三方 API 的调用次数。\n\n2. **优化调用方式**\n   * **并行调用**：如果多个第三方 API 之间没有依赖关系，改为并行调用以缩短总耗时。\n   * **批量接口**：使用批量接口替代多次单条调用，减少网络往返次数。\n\n3. **异步处理**\n   * 对于非实时性要求高的操作（如记录日志、发送通知等），将第三方 API 调用放入消息队列中进行异步处理，不阻塞主线程。\n\n4. **监控与告警**\n   * 建立针对第三方 API 响应时间的监控指标（P50, P90, P99）。\n   * 设置合理的告警阈值，及时发现异常波动。\n\n### 总结建议\n\n| 阶段 | 核心动作 | 目的 |\n|------|----------|------|\n| **紧急止损** | 设置超时、熔断、降级 | 快速恢复服务可用性，防止故障扩散 |\n| **短期优化** | 引入缓存、调整重试策略 | 减少对第三方依赖，提升响应速度 |\n| **长期优化** | 异步化、架构解耦、多供应商备选 | 从根本上降低外部依赖风险 |\n\n通过以上措施，可以有效缓解第三方 API 慢导致的接口性能问题，并逐步构建更健壮的系统架构。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "接口慢 第三方API 响应慢 优化 止损"
+          ]
+        },
+        {
+          "rank": 3,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 记录故障发生时间，用于后续分析   ### 步骤2: 查询服务状态日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `application-lo...",
+          "recall_path": "both",
+          "queries": [
+            "接口慢 第三方API 响应慢 优化 止损"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "先设置合理的连接和读取超时，避免无限等待",
+        "对非关键调用启用降级、熔断或返回默认值",
+        "可以使用缓存数据或异步化处理非关键调用",
+        "长期可考虑并行调用、批量接口和本地缓存"
+      ],
+      "matched_points": [
+        "先设置合理的连接和读取超时，避免无限等待",
+        "可以使用缓存数据或异步化处理非关键调用",
+        "长期可考虑并行调用、批量接口和本地缓存"
+      ],
+      "point_hit_rate": 0.75,
+      "latency_seconds": 5.042,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_10",
+      "question": "如果缓存命中率突然下降、数据库查询量激增、响应时间同步变长，这更像什么问题？应该怎么处理？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md"
+      ],
+      "answer": "根据知识库资料，**缓存命中率突然下降、数据库查询量激增、响应时间同步变长** 这一组合特征，最符合 **原因4：缓存失效或缓存穿透**。\n\n## 📌 问题判断依据\n\n| 症状 | 对应特征 |\n|------|---------|\n| 缓存命中率突然下降 | 日志中有大量缓存 miss 记录 |\n| 数据库查询量激增 | 请求直接打到数据库层 |\n| 响应时间变长 | 数据库负载升高导致 |\n\n这是典型的 **\"缓存击穿/穿透\"** 场景——当热点数据过期、同时失效或被恶意请求绕过缓存时，所有请求会瞬间涌向数据库。\n\n---\n\n## 🔧 处理方案\n\n### 1️⃣ **紧急措施（立即执行）**\n- **缓存预热**：重启后或发现异常时，立即对热点数据进行预热\n- **防止缓存穿透**：\n  - 对空值也进行缓存（设置短TTL）\n  - 使用布隆过滤器拦截非法参数查询\n  - 增加参数校验，防止恶意探测\n\n### 2️⃣ **短期优化（几小时内）**\n- **优化缓存策略**：\n  - 设置合理的过期时间（避免批量同时失效）\n  - 引入**多级缓存**（本地缓存 + 分布式缓存）\n  - 实现缓存更新机制（主动刷新而非被动过期）\n\n### 3️⃣ **长期优化（架构层面）**\n- **监控告警**：持续监控缓存命中率指标，设置阈值告警\n- **降级保护**：启用限流和熔断机制，防止雪崩\n- **容量规划**：评估业务增长，合理配置缓存集群规模\n\n---\n\n## ⚡ 排查建议\n如果正在经历此问题，建议按以下顺序排查：\n1. 检查缓存中间件（Redis等）的健康状态\n2. 查看是否有大批量的 Key 在同一时间点过期\n3. 分析是否存在恶意扫描或爬虫攻击\n4. 确认应用代码中缓存的使用逻辑是否正确",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 数据库慢查询 **特征**: - 慢查询日志中有大量记录 - 数据库CPU使用率高 - 特定SQL执行时间长 - 数据库连接池接近满载   **处理方案**: 1. **立即优化**: - 找出最慢的SQL语句 - 检查是否缺少索引 - 查看执行计划（EXPLAIN） - 临时添加索引或优化SQL   2. **短期...",
+          "recall_path": "both",
+          "queries": [
+            "缓存命中率下降 数据库查询量激增 响应时间变长"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "排查步骤"
+          ],
+          "preview": "## 排查步骤   ### 步骤1: 获取当前时间 **工具**: `get_current_time` **目的**: 确定告警发生的时间范围   ### 步骤2: 查询系统监控日志 **工具**: `query_logs` **参数要求**: - **地域**: `ap-guangzhou` - **日志主题**: `system-metrics` - ...",
+          "recall_path": "both",
+          "queries": [
+            "缓存命中率下降 数据库查询量激增 响应时间变长"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "更像缓存失效或缓存穿透",
+        "需要做缓存预热和定时刷新",
+        "对空值进行缓存或使用布隆过滤器防穿透",
+        "优化缓存过期策略和多级缓存方案"
+      ],
+      "matched_points": [
+        "更像缓存失效或缓存穿透",
+        "对空值进行缓存或使用布隆过滤器防穿透"
+      ],
+      "point_hit_rate": 0.5,
+      "latency_seconds": 5.282,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_11",
+      "question": "服务响应变慢和服务不可用相比，什么时候应该优先做降级和限流，什么时候应该优先做回滚或启用备用服务？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md",
+        "aiops-docs/service_unavailable.md"
+      ],
+      "answer": "根据知识库中的服务故障处理方案，以下是**服务响应变慢**和**服务不可用**两种场景下，降级/限流与回滚/启用备用服务的优先级判断：\n\n---\n\n## 一、服务响应变慢（SlowResponse）\n> **告警级别**: 警告 | **触发条件**: P99响应时间持续5分钟超过3秒\n\n### ✅ 优先做 **限流** 和 **降级**\n当服务响应变慢时，说明服务仍在运行但性能下降，此时应优先保护系统不被压垮：\n\n1. **限流 (Rate Limiting)**\n   - 降低请求入口流量，防止请求堆积导致雪崩\n   - 限制非核心业务的并发请求\n   \n2. **降级 (Degradation)**\n   - 跳过非关键依赖（如推荐系统、统计分析）\n   - 使用缓存数据或返回默认值\n   - 启用熔断机制隔离故障依赖\n\n### ⚠️ 什么时候考虑回滚？\n- 如果响应变慢是**由最近一次发布引起**（新版本上线后出现）\n- 限流和降级无法在合理时间内恢复性能\n- 需要立即执行回滚到上一个稳定版本\n\n---\n\n## 二、服务不可用（ServiceUnavailable）\n> **告警级别**: 紧急 | **触发条件**: 健康检查失败或错误率超过50%\n\n### ✅ 优先做 **回滚** 或 **启用备用服务**\n服务不可用是最严重的故障，会导致业务完全中断，此时应优先恢复服务可用性：\n\n#### 第一时间（1分钟内）止损措施：\n| 情况 | 处理方案 |\n|------|----------|\n| 部分实例故障 | 摘除故障实例 |\n| 全部实例故障 | **启用备用服务** 或显示维护页面 |\n\n#### 5分钟内决策：\n| 原因 | 优先方案 |\n|------|----------|\n| 新版本发布后出现 | **立即回滚**到上一稳定版本 |\n| 配置错误 | **回滚配置** |\n| 应用崩溃/OOM | 重启或**回滚** |\n| 依赖服务故障 | 启用**降级**（熔断、跳过非关键依赖） |\n| 数据库连接失败 | 恢复数据库连接 |\n\n---\n\n## 三、总结对比\n\n| 场景 | 服务状态 | 优先级策略 | 原因 |\n|------|---------|-----------|------|\n| **响应变慢** | 服务可用但性能差 | **先限流/降级** → 再排查回滚 | 服务还在工作，先控制流量保护系统 |\n| **服务不可用** | 服务完全不可用 | **先回滚/启用备用** → 再排查修复 | 业务已中断，必须快速恢复可用性 |\n\n**核心原则**：\n- **响应变慢** = 还有救 → 用限流/降级\"保命\"\n- **服务不可用** = 已经挂 → 用回滚/备用服务\"急救\"",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/service_unavailable.md",
+          "file_name": "service_unavailable.md",
+          "headers": [
+            "服务不可用告警处理方案",
+            "常见原因分析"
+          ],
+          "preview": "## 常见原因分析   ### 原因1: 应用崩溃或无法启动 **特征**: - 所有实例都无法响应 - 日志中有启动失败记录 - 可能有OOM或其他致命错误 - 健康检查全部失败   **处理方案**: 1. **立即回滚**: - 如果是新版本发布后出现，立即回滚到上一个稳定版本 - 使用蓝绿部署或金丝雀发布策略   2. **紧急修复**: - 查看启...",
+          "recall_path": "both",
+          "queries": [
+            "服务响应变慢 服务不可用 应急响应策略",
+            "服务降级 限流 回滚 备用服务 故障处理"
+          ]
+        },
+        {
+          "rank": 2,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 服务响应时间过长告警处理方案   ## 告警名称 - **告警名**: `SlowResponse` - **告警级别**: 警告 - **触发条件**: P99响应时间持续5分钟超过3秒  ## 问题描述 当服务的响应时间持续超过阈值时，会导致： - 用户体验下降 - 请求堆积 - 可能触发超时错误 - 影响下游服务",
+          "recall_path": "both",
+          "queries": [
+            "服务降级 限流 回滚 备用服务 故障处理"
+          ]
+        }
+      ],
+      "retrieval_rank": 1,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 1.0,
+      "gold_answer_points": [
+        "慢响应但服务仍可用时，优先考虑扩容、限流、降级和性能优化",
+        "服务不可用时，优先恢复可用性，例如回滚、启用备用服务或维护页面",
+        "两者都可能需要降级，但服务不可用更强调止损和恢复业务",
+        "慢响应更强调找到性能瓶颈并逐步优化"
+      ],
+      "matched_points": [
+        "服务不可用时，优先恢复可用性，例如回滚、启用备用服务或维护页面"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 6.603,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    },
+    {
+      "id": "slow_12",
+      "question": "服务响应时间变长和 CPU 持续升高之间可能有什么关系，排查时应该怎么串起来看？",
+      "gold_docs": [
+        "aiops-docs/slow_response.md",
+        "aiops-docs/cpu_high_usage.md"
+      ],
+      "answer": "根据知识库中的相关信息，服务响应时间变长与 CPU 持续升高之间存在密切的关联关系。以下是详细分析和排查串联方法：\n\n## 一、两者之间的关系\n\n### 1. 因果关系\n- **CPU 升高 → 响应时间变长**：CPU 持续高位意味着计算资源被大量占用，新到达的请求需要排队等待 CPU 调度，导致响应时间延长。\n- **响应时间变长 → CPU 升高**：响应变慢会导致请求堆积，系统可能需要创建更多线程来处理积压请求，从而推高 CPU 使用率。\n\n### 2. 共同根因\n两者往往是同一问题的不同表现形式：\n- **代码逻辑问题**（如死循环、复杂计算）：同时消耗大量 CPU 并拖慢响应\n- **数据库慢查询**：数据库 CPU 升高会直接影响应用层响应速度\n- **GC 频繁**：Full GC 会占用 CPU 并造成应用暂停，表现为响应延迟\n- **流量突增**：请求量激增同时推高 CPU 和响应时间\n\n## 二、排查串联方法\n\n根据知识库中的排查步骤，建议按以下流程串联分析：\n\n### 第一步：确定时间线对齐\n- 获取告警发生的准确时间\n- 对比 CPU 升高曲线和响应时间变化曲线的**时间重叠区域**\n- 确认两者是同步发生还是存在先后顺序\n\n### 第二步：多维度日志关联查询\n| 维度 | 查询内容 | 目的 |\n|------|----------|------|\n| 应用日志 | `response_time > 3000 AND level:WARN` | 找出慢请求的具体时间点 |\n| 数据库日志 | `query_time > 1000` | 检查是否有慢 SQL 导致 CPU 升高 |\n| 系统指标 | `cpu_usage OR memory_usage OR disk_io` | 确认资源瓶颈位置 |\n\n### 第三步：定位具体瓶颈环节\n通过应用性能日志追踪慢请求的耗时分布：\n- 是否在数据库查询阶段耗时最长？→ 检查索引、SQL 优化\n- 是否在某段业务逻辑中耗时最长？→ 检查代码复杂度、循环逻辑\n- 是否在网络调用阶段耗时最长？→ 检查外部依赖服务的响应\n\n### 第四步：验证关键指标\n参考知识库中的监控指标体系：\n- **响应时间**：关注 P50、P90、P99、P999 的变化趋势\n- **资源使用**：CPU、内存、网络、磁盘 IO 的综合情况\n- **吞吐量**：QPS、TPS 是否下降\n- **错误率**：4xx、5xx 错误比例是否上升\n\n## 三、快速处理建议\n\n根据知识库中的紧急处理措施：\n\n1. **立即操作（5分钟内）**：\n   - 如果是资源不足：立即扩容增加实例\n   - 如果流量突增：启用限流保护系统\n   - 如果是内存泄漏等问题：重启受影响实例\n\n2. **短期措施（30分钟内）**：\n   - 通过日志分析找出慢的环节\n   - 临时优化：增加缓存、优化慢 SQL、调整超时时间\n\n3. **长期优化**：\n   - 代码层面的性能优化\n   - 引入缓存、消息队列等架构优化\n   - 定期进行压力测试\n\n## 四、排查清单要点\n\n排查时重点关注：\n- [ ] 数据库查询是否有索引缺失\n- [ ] 是否存在 N+1 查询问题\n- [ ] 缓存策略是否合理，命中率如何\n- [ ] 外部 API 调用是否有超时设置\n- [ ] 是否有不必要的同步等待\n- [ ] 日志级别是否过于详细（INFO/DEBUG 会影响性能）\n- [ ] 是否有大对象序列化开销\n- [ ] 网络调用是否可以批量化处理\n\n通过以上串联分析，可以将 CPU 升高和响应时间变长这两个现象关联起来，快速定位根本原因并采取针对性措施。",
+      "retrieved_docs": [
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/memory_high_usage.md",
+          "file_name": "memory_high_usage.md",
+          "headers": [
+            "内存使用率过高告警处理方案",
+            "告警名称"
+          ],
+          "preview": "# 内存使用率过高告警处理方案   ## 告警名称 - **告警名**: `HighMemoryUsage` - **告警级别**: 严重 - **触发条件**: 内存使用率持续5分钟超过85%  ## 问题描述 当服务器或容器的内存使用率持续超过85%时，可能导致： - 应用频繁GC（垃圾回收） - OOM（Out Of Memory）错误 - 应用崩溃或...",
+          "recall_path": "both",
+          "queries": [
+            "响应时间 CPU 升高 性能排查",
+            "CPU使用率高 性能问题根因分析",
+            "CPU使用率高 响应时间长 排查方法 关联分析"
+          ]
+        },
+        {
+          "rank": 1,
+          "source": "E:/develop/Python/super_biz_agent/uploads/slow_response.md",
+          "file_name": "slow_response.md",
+          "headers": [
+            "服务响应时间过长告警处理方案",
+            "紧急处理措施"
+          ],
+          "preview": "## 紧急处理措施   ### 立即操作（5分钟内） 1. **扩容**: 如果是资源不足，立即增加实例 2. **限流**: 保护系统不被压垮 3. **降级**: 关闭非核心功能 4. **重启**: 如果是内存泄漏等问题，重启受影响实例   ### 短期措施（30分钟内） 1. **定位根因**: 通过日志分析找出慢的环节 2. **临时优化**: -...",
+          "recall_path": "both",
+          "queries": [
+            "响应时间 CPU 升高 性能排查",
+            "CPU使用率高 性能问题根因分析",
+            "CPU使用率高 响应时间长 排查方法 关联分析"
+          ]
+        }
+      ],
+      "retrieval_rank": 2,
+      "hit_at_3": 1,
+      "hit_at_5": 1,
+      "reciprocal_rank": 0.5,
+      "gold_answer_points": [
+        "CPU 高可能直接导致响应时间变长",
+        "如果 CPU 高由死循环、流量突增或慢查询引起，慢响应可能是其表现之一",
+        "排查时要同时看响应时间日志、系统资源、进程占用和应用日志",
+        "根据是资源打满还是外部依赖慢，决定扩容、限流、重启还是优化代码和 SQL"
+      ],
+      "matched_points": [
+        "CPU 高可能直接导致响应时间变长"
+      ],
+      "point_hit_rate": 0.25,
+      "latency_seconds": 12.153,
+      "recall_mode": "hybrid",
+      "recall_path_stats": {
+        "both": 2
+      },
+      "mode": "normal"
+    }
+  ]
+}
